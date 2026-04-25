@@ -1,0 +1,8 @@
+# Drive sync artifacts
+.DS_Store
+**/.DS_Store
+
+# OS junk
+.AppleDouble
+.LSOverride
+Thumbs.db
