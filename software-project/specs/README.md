@@ -82,3 +82,13 @@ The `spec-drift-check` skill (see [`../hodos.md`](../hodos.md)) handles this on 
 ## When a section grows too large
 
 If a spec section grows past ~300 lines or ~20% of its file, consider whether it should split into its own spec — or whether part of it belongs in `vision/` (purpose contamination).
+
+---
+
+## Examples bundled with this template
+
+This `specs/` folder ships with one example spec file that you should keep:
+
+- [`tooling-philosophy.md`](tooling-philosophy.md) — the universal AI-maintained-codebase philosophy: library-vs-framework rule, evaluation checklist, decision rules, voice quotes. Pair it with a project-specific tooling spec (your stack inventory) — see the *"How to use this in your project"* section at the bottom of that file.
+
+Other specs are project-specific and you author them as the project takes shape.
