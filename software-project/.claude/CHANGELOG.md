@@ -18,6 +18,16 @@ Most-recent entries at the top. Older entries below.
 
 ---
 
+## 2026-04-27 — Move plans/ out of .claude/
+
+**Files touched:** moved `.claude/plans/` → `plans/`; updated path references in all 6 SKILL.md files (`audit-subsystem`, `brainstorm`, `decompose`, `execute-plan`, `spec-drift-check`, `write-plan`), 13 command files (`README.md`, `backfill-tests.md`, `brainstorm.md`, `critic-review.md`, `debug.md`, `decompose.md`, `execute-plan.md`, `refactor.md`, `review-work.md`, `skeleton-first.md`, `spec-drift-check.md`, `update-spec.md`, `write-plan.md`), `CLAUDE-add-to-project.md`, and `hodos.md`.
+**What changed:** Plan files now live at `plans/` (sibling to `specs/` and `vision/`) instead of `.claude/plans/`. All skills and commands that produce plan-family artifacts (plans, drift reports, audit reports, critic reviews, review reports, bug investigations, refactor plans, backfill plans, brainstorm summaries, decomposition trees, spec update proposals) now write to the new top-level location.
+**Why:** IDEs are reluctant to auto-approve actions on files inside hidden directories like `.claude/`. Moving the artifact directory out makes the user-facing decision-log accessible without permission friction.
+**Test:** Verify no remaining `.claude/plans/` references via grep. Run `/write-plan` in a real session and confirm the file lands at `plans/` rather than `.claude/plans/`.
+**Backport status:** Originated here.
+
+---
+
 ## 2026-04-25 — Initial template state
 
 **Files touched:** `.claude/commands/` (16 skills) + `.claude/skills/` (16 SKILL.md auto-trigger files), plus `README.md`, `CLAUDE-add-to-project.md`, `hodos.md`, `specs/README.md`, `vision/README.md`.

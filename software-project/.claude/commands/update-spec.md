@@ -173,7 +173,7 @@ After user approval:
 
 ## Output handoff
 
-- Diff proposal file written to `.claude/plans/{YYYY-MM-DD}-update-{spec-name}.md`
+- Diff proposal file written to `plans/{YYYY-MM-DD}-update-{spec-name}.md`
 - User reviews, approves or rejects each edit
 - Approved edits applied to the spec file
 - Plan file kept as decision log (why each edit was made)

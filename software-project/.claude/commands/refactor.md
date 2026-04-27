@@ -58,7 +58,7 @@ The characterization test captures the quirk as-is. Once the refactor is done, a
 
 ## Output format
 
-Write a plan file at `.claude/plans/{YYYY-MM-DD}-refactor-{name}.md`.
+Write a plan file at `plans/{YYYY-MM-DD}-refactor-{name}.md`.
 
 ```markdown
 # Refactor — {name}

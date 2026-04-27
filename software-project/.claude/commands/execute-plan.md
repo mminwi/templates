@@ -23,7 +23,7 @@ This is the discipline that prevents AI drift on long tasks. The checkbox plan i
 
 ### Starting
 
-1. Read the plan file from `.claude/plans/{plan-name}.md`.
+1. Read the plan file from `plans/{plan-name}.md`.
 2. Confirm status is `Approved`. If it's `Draft`, stop and ask the user to approve or run `/critic-review`.
 3. Change status to `In progress`. Record the start time.
 4. Review the task list. Identify the next unchecked task.

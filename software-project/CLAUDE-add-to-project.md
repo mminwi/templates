@@ -92,7 +92,7 @@ Quick reference:
 
 ## Plan files
 
-For Big-tier changes, plan files live in `.claude/plans/{YYYY-MM-DD}-{short-task-name}.md`. They are committed to git so they form a decision log. Never delete an old plan — mark it superseded if the approach changes.
+For Big-tier changes, plan files live in `plans/{YYYY-MM-DD}-{short-task-name}.md`. They are committed to git so they form a decision log. Never delete an old plan — mark it superseded if the approach changes.
 
 Small and Medium changes do not require plan files. The spec is the contract; for those tiers, updating the spec inline is enough.
 

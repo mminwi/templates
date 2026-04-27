@@ -83,7 +83,7 @@ Once the design is approved:
 - **Brief design summary** (one paragraph) goes into the user's record of the conversation. No formal design doc unless the work is Big-tier.
 - Hand off to `/decompose` (if the design has multiple slices), `/write-spec` (if a single feature spec is the next artifact), or `/write-plan` (if the design is small enough to plan directly).
 
-For Big-tier work, the brainstorm output itself can be saved to `.claude/plans/{YYYY-MM-DD}-{topic}-brainstorm.md` so the design conversation isn't lost.
+For Big-tier work, the brainstorm output itself can be saved to `plans/{YYYY-MM-DD}-{topic}-brainstorm.md` so the design conversation isn't lost.
 
 ## Rules
 

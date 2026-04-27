@@ -26,7 +26,7 @@ Plus: any wide opening of new feature work — even if the user didn't use a bra
 - Proposes 2-3 candidate approaches with tradeoffs and a recommendation (not neutral)
 - Presents the design in screen-sized sections, getting user approval after each
 - Hands off to `decompose`, `write-spec`, or `write-plan` once design is approved
-- For Big-tier work, captures a brainstorm summary at `.claude/plans/{YYYY-MM-DD}-{topic}-brainstorm.md`
+- For Big-tier work, captures a brainstorm summary at `plans/{YYYY-MM-DD}-{topic}-brainstorm.md`
 
 ## Hard rule
 

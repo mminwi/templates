@@ -78,7 +78,7 @@ Anything that loops over a potentially large set. N+1 queries. Blocking operatio
 
 ## Output format
 
-Write the report to `.claude/plans/{plan-name}-critic.md` alongside the plan being audited.
+Write the report to `plans/{plan-name}-critic.md` alongside the plan being audited.
 
 ```markdown
 # Critic Review — {Plan name}

@@ -20,7 +20,7 @@ Or when the user's request is multi-feature (e.g., *"redocument the whole system
 
 ## What this skill does
 
-- Produces a three-level decomposition tree, written to `.claude/plans/{YYYY-MM-DD}-{task-name}-decomposition.md`
+- Produces a three-level decomposition tree, written to `plans/{YYYY-MM-DD}-{task-name}-decomposition.md`
 - Recommends a starting point (defaults to smallest-and-riskiest — reveals surprises early)
 - Calls out *out-of-scope* items explicitly to prevent scope creep later
 - Lists open questions the user must answer before proceeding

@@ -34,7 +34,7 @@ Each category gets:
 - **🟡 Yellow** — concerns, document and watch (or fix opportunistically)
 - **🔴 Red** — broken or risky, needs deliberate fix
 
-Report goes to `.claude/plans/{YYYY-MM-DD}-audit-{subsystem}.md`.
+Report goes to `plans/{YYYY-MM-DD}-audit-{subsystem}.md`.
 
 ## Hard rule — assess, don't fix
 

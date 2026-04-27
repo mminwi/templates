@@ -16,7 +16,7 @@ Do **not** use for a single-file change or a task with obvious bounded scope.
 
 ## What you must produce
 
-A decomposition tree, three levels deep, written to `.claude/plans/{YYYY-MM-DD}-{task-name}-decomposition.md`.
+A decomposition tree, three levels deep, written to `plans/{YYYY-MM-DD}-{task-name}-decomposition.md`.
 
 ```markdown
 # Decomposition — {task name}

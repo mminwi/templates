@@ -78,7 +78,7 @@ This rule exists because "try random fixes until one works" is how bugs get pape
 
 ## Output format
 
-Write to `.claude/plans/{YYYY-MM-DD}-bug-{short-name}.md`.
+Write to `plans/{YYYY-MM-DD}-bug-{short-name}.md`.
 
 ```markdown
 # Bug Investigation — {short name}

@@ -20,7 +20,7 @@ Speak naturally. You don't type slash commands — you describe intent and Claud
 | *"Let's decompose this," "break X into pieces," "slice this up"*                      | `decompose`  | `/decompose`  | Tree: epic → feature → component                                                             |
 | *"Spec out X," "document how X works," "write the spec for Y"*                        | `write-spec` | `/write-spec` | Feature/event spec — JSON by default, MD on request                                          |
 | *"Make a flowchart for X," "diagram X," "draw the state machine for X"*               | `flowchart`  | `/flowchart`  | Mermaid diagram (graph / state / sequence / ER, chosen to fit)                               |
-| *"Write the plan," "let's plan this," "plan this out"*                                | `write-plan` | `/write-plan` | Checkbox plan file in `.claude/plans/` (Big-tier changes only)                               |
+| *"Write the plan," "let's plan this," "plan this out"*                                | `write-plan` | `/write-plan` | Checkbox plan file in `plans/` (Big-tier changes only)                                       |
 
 ### Phase 2 — Audit
 
@@ -218,7 +218,7 @@ The four phases of Hodos are those hard gates. Each phase produces an artifact (
 These are the failure modes that motivated each gate:
 
 1. **Drifting off-plan mid-task.** The AI starts executing, realizes it could do something cleverer, pivots, and the plan no longer describes what was built. *Fix:* plan is a contract. Change the plan file first, then execute.
-2. **Brainstorming substituting for planning.** You spend 30 minutes discussing options with the AI. No artifact is produced. Next session, the context is gone and you discuss it again. *Fix:* every design discussion produces an artifact in `.claude/plans/` or `specs/`.
+2. **Brainstorming substituting for planning.** You spend 30 minutes discussing options with the AI. No artifact is produced. Next session, the context is gone and you discuss it again. *Fix:* every design discussion produces an artifact in `plans/` or `specs/`.
 3. **Review by the same AI that wrote it.** *"Yes, my code looks correct."* Always does. *Fix:* fresh context for review, ideally a different AI instance.
 4. **Reasoning treated as rules.** User reasons out loud about whether to use option A or B; AI saves the in-the-moment thought as a permanent rule. *Fix:* the firewall above. Confirm before promoting.
 5. **Vision contaminating specs.** User explains *why* a feature exists; AI writes the *why* into the *spec* alongside the feature. Three months later the spec is half marketing copy. *Fix:* the two-path rule. Test: would the code break if this disappeared?

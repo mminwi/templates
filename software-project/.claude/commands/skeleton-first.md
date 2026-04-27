@@ -87,7 +87,7 @@ def verify_company(company_id: str):
 
 ```sql
 -- Migration 031: verified_customer tag
--- Related plan: .claude/plans/2026-04-24-verified-customer-tag.md
+-- Related plan: plans/2026-04-24-verified-customer-tag.md
 -- Related spec: spec/events/mark-company-verified.md
 
 -- TODO: add `is_verified_customer` column to bd_companies (BOOLEAN, default 0)

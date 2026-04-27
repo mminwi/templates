@@ -17,7 +17,7 @@ Do **not** use to auto-fix drift. That's `/update-spec` (if the spec is wrong) o
 
 ## What you must produce
 
-A drift report at `.claude/plans/{YYYY-MM-DD}-drift-{spec-name}.md`.
+A drift report at `plans/{YYYY-MM-DD}-drift-{spec-name}.md`.
 
 ## Process
 
@@ -190,7 +190,7 @@ After the drift report is produced:
 2. **Offer to chain to `/update-spec`** for the "Spec is wrong" findings — these are the cheap wins. If the user approves, invoke `/update-spec` with the drift report as input; it will produce diff proposals for each.
 3. "Code is wrong" findings are flagged for a separate Hodos run (they require actual code changes).
 4. "Both wrong or ambiguous" findings stay open until the user makes a decision.
-5. The drift report is saved at `.claude/plans/` regardless of whether the user chooses to act on it — it's a decision log.
+5. The drift report is saved at `plans/` regardless of whether the user chooses to act on it — it's a decision log.
 
 ## What you do NOT do in this skill
 

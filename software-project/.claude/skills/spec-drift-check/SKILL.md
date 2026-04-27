@@ -26,7 +26,7 @@ Auto-fires on:
   - **both-wrong** — neither matches a coherent design (needs design conversation)
   - **accurate** — spec and code agree (still worth listing — tells the user what they can trust)
   - **undocumented** — code does something the spec doesn't cover at all
-- Writes the report to `.claude/plans/{YYYY-MM-DD}-drift-{spec-name}.md`
+- Writes the report to `plans/{YYYY-MM-DD}-drift-{spec-name}.md`
 - Suggests next-step skills per finding (e.g., undocumented → `write-spec`; spec-wrong → `update-spec`)
 
 ## Hard rule — no edits

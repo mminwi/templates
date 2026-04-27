@@ -1,6 +1,6 @@
 ---
 name: write-plan
-description: "Use this for Big-tier changes that need an implementation plan before code is written. Produces a numbered checkbox plan file at .claude/plans/{YYYY-MM-DD}-{task}.md with file paths, completion criteria, and any test scenarios. Skip for Small and Medium changes — the spec is the contract."
+description: "Use this for Big-tier changes that need an implementation plan before code is written. Produces a numbered checkbox plan file at plans/{YYYY-MM-DD}-{task}.md with file paths, completion criteria, and any test scenarios. Skip for Small and Medium changes — the spec is the contract."
 ---
 
 # write-plan
@@ -21,7 +21,7 @@ Use only for Big-tier work (new subsystem, schema change, multi-spec change, new
 ## What this skill does
 
 - Reads the relevant spec(s) to understand the contract
-- Produces a numbered checkbox plan at `.claude/plans/{YYYY-MM-DD}-{short-task-name}.md`:
+- Produces a numbered checkbox plan at `plans/{YYYY-MM-DD}-{short-task-name}.md`:
   - Each step has a clear file path or operation
   - Each step has a completion criterion
   - Test scenarios are included where relevant (Given/When/Then-style for clarity)

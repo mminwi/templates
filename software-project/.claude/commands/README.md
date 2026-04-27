@@ -28,18 +28,18 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 
 | Artifact | Location |
 |---|---|
-| Plan files (Hodos) | `.claude/plans/{YYYY-MM-DD}-{task}.md` |
-| Brainstorm summaries (for Big-tier work) | `.claude/plans/{YYYY-MM-DD}-{topic}-brainstorm.md` |
-| Bug investigations | `.claude/plans/{YYYY-MM-DD}-bug-{name}.md` |
-| Spec update proposals | `.claude/plans/{YYYY-MM-DD}-update-{spec-name}.md` |
-| Drift reports | `.claude/plans/{YYYY-MM-DD}-drift-{spec-name}.md` |
-| Audit reports | `.claude/plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
-| Refactor plans | `.claude/plans/{YYYY-MM-DD}-refactor-{name}.md` |
-| Backfill plans | `.claude/plans/{YYYY-MM-DD}-backfill-tests-{target}.md` |
+| Plan files (Hodos) | `plans/{YYYY-MM-DD}-{task}.md` |
+| Brainstorm summaries (for Big-tier work) | `plans/{YYYY-MM-DD}-{topic}-brainstorm.md` |
+| Bug investigations | `plans/{YYYY-MM-DD}-bug-{name}.md` |
+| Spec update proposals | `plans/{YYYY-MM-DD}-update-{spec-name}.md` |
+| Drift reports | `plans/{YYYY-MM-DD}-drift-{spec-name}.md` |
+| Audit reports | `plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
+| Refactor plans | `plans/{YYYY-MM-DD}-refactor-{name}.md` |
+| Backfill plans | `plans/{YYYY-MM-DD}-backfill-tests-{target}.md` |
 | New specs | `specs/{name}.json` (or `.md` on request) |
 | Flowcharts | Embedded in the relevant spec file |
-| Critic reports | `.claude/plans/{plan-name}-critic.md` alongside the plan |
-| Review reports | `.claude/plans/{plan-name}-review.md` alongside the plan |
+| Critic reports | `plans/{plan-name}-critic.md` alongside the plan |
+| Review reports | `plans/{plan-name}-review.md` alongside the plan |
 | Verification reports | Inline in the conversation; cited in the change manifest |
 
 All of these get committed to git. They are the decision log.

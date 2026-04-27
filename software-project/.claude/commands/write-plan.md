@@ -12,7 +12,7 @@ Also invoke for smaller tasks where the design artifacts are unnecessary but a p
 
 ## What you must produce
 
-A plan file at `.claude/plans/{YYYY-MM-DD}-{short-task-name}.md`. Use today's date and a short hyphenated name derived from the task (e.g., `2026-04-24-verified-customer-tag.md`).
+A plan file at `plans/{YYYY-MM-DD}-{short-task-name}.md`. Use today's date and a short hyphenated name derived from the task (e.g., `2026-04-24-verified-customer-tag.md`).
 
 ## File template
 

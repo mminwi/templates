@@ -92,7 +92,7 @@ The rationale: a fix changes behavior. Backfill captures current behavior. Mixin
 
 ## Output format
 
-Plan file at `.claude/plans/{YYYY-MM-DD}-backfill-tests-{target}.md`.
+Plan file at `plans/{YYYY-MM-DD}-backfill-tests-{target}.md`.
 
 ```markdown
 # Backfill Tests — {target}

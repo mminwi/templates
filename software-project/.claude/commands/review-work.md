@@ -29,7 +29,7 @@ When invoked, you are:
 
 Inputs the review reads:
 
-- The plan file (`.claude/plans/{plan-name}.md`) — the authoritative intent
+- The plan file (`plans/{plan-name}.md`) — the authoritative intent
 - All Gherkin scenarios referenced by the plan
 - The diff of all changes (files listed in the plan's "Files touched" table)
 - The critic report from Phase 2, if present (to confirm findings were addressed)
@@ -84,7 +84,7 @@ Inputs the review reads:
 
 ## Output format
 
-Write to `.claude/plans/{plan-name}-review.md` alongside the plan and critic reports.
+Write to `plans/{plan-name}-review.md` alongside the plan and critic reports.
 
 ```markdown
 # Review — {Plan name}

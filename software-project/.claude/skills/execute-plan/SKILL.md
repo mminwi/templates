@@ -20,7 +20,7 @@ Or after `write-plan` is approved and (for Big-tier work) after `skeleton-first`
 
 ## What this skill does
 
-- Reads the approved plan from `.claude/plans/{YYYY-MM-DD}-{task}.md`
+- Reads the approved plan from `plans/{YYYY-MM-DD}-{task}.md`
 - Works through each checkbox in order
 - Marks each item complete as it's done (in the plan file or in conversation)
 - Writes code that matches the plan's file paths and completion criteria
