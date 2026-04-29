@@ -30,10 +30,42 @@ The most common contamination: the user explains *why* a feature exists while sp
 
 ---
 
+## Two kinds of spec documents
+
+`specs/` holds two complementary categories of document. Both are part of the spec.
+
+1. **JSON specs (`*.json`) — contracts.** What the platform *must* do. Behavioral rules, architectural invariants, runtime contracts (e.g., "the audit log is append-only," "no dialogue retention," "instruction layers are additive"). These change when intent changes, not when implementation drifts. They are the stable, opinionated documents.
+
+2. **Markdown inventories (`*.md`) — current-state snapshots.** What the codebase *currently is*. The template ships skeletons of eight standard inventories that every project keeps:
+
+   | File | Purpose |
+   |---|---|
+   | [`SCHEMA.md`](SCHEMA.md) | Per-table data-model inventory — every column, FK, index. |
+   | [`ROUTES.md`](ROUTES.md) | Per-route API + server-actions inventory — every endpoint, method, audience, body, response. |
+   | [`SITE_INVENTORY.md`](SITE_INVENTORY.md) | Per-page inventory — every page, audience, content, actions, status. |
+   | [`COMPONENTS.md`](COMPONENTS.md) | Per-component inventory — every reusable component and where it's used. |
+   | [`GLOSSARY.md`](GLOSSARY.md) | Domain glossary — every project-specific term. |
+   | [`OPERATIONS.md`](OPERATIONS.md) | Solo-dev runbook — recipes for every operational task. |
+   | [`ENVIRONMENT.md`](ENVIRONMENT.md) | Env-var inventory — every var the app reads. |
+   | [`DECISIONS.md`](DECISIONS.md) | ADR log — every architectural decision and why. |
+   | [`tooling-philosophy.md`](tooling-philosophy.md) | Universal AI-maintained-codebase philosophy. Bundled, not project-specific. |
+
+   Inventories are denormalizable from the codebase. They exist so future-you and future-Claude don't have to re-grep the project to answer "what does this app actually contain?" Maintain them as you change code; treat them as part of the same edit.
+
+**Together, the JSON contracts + the markdown inventories are the regeneration source.** Either alone is incomplete. JSON specs say what the platform must do; markdown inventories say what shape the current implementation takes.
+
+### Precedence on conflict
+
+If a JSON spec and a markdown inventory disagree, **the JSON spec wins** for behavioral facts; update the inventory to match.
+If the codebase and a markdown inventory disagree, **the codebase wins** (the inventory is a snapshot — regenerate it).
+If the codebase and a JSON spec disagree, **the JSON spec wins** unless intent has changed — in which case update the spec first as part of the same change.
+
+---
+
 ## File format
 
-- **JSON** is the default for schema-heavy specs (database tables, API routes, plan matrices). Structure is enforced; contradictions across files are easier to spot.
-- **Markdown** is fine for prose-heavy specs (runtime behavior described in narrative form, complex flows that benefit from narrative context).
+- **JSON** is the default for the contract specs (database invariants, route conventions, runtime rules, plan matrices). Structure is enforced; contradictions across files are easier to spot.
+- **Markdown** is the format for the eight bundled inventories listed above and for any prose-heavy spec (runtime behavior described in narrative form, complex flows that benefit from narrative context).
 - **When you want to review and comment**, ask the AI to render a JSON spec as Markdown. Edit or comment on the MD; the AI re-syncs to JSON.
 
 Validate JSON specs after every edit:
@@ -85,10 +117,11 @@ If a spec section grows past ~300 lines or ~20% of its file, consider whether it
 
 ---
 
-## Examples bundled with this template
+## Bundled with this template
 
-This `specs/` folder ships with one example spec file that you should keep:
+This `specs/` folder ships with:
 
-- [`tooling-philosophy.md`](tooling-philosophy.md) — the universal AI-maintained-codebase philosophy: library-vs-framework rule, evaluation checklist, decision rules, voice quotes. Pair it with a project-specific tooling spec (your stack inventory) — see the *"How to use this in your project"* section at the bottom of that file.
+- [`tooling-philosophy.md`](tooling-philosophy.md) — universal AI-maintained-codebase philosophy: library-vs-framework rule, evaluation checklist, decision rules. Pair it with a project-specific tooling spec (your stack inventory) — see the *"How to use this in your project"* section at the bottom of that file.
+- Eight empty inventory skeletons (`SCHEMA.md`, `ROUTES.md`, `SITE_INVENTORY.md`, `COMPONENTS.md`, `GLOSSARY.md`, `OPERATIONS.md`, `ENVIRONMENT.md`, `DECISIONS.md`). Each has the header + field reference + a TODO marker. Fill them in as the project takes shape; treat their maintenance as part of the same edit that introduced the table / route / page / component / decision.
 
-Other specs are project-specific and you author them as the project takes shape.
+Other specs are project-specific and you author them as the project takes shape (typically one JSON contract per major subsystem).
