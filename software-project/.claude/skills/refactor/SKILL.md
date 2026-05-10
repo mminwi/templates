@@ -20,7 +20,7 @@ Do NOT use for:
 
 - Adding new behavior (that's feature work — go through brainstorm/spec/plan)
 - Fixing bugs (that's `systematic-debug`)
-- Adding tests to code that has none (run `audit-subsystem` first to assess coverage gaps)
+- Adding tests to code that has none (run `analyze` first to assess coverage gaps)
 
 ## What this skill does
 
@@ -43,5 +43,5 @@ Complete behavior contract — characterization test patterns, refactor moves, w
 
 ## Related skills
 
-- Often follows `audit-subsystem` (which reveals what's worth refactoring)
+- Often follows `analyze` (which reveals what's worth refactoring)
 - After refactor: separate-agent verification to confirm nothing broke beyond the tests

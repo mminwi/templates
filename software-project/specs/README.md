@@ -140,7 +140,7 @@ You should be able to produce a contradiction-and-completeness audit across all 
 - Vision-flavored content that crept into specs (purpose, audience, market positioning)
 - Behavior in code that isn't documented in any spec
 
-The `audit-subsystem` skill (see [`../hodos.md`](../hodos.md)) includes spec drift checking as part of its full health check. When you notice drift while doing other work, flag it — don't wait to be asked.
+The `analyze` skill (see [`../hodos.md`](../hodos.md)) includes spec drift checking as part of its full health check. When you notice drift while doing other work, flag it — don't wait to be asked.
 
 ---
 

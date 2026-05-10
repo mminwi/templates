@@ -24,7 +24,7 @@ brainstorm → write-spec → write-plan → execute-plan
 ## Maintenance skills
 
 - `debug.md`
-- `audit-subsystem.md` (includes spec drift and test coverage assessment)
+- `analyze.md` (includes spec drift and test coverage assessment)
 - `refactor.md`
 
 Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet — the slash command name is `/debug` (kept short for typing/voicing).
@@ -39,8 +39,8 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 - `skeleton-first.md` — folded into `write-plan.md` as a skeleton/framework phase.
 - `verify.md`, `review-work.md` — folded into `execute-plan.md` as final verification and separate-agent review.
 - `update-spec.md` — folded into `write-spec.md` as targeted edit mode.
-- `spec-drift-check.md` — folded into `audit-subsystem.md` as the spec drift agent.
-- `backfill-tests.md` — folded into `audit-subsystem.md` as test coverage assessment and test plan recommendations.
+- `spec-drift-check.md` — folded into `analyze.md` as the spec drift agent.
+- `backfill-tests.md` — folded into `analyze.md` as test coverage assessment and test plan recommendations.
 - `upgrade-dependency.md` — one-off task that didn't earn a slot in the lean skill set; treat dependency upgrades as Medium-tier work that follows the normal Working Discipline.
 
 ## Where the artifacts these skills produce end up

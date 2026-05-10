@@ -2,7 +2,9 @@
 description: Full health check on one subsystem — code hygiene, spec drift, test coverage, ops/security — using 4 parallel agents. Produces a punch list and test plan recommendations.
 ---
 
-# /audit-subsystem
+# /analyze
+
+> Formerly `/audit-subsystem`. Same skill, shorter name.
 
 ## When to use
 
@@ -55,7 +57,7 @@ Some projects maintain a registered-subsystems table, mapping subsystem names to
 | ...      | ...                                  | ...                               |
 ```
 
-If a project has this, type `/audit-subsystem BD` resolves the paths from the table. If the project does not have this table yet, consider suggesting one — it makes audit invocation a single word instead of a path-lookup conversation.
+If a project has this, type `/analyze BD` resolves the paths from the table. If the project does not have this table yet, consider suggesting one — it makes audit invocation a single word instead of a path-lookup conversation.
 
 ## Step 2 — Launch four parallel subagents
 

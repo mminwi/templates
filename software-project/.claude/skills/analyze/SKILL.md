@@ -1,9 +1,9 @@
 ---
-name: audit-subsystem
-description: "Full health check of a single subsystem — code hygiene, spec drift, test coverage with test plan recommendations, and ops/security. Produces a Green/Yellow/Red punch list. Includes what spec-drift-check and backfill-tests used to do separately."
+name: analyze
+description: "Full health check of a single subsystem — code hygiene, spec drift, test coverage with test plan recommendations, and ops/security. Produces a Green/Yellow/Red punch list. Formerly audit-subsystem."
 ---
 
-# audit-subsystem
+# analyze
 
 Full health check on one subsystem at a time. Produces a Green/Yellow/Red punch list covering code hygiene, spec drift, test coverage, and ops/security — plus concrete test plan recommendations.
 
@@ -11,7 +11,8 @@ Full health check on one subsystem at a time. Produces a Green/Yellow/Red punch 
 
 Auto-fires on:
 
-- *"Audit the X module"*
+- *"Analyze X"*
+- *"Audit X"*
 - *"How healthy is X"*
 - *"Check the health of X"*
 - *"Check for spec drift"*
@@ -36,18 +37,18 @@ The report includes:
 - Test plan recommendations — what tests to add, what existing tests are stale, what `tests/TEST_PLAN.md` entries need updating
 - Recommended next actions — offer to chain into `write-spec` for spec fixes or update `tests/TEST_PLAN.md`
 
-Report goes to `plans/{YYYY-MM-DD}-audit-{subsystem}.md`.
+Report goes to `plans/{YYYY-MM-DD}-analyze-{subsystem}.md`.
 
 ## Hard rule — assess, don't fix
 
-This skill produces a report. The user triages and decides what to fix. Do NOT start refactoring or fixing during the audit.
+This skill produces a report. The user triages and decides what to fix. Do NOT start refactoring or fixing during the analysis.
 
 ## Full instructions
 
-Complete behavior contract — agent briefs, report template, test plan recommendations — in [`../../commands/audit-subsystem.md`](../../commands/audit-subsystem.md).
+Complete behavior contract — agent briefs, report template, test plan recommendations — in [`../../commands/analyze.md`](../../commands/analyze.md).
 
 ## Related skills
 
-- Often run before `refactor` (audit reveals what's worth refactoring)
+- Often run before `refactor` (analysis reveals what's worth refactoring)
 - Spec drift findings chain into `write-spec` (targeted edit mode) for fixes
 - Test recommendations chain into `tests/TEST_PLAN.md` updates

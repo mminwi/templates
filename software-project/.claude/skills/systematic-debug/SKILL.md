@@ -41,4 +41,4 @@ Complete behavior contract — phase templates, what counts as a hypothesis, esc
 ## Related skills
 
 - After fix is verified: hand off to `verification-before-completion`
-- If the bug reveals missing test coverage or spec/code disagreement: hand off to `audit-subsystem` for full health check
+- If the bug reveals missing test coverage or spec/code disagreement: hand off to `analyze` for full health check
