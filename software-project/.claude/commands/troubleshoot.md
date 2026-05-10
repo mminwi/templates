@@ -55,14 +55,24 @@ Do at least three hypotheses. One plausible hypothesis is selection bias — you
 
 Test hypotheses with read-only actions where possible. Logging, adding print statements, stepping through. **Do not attempt a fix during this phase.**
 
-### Phase 4 — Fix
+### Phase 4 — Assess and fix
 
-Only after a hypothesis is supported by clear evidence.
+Only after a hypothesis is supported by clear evidence. Before fixing, decide which path applies:
 
-- **Fix the root cause.** Not the symptom. "Add a null check" is usually a symptom fix. "Return empty list instead of None from function X" may be the root cause.
-- **Write a regression test FIRST.** Commit the failing test. Then commit the fix. The failing-test commit proves you actually understand the bug; the passing-test commit proves you fixed it.
-- **Check for the bug's siblings.** If the pattern analysis found related code, fix those too (or document why they're safe).
-- **Update the relevant spec.** If the bug was caused by spec drift, fix the spec alongside the code.
+**Path A — Simple fix (typo, simple mistake, isolated error):**
+The root cause is a straightforward mistake, not a systemic problem. Fix it directly:
+- Fix the root cause. Not the symptom.
+- Write a regression test FIRST. Commit the failing test, then the fix.
+- Check for the bug's siblings — same mistake elsewhere?
+- Update notebook. Done.
+
+**Path B — Significant fix (systematic failure, spec is wrong, design problem):**
+The root cause reveals that the spec doesn't correctly describe what the software should do, or the architecture has a fundamental issue. Do not attempt to fix this inline — the spec needs to change first.
+- Document the root cause thoroughly in the notebook
+- Flow into `/brainstorm` with the root cause as input
+- Brainstorm defines the correct behavior → `/write-spec` updates the spec → `/write-plan` → `/execute-plan`
+
+The test for which path: *"Is this a mistake in the code, or a mistake in what we told the code to do?"* If the spec is right and the code is wrong, it's Path A. If the spec is wrong (or missing), it's Path B.
 
 ## Notebook — document everything
 

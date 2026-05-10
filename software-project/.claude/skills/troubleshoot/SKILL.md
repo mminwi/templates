@@ -27,7 +27,7 @@ Four phases, in order:
 1. **Reproduce** — find the minimal sequence that reliably triggers the failure. If it can't be reproduced, it can't be fixed.
 2. **Pattern** — look at the failure surface. What's the actual error? What was the input? What was expected? Check git log, related code, specs.
 3. **Hypothesize** — propose 1-3 specific causes. Each hypothesis must be testable.
-4. **Fix** — test the hypothesis. If it's the cause, fix it. If not, drop it and try the next.
+4. **Assess and fix** — if the root cause is a simple mistake (code is wrong, spec is right), fix it directly. If the root cause is systematic (spec is wrong or missing), document it and flow into `brainstorm` → main workflow.
 
 Documents everything in `notebook/{YYYY-MM-DD}-troubleshoot-{name}.md` — what was observed, tried, learned, fixed, and what's still uncertain. This is the persistent record for recurring problems.
 
