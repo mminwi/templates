@@ -1,11 +1,11 @@
 ---
 name: decompose
-description: "Use this when a task is too big to plan as a single unit, has unclear scope, touches multiple modules, or covers multiple features. Produces a three-level tree (epic → feature → component) so the user only commits to one slice at a time. Do NOT use for single-file changes or bounded scope."
+description: "Compatibility/standalone decomposition. Normally folded into brainstorm. Use directly only when the user explicitly asks for a decomposition artifact."
 ---
 
 # decompose
 
-Break a large task into a navigable tree (epic → feature → component) so the user can pick one slice to start with. The point is to *reveal scope*, not to pre-plan every component.
+Break a large task into slices. Normally this happens inside `brainstorm` with composer guidance, file ownership, and parallel/series decisions.
 
 ## When this skill fires
 
@@ -36,5 +36,5 @@ Complete behavior contract — process, rules, output template, what NOT to do �
 
 ## Related skills
 
-- Often invoked after `brainstorm` when the design conversation reveals multi-slice work
-- Hands off to: `write-plan` (for implementation work on the chosen slice) or `write-spec` (for documentation work)
+- Normally replaced by `brainstorm`
+- If used standalone, hand off to `write-spec` or `write-plan`

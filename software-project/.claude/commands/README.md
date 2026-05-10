@@ -1,6 +1,6 @@
 # .claude/commands/
 
-Slash command files for the Hodos pipeline and maintenance skills. Each `.md` in this folder is a skill that Claude can invoke. The user types or voices a slash command (e.g., `/decompose`) as an explicit override; the auto-trigger model fires the same skills based on natural-language intent.
+Slash command files for the Hodos pipeline and maintenance skills. Each `.md` in this folder is a skill that Claude can invoke. The user types or voices a slash command (e.g., `/write-plan`) as an explicit override; the auto-trigger model fires the same skills based on natural-language intent.
 
 ## Looking for the menu?
 
@@ -8,13 +8,38 @@ Slash command files for the Hodos pipeline and maintenance skills. Each `.md` in
 
 That's the one to open when you want to remember how to say something. Don't look here.
 
-## The 16 skills
+## Main workflow skills
 
-- **Hodos Phase 1 (Design):** `brainstorm.md`, `decompose.md`, `write-spec.md`, `flowchart.md`, `write-plan.md`
-- **Hodos Phase 2 (Audit):** `critic-review.md`
-- **Hodos Phase 3 (Build):** `skeleton-first.md`, `execute-plan.md`
-- **Hodos Phase 4 (Verify):** `verify.md`, `review-work.md`
-- **Maintenance (investigate & assess):** `debug.md`, `update-spec.md`, `spec-drift-check.md`, `audit-subsystem.md`, `refactor.md`, `backfill-tests.md`
+The main Hodos build workflow is now:
+
+```text
+brainstorm → write-spec → write-plan → execute-plan
+```
+
+- **`brainstorm.md`** — classify, recommend, decompose, define composer guidance.
+- **`write-spec.md`** — create/update CSV canvases, page mock-ups, interaction matrices, state tables, generated views.
+- **`write-plan.md`** — create checkbox plan, notebook entry, test plan updates, skeleton phase if needed, critic loop.
+- **`execute-plan.md`** — execute plan, run tests, update notebook, require separate-agent verification.
+
+## Maintenance skills
+
+- `debug.md`
+- `update-spec.md`
+- `spec-drift-check.md`
+- `audit-subsystem.md`
+- `refactor.md`
+- `backfill-tests.md`
+
+## Legacy / folded main-flow commands
+
+These remain as compatibility references but are no longer normal user-called steps in the main workflow:
+
+- `decompose.md` — folded into `brainstorm.md`
+- `flowchart.md` — replaced by state/transition CSVs except as optional diagram helper
+- `critic-review.md` — folded into `write-plan.md`
+- `skeleton-first.md` — folded into `write-plan.md` as a skeleton/framework phase
+- `verify.md` — folded into `execute-plan.md`
+- `review-work.md` — folded into `execute-plan.md` as separate-agent verification
 
 Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet — the slash command name is `/debug` (kept short for typing/voicing).
 
@@ -29,18 +54,17 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 | Artifact | Location |
 |---|---|
 | Plan files (Hodos) | `plans/{YYYY-MM-DD}-{task}.md` |
-| Brainstorm summaries (for Big-tier work) | `plans/{YYYY-MM-DD}-{topic}-brainstorm.md` |
+| Notebook entries | `notebook/{YYYY-MM-DD}-{topic}.md` |
+| Test plan | `tests/TEST_PLAN.md` |
 | Bug investigations | `plans/{YYYY-MM-DD}-bug-{name}.md` |
 | Spec update proposals | `plans/{YYYY-MM-DD}-update-{spec-name}.md` |
 | Drift reports | `plans/{YYYY-MM-DD}-drift-{spec-name}.md` |
 | Audit reports | `plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
 | Refactor plans | `plans/{YYYY-MM-DD}-refactor-{name}.md` |
 | Backfill plans | `plans/{YYYY-MM-DD}-backfill-tests-{target}.md` |
-| New specs | `specs/{name}.json` (or `.md` on request) |
-| Flowcharts | Embedded in the relevant spec file |
-| Critic reports | `plans/{plan-name}-critic.md` alongside the plan |
-| Review reports | `plans/{plan-name}-review.md` alongside the plan |
-| Verification reports | Inline in the conversation; cited in the change manifest |
+| Spec canvases | `specs/database/*.csv`, `specs/pages/{page}/interaction-matrix.csv`, `specs/pages/{page}/mock-up.html` |
+| Critic reports | `plans/{plan-name}-critic.md` when produced by the automatic plan loop |
+| Review reports | `plans/{plan-name}-review.md` when separate-agent verification is written to disk |
 
 All of these get committed to git. They are the decision log.
 

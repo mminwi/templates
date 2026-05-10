@@ -1,11 +1,11 @@
 ---
 name: critic-review
-description: "Use this AFTER a design or plan is drafted but BEFORE code is written. A ruthless QA reviewer persona audits the artifact for contradictions, missing edge cases, integration flaws. The two-AI variant (separate AI instance) is the highest-leverage technique in Hodos. Builder fixes flaws; loop until clean."
+description: "Compatibility/standalone critic pass. Normally folded into write-plan. Use directly only when the user explicitly asks for a critic/audit of a spec or plan before code is written."
 ---
 
 # critic-review
 
-Audit a design or plan for flaws *before* code is written. Find contradictions, missing edge cases, integration flaws, vague specifications. The reviewer persona is "ruthless Senior QA Architect" — does NOT write code, only flaws and recommendations.
+Audit a design or plan for flaws *before* code is written. Normally this happens automatically inside `write-plan`.
 
 ## When this skill fires
 
@@ -17,7 +17,7 @@ Auto-fires on:
 - *"Review the design"*
 - *"What could go wrong"*
 
-Or after `write-plan` for Big-tier work — the plan should always be auditied before execution.
+Normally invoked by `write-plan` for non-trivial work.
 
 ## What this skill does
 
@@ -43,6 +43,6 @@ Complete behavior contract — review template, persona priming, severity defini
 
 ## Related skills
 
-- Runs between `write-plan` (or `write-spec`) and `skeleton-first`/`execute-plan`
-- Loops with the builder skill that produced the artifact (fix → re-review → fix) until clean
+- Runs inside `write-plan` before `execute-plan`
+- Loops at most two times before escalation
 - Different from `review-work` (which audits the *finished* code, not the design)

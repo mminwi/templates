@@ -1,11 +1,11 @@
 ---
 name: brainstorm
-description: "Use this BEFORE any creative or feature work — creating features, building components, adding functionality, modifying behavior, or any task where the first description is wide enough to build several different things from. Open the work, clarify what we're really trying to do, surface tradeoffs, propose 2-3 approaches, get user approval before any artifact is produced."
+description: "Use this as the front door for non-trivial product/software work. Classifies the request, recommends one strong path, decomposes into small slices when needed, defines composer/parallelism guidance, updates the notebook for Tier 2/3 work, and hands off to write-spec or write-plan. No code."
 ---
 
 # brainstorm
 
-Open the work that involves creating or extending a feature. No code, no spec file, no plan file is produced — that's the next skill's job. The single goal is to converge on **what we're trying to do** and **the approach** with the user.
+Open non-trivial work, decide the workflow tier, converge on direction, and decompose small enough that later agents can work with focused context.
 
 ## When this skill fires
 
@@ -16,27 +16,36 @@ Auto-fires on:
 - *"I'm thinking about X but I'm not sure…"*
 - *"Help me figure out the approach for X"*
 - *"How should we handle X?"*
+- *"Break this up"*
+- *"How should we divide this work?"*
 
-Plus: any wide opening of new feature work — even if the user didn't use a brainstorm trigger phrase.
+Plus: any wide opening of feature/product work where multiple implementations could be reasonable.
 
 ## What this skill does
 
-- Reads project context (`CLAUDE.md`, `specs/`, recent git log) before asking any question
-- Asks clarifying questions one at a time, never as a list
-- Proposes 2-3 candidate approaches with tradeoffs and a recommendation (not neutral)
-- Presents the design in screen-sized sections, getting user approval after each
-- Hands off to `decompose`, `write-spec`, or `write-plan` once design is approved
-- For Big-tier work, captures a brainstorm summary at `plans/{YYYY-MM-DD}-{topic}-brainstorm.md`
+- Classifies the request and recommends the correct tier.
+- Reads project context before asking questions.
+- Asks one clarifying question at a time only when needed.
+- Gives one strong recommendation unless multiple real paths exist.
+- Decomposes big work into small coherent slices.
+- Defines composer guidance, file/page ownership, interfaces, and parallel/series decisions.
+- Creates or updates a notebook entry for Tier 2/3 work.
+- Hands off to `write-spec` or `write-plan`.
 
-## Hard rule
+## Hard rules
 
-Do NOT invoke any artifact-producing skill (write code, create spec file, create plan file) until the user has approved the approach. This applies to every project regardless of perceived simplicity. "Simple" projects are where unexamined assumptions cause the most wasted work.
+- No code.
+- No implementation plan.
+- No padded option lists.
+- Prefer small slices.
+- Shared writable files mean series, not no decomposition.
 
 ## Full instructions
 
-Complete behavior contract — when to use, when NOT to use, full process, rules, anti-patterns — in [`../../commands/brainstorm.md`](../../commands/brainstorm.md).
+Complete behavior contract in [`../../commands/brainstorm.md`](../../commands/brainstorm.md).
 
 ## Related skills
 
-- After approval, hand off to: `decompose` (if multiple slices), `write-spec` (if a feature spec is the next artifact), `write-plan` (if work is small enough to plan directly)
-- Closely related to: `write-spec` (don't run brainstorm if a clear spec already exists)
+- Usually hands off to `write-spec`.
+- May hand off directly to `write-plan` if spec canvases are already current.
+- Maintenance work may route to `systematic-debug` or `refactor` instead.

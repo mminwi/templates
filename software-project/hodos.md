@@ -1,6 +1,6 @@
 # Hodos — the Methodology
 
-**Hodos** (Greek: ὁδός — *"way," "path"*; the root of *method*, *exodus*, *synod*) is the four-phase gate-driven methodology this template enforces for AI-assisted software change — adding, modifying, or extending the system.
+**Hodos** (Greek: ὁδός — *"way," "path"*; the root of *method*, *exodus*, *synod*) is the gate-driven methodology this template enforces for AI-assisted software change — adding, modifying, or extending the system.
 
 A short cheat sheet. **Open this while talking with the AI.** Refer back when you forget the right word for what you want.
 
@@ -12,42 +12,35 @@ Speak naturally. You don't type slash commands — you describe intent and Claud
 
 *This is the single source of truth for the menu. If you add or change a skill, update this section.*
 
-### Phase 1 — Design (no code yet)
+### Main workflow
 
-| Say this                                                                              | Skill        | Slash         | Produces                                                                                     |
-| ------------------------------------------------------------------------------------- | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
-| *"Let's brainstorm," "what could we do about X," "I'm thinking about Y but not sure"* | `brainstorm` | `/brainstorm` | Surfaces tradeoffs and asks what you're really trying to do — *before* any planning artifact |
-| *"Let's decompose this," "break X into pieces," "slice this up"*                      | `decompose`  | `/decompose`  | Tree: epic → feature → component                                                             |
-| *"Spec out X," "document how X works," "write the spec for Y"*                        | `write-spec` | `/write-spec` | Feature/event spec — JSON by default, MD on request                                          |
-| *"Make a flowchart for X," "diagram X," "draw the state machine for X"*               | `flowchart`  | `/flowchart`  | Mermaid diagram (graph / state / sequence / ER, chosen to fit)                               |
-| *"Write the plan," "let's plan this," "plan this out"*                                | `write-plan` | `/write-plan` | Checkbox plan file in `plans/` (Big-tier changes only)                                       |
+| Say this | Skill | Slash | Produces |
+|---|---|---|---|
+| *"Let's brainstorm," "what could we do about X," "how should we handle Y," "break this up"* | `brainstorm` | `/brainstorm` | Intake classification, one strong recommendation, small-slice decomposition, composer guidance, notebook summary |
+| *"Update the spec," "spec out X," "make the CSVs," "make the mock-up," "reverse engineer this into specs"* | `write-spec` | `/write-spec` | CSV canvases, page mock-ups, interaction matrices, state/transition tables, generated views |
+| *"Write the plan," "let's plan this," "plan the implementation"* | `write-plan` | `/write-plan` | Checkbox plan, notebook link, `tests/TEST_PLAN.md` updates, skeleton phase if needed, automatic critic loop |
+| *"Execute the plan," "build it," "run the plan," "implement this"* | `execute-plan` | `/execute-plan` | Implementation, tests, notebook closeout, separate-agent verification before completion |
 
-### Phase 2 — Audit
+Normal sequence:
 
-| Say this                                                                 | Skill           | Slash            | Produces                                                         |
-| ------------------------------------------------------------------------ | --------------- | ---------------- | ---------------------------------------------------------------- |
-| *"Run the critic," "audit this plan," "find flaws," "review the design"* | `critic-review` | `/critic-review` | Severity-sorted flaw report. Best run in a separate AI instance. |
+```text
+brainstorm → write-spec → write-plan → execute-plan
+```
 
-### Phase 3 — Build
+Folded steps:
 
-| Say this                                                                                                   | Skill            | Slash             | Produces                                                                                          |
-| ---------------------------------------------------------------------------------------------------------- | ---------------- | ----------------- | ------------------------------------------------------------------------------------------------- |
-| *"Frame it up," "write the framework," "framework first," "skeleton first," "show me the structure first"* | `skeleton-first` | `/skeleton-first` | File paths + function signatures + empty bodies. Waits for your approval before logic is written. |
-| *"Execute the plan," "build it," "run the plan," "implement this"*                                         | `execute-plan`   | `/execute-plan`   | Implementation, checkbox by checkbox, no improvising                                              |
-
-### Phase 4 — Verify
-
-| Say this                                                          | Skill                            | Slash          | Produces                                                                         |
-| ----------------------------------------------------------------- | -------------------------------- | -------------- | -------------------------------------------------------------------------------- |
-| *(Fires automatically before claiming work is done)*              | `verification-before-completion` | `/verify`      | Confirms behavior with concrete checks — does it actually work, not just compile |
-| *"Review the work," "does this match the plan," "audit the diff"* | `review-work`                    | `/review-work` | Pass / Pass-with-notes / Needs-fix report. Best run in a separate AI instance.   |
+- `decompose` is part of `brainstorm`.
+- `flowchart` is replaced by state/transition CSVs except as an optional diagram helper.
+- `critic-review` is part of `write-plan`.
+- `skeleton-first` is a phase inside `write-plan` when work is substantial.
+- `verify` and `review-work` are final gates inside `execute-plan`.
 
 ### Maintenance — Investigate & Assess
 
 | Say this                                                                  | Skill              | Slash               | Produces                                                                                           |
 | ------------------------------------------------------------------------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
 | *"Let's debug this," "why is X failing," "find the bug"*                  | `systematic-debug` | `/debug`            | Four-phase investigation (reproduce → pattern → hypothesize → fix). Stops after 3 failed attempts. |
-| *"Update the spec," "fix the spec for X," "I changed Y, update the spec"* | `update-spec`      | `/update-spec`      | Targeted edit proposals. Structure preserved.                                                      |
+| *"Targeted edit to old prose spec," "surgically patch this spec file"*    | `update-spec`      | `/update-spec`      | Legacy targeted spec-file edit proposals. Main spec canvas updates use `write-spec`.                 |
 | *"Check for spec drift," "is the spec still accurate," "scan the specs"*  | `spec-drift-check` | `/spec-drift-check` | Drift report — spec-wrong / code-wrong / both-wrong / accurate                                     |
 | *"Audit the X module," "how healthy is X," "check the health of X"*       | `audit-subsystem`  | `/audit-subsystem`  | Green/Yellow/Red report across categories                                                          |
 | *"Refactor X," "clean up X without changing behavior," "restructure X"*   | `refactor`         | `/refactor`         | Characterization tests → refactor → same tests still pass                                          |
@@ -59,12 +52,12 @@ Speak naturally. You don't type slash commands — you describe intent and Claud
 
 Some phrases are ambiguous. The AI will ask to clarify in these cases; here's the breakdown for your own reference.
 
-### "Fix the spec" / spec work
+### "Update the spec" / spec work
 
 | If the intent is...                     | Skill                       |
 | --------------------------------------- | --------------------------- |
-| Write a new spec from scratch           | `write-spec` (create)       |
-| Targeted edit of an existing spec       | `update-spec` (edit)        |
+| Create or revise CSVs/mock-ups/spec canvases | `write-spec`          |
+| Targeted edit of an older prose/JSON spec file | `update-spec`       |
 | Report where specs are stale (no edits) | `spec-drift-check` (assess) |
 
 ### "Fix this" / bug vs refactor
@@ -80,7 +73,7 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 
 | If the work is...                    | Skill                                           |
 | ------------------------------------ | ----------------------------------------------- |
-| Too big to plan as one unit          | `decompose` first, then `write-plan` on a slice |
+| Too big to plan as one unit          | `brainstorm` decomposes it first                |
 | Bounded, scope is clear              | `write-plan` directly                           |
 | Not sure what we're trying to do yet | `brainstorm` first                              |
 
@@ -90,12 +83,12 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 
 Hodos costs time. Match overhead to the change.
 
-| Change type                                     | Required Hodos phases        |
-| ----------------------------------------------- | ---------------------------- |
-| Typo fix, comment edit, one-line doc change     | None — just do it            |
-| Single-file bug fix, <10 min                    | Phase 4 verify only          |
-| Single-feature change, one module               | Phases 1 (lean) + 3 + 4      |
-| Multi-module change, new feature, schema change | Full Hodos (all four phases) |
+| Tier | Use when | Required process |
+|---|---|---|
+| Tier 0 — Tiny | Safe edit; no meaningful behavior change | Direct edit + quick verification |
+| Tier 1 — Small | Local behavior/code change; low risk | Lean implementation + verification; update spec/test if behavior changes |
+| Tier 2 — Medium | Several files, one feature/page, meaningful behavior | Brainstorm if needed → spec canvases → plan/notebook/test plan → execute with reviewer |
+| Tier 3 — Big | Multi-agent, multi-module, schema, architecture, high risk | Brainstorm with decomposition → spec canvases → composer → plan + critic loop + skeleton + test plan → execute + separate reviewer |
 
 The instinct test: *"If something went wrong here, how bad would it be?"* Bad answer → run full Hodos. Low stakes → skip.
 
@@ -144,72 +137,78 @@ The cost of asking *"is this a rule?"* once is tiny. The cost of an unintended r
 
 AI models treat paragraphs of text as *recommendations* that can be compromised. Soft specs drift. The only reliable way to keep an AI on rails is **hard gates** — explicit artifacts the AI must produce and the user must approve before the next step is allowed.
 
-The four phases of Hodos are those hard gates. Each phase produces an artifact (plan file, flowchart, Gherkin scenarios, skeleton, review output) that you can inspect and approve. The artifacts are saved. If something goes wrong later, you can look at the artifacts and see exactly where the reasoning drifted.
+The main Hodos workflow is those hard gates expressed as four SOPs: brainstorm, write-spec, write-plan, and execute-plan. Each SOP produces or updates durable artifacts. If something goes wrong later, you can look at the artifacts and see exactly where the reasoning drifted.
 
 ---
 
-## The four phases of Hodos
+## The four main SOPs of Hodos
 
-### Phase 1 — Decompose & Design
+### 1 — Brainstorm
 
-**Goal:** before any code, produce the design artifacts that describe *what* the change is, *where* it lives, and *what "done" looks like.*
+**Goal:** classify the request, converge on direction, and decompose large work into small slices before artifacts are written.
 
 **Why it matters:** the "Lost in the Middle" problem — an AI that starts coding before the scope is pinned will drift by turn 20. Fresh context + pinned scope = focused execution.
 
+**Key outputs:**
+
+- Intake classification and tier
+- One strong recommendation, not padded options
+- Small-slice decomposition when needed
+- Composer guidance: file/page ownership, interfaces, parallel vs series
+- Notebook summary for Tier 2/3 work
+
+**What you approve:** the direction and slice boundaries. If the decomposition is wrong, fix it before specs or plans are written.
+
+---
+
+### 2 — Write Spec
+
+**Goal:** capture intended product behavior in structured spec canvases before planning implementation.
+
+**Why it matters:** prose drifts. CSVs, mock-ups, interaction matrices, and state tables give the user a reviewable surface and give the AI a tighter contract.
+
 **Key artifacts:**
 
-- **Decomposition tree** — epic → feature → component. You commit to one slice at a time.
-- **Feature spec** — for any new feature. JSON by default (rigorous, validatable). MD on request when you want to review and comment.
-- **Flowchart** — Mermaid diagram for process flows and state changes.
-- **Plan file** — numbered checkbox list with file paths and "done" criteria. Big-tier changes only.
+- Database CSVs — usually one CSV per table
+- Page mock-ups — low-fidelity HTML visual canvas
+- Page interaction matrices
+- State/transition CSVs when state behavior matters
+- Generated JSON/Markdown views only when useful
 
-**What you approve:** the artifacts. If the flowchart is wrong, fix it now. Changing a flowchart costs 30 seconds. Changing code costs hours.
-
----
-
-### Phase 2 — Audit (the Critic Agent gate)
-
-**Goal:** find flaws in the design *before* code is written.
-
-**Why it matters:** the builder and the reviewer have different attention patterns. The builder wants to be helpful and make progress. The reviewer looks for what's wrong. Asking one AI to do both tasks creates conflict of interest.
-
-**Pattern:**
-
-1. Freeze the design artifacts from Phase 1.
-2. Invoke `critic-review` (ideally in a **fresh, separate AI instance** — new chat or second AI tool).
-3. The critic is primed as "ruthless Senior QA Architect. Find contradictions, missing edge cases, integration flaws. Do not write code."
-4. Flaws come back. Builder fixes the design. Loop if needed.
-5. Only when the critic finds nothing substantive do you proceed to Phase 3.
-
-**Two-AI variant (highest assurance):** Builder AI drafts the design. Critic AI reviews cold without seeing the builder's reasoning. User arbitrates disagreements. This is the "AIs playing against each other" pattern — highest-leverage technique in Hodos.
+**What you approve:** the structured spec artifacts. If the mock-up or CSV is wrong, fix it before planning implementation.
 
 ---
 
-### Phase 3 — Build
+### 3 — Write Plan
 
-**Goal:** write code that matches the approved design exactly.
+**Goal:** translate aligned spec canvases into an executable checkbox plan.
 
-**Two sub-steps:**
+**What the plan includes:**
 
-- **Skeleton first** — module structure, class/function signatures, docstrings. Empty bodies. Verify the *shape* before any logic exists. (The user prefers the word **framework** to "skeleton" — same thing.)
-- **Fill in** — implement against the skeleton and the test scenarios. Check off plan items. If the plan is wrong, **stop and revise it** — don't improvise off-plan.
+- File paths and done criteria
+- Execution model: owner, writable files, interfaces, parallel/series
+- Notebook link and summary
+- `tests/TEST_PLAN.md` updates
+- Skeleton/framework phase when work is substantial
+- Automatic critic loop for non-trivial plans
 
----
+**Critic role:** the critic asks whether the plan/design will actually achieve the intended outcome. Critic review is part of planning, not something the user must manually trigger.
 
-### Phase 4 — Verify
+### 4 — Execute Plan
 
-**Goal:** catch drift between plan and implementation before the work is declared done.
+**Goal:** implement the approved plan exactly and verify completion before claiming done.
 
-**Why it matters:** AI gets tired. By the end of a long task, details slip. A fresh reviewer persona catches what the builder missed.
+**Execution rules:**
 
-**What gets checked:**
+- Check off plan tasks in real time
+- Stop if the plan is wrong instead of improvising
+- Run tests/manual checks from the test plan
+- Update notebook with result, surprises, and follow-up
+- Use a separate short-context reviewer before marking complete
 
-- Does the diff match the plan?
-- Does the code actually work — not just compile, but produce the expected behavior?
-- Were there silent deviations from the skeleton?
-- Were any side effects missed?
+**Reviewer role:** the reviewer asks, "This is what the agent was told to do. Did it actually do it?" It is intentionally narrower than the critic.
 
-**Output:** pass / pass-with-notes / needs-fix. Builder fixes issues. Loop until clean.
+**Done means:** a separate reviewer can verify that the approved plan was executed, not that the builder thinks it is close enough.
 
 ---
 
@@ -218,13 +217,13 @@ The four phases of Hodos are those hard gates. Each phase produces an artifact (
 These are the failure modes that motivated each gate:
 
 1. **Drifting off-plan mid-task.** The AI starts executing, realizes it could do something cleverer, pivots, and the plan no longer describes what was built. *Fix:* plan is a contract. Change the plan file first, then execute.
-2. **Brainstorming substituting for planning.** You spend 30 minutes discussing options with the AI. No artifact is produced. Next session, the context is gone and you discuss it again. *Fix:* every design discussion produces an artifact in `plans/` or `specs/`.
+2. **Brainstorming substituting for planning.** You spend 30 minutes discussing options with the AI. No artifact is produced. Next session, the context is gone and you discuss it again. *Fix:* Tier 2/3 brainstorms update the notebook and hand off to specs/plans.
 3. **Review by the same AI that wrote it.** *"Yes, my code looks correct."* Always does. *Fix:* fresh context for review, ideally a different AI instance.
 4. **Reasoning treated as rules.** User reasons out loud about whether to use option A or B; AI saves the in-the-moment thought as a permanent rule. *Fix:* the firewall above. Confirm before promoting.
 5. **Vision contaminating specs.** User explains *why* a feature exists; AI writes the *why* into the *spec* alongside the feature. Three months later the spec is half marketing copy. *Fix:* the two-path rule. Test: would the code break if this disappeared?
-6. **Implementation before behavior is defined.** You write code, then write tests for what it happens to do. Tests rubber-stamp the implementation. *Fix:* behavior contract first (Gherkin or equivalent), code meets the contract.
+6. **Implementation before behavior is defined.** You write code, then write tests for what it happens to do. Tests rubber-stamp the implementation. *Fix:* spec canvases and test plan before implementation.
 7. **40-minute silent stretches.** AI runs off and works without checking in. User can't tell if it's stuck or making progress. *Fix:* phase announcements when work runs long ("Inventorying," "Editing," "Verifying").
-8. **"Done" without verification.** AI says it's complete, hands it off, user discovers it doesn't work. *Fix:* `verification-before-completion` is mandatory before claiming done.
+8. **"Done" without verification.** AI says it's complete, hands it off, user discovers it doesn't work. *Fix:* separate-agent verification is mandatory inside `execute-plan`.
 
 ---
 

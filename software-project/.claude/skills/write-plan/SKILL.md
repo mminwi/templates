@@ -1,11 +1,11 @@
 ---
 name: write-plan
-description: "Use this for Big-tier changes that need an implementation plan before code is written. Produces a numbered checkbox plan file at plans/{YYYY-MM-DD}-{task}.md with file paths, completion criteria, and any test scenarios. Skip for Small and Medium changes — the spec is the contract."
+description: "Use this after spec canvases are aligned for Tier 2/3 or multi-file work. Produces a checkbox plan, creates/links notebook entry, updates tests/TEST_PLAN.md, includes skeleton/framework phase when substantial, and runs a bounded critic loop automatically before execution."
 ---
 
 # write-plan
 
-Produce a checkbox-driven implementation plan for a Big-tier change. The plan is a contract — once approved, `execute-plan` works through it without improvising.
+Produce a checkbox-driven implementation plan from aligned spec canvases. The plan is a contract — once approved, `execute-plan` works through it without improvising.
 
 ## When this skill fires
 
@@ -16,16 +16,20 @@ Auto-fires on:
 - *"Plan this out"*
 - *"Plan the implementation"*
 
-Use only for Big-tier work (new subsystem, schema change, multi-spec change, new external integration). Do NOT generate plan files for Small or Medium changes — the spec covers them.
+Use for Tier 2/3 work, multi-file changes, multi-agent work, sequenced slices, or whenever the user asks for a plan. Skip only for genuinely tiny or obvious changes.
 
 ## What this skill does
 
-- Reads the relevant spec(s) to understand the contract
+- Reads the relevant spec canvases to understand the contract
 - Produces a numbered checkbox plan at `plans/{YYYY-MM-DD}-{short-task-name}.md`:
   - Each step has a clear file path or operation
   - Each step has a completion criterion
-  - Test scenarios are included where relevant (Given/When/Then-style for clarity)
-- Calls out dependencies between steps (which must complete first)
+- Execution model names owners, writable files, interfaces, and parallel/series mode
+- Creates or updates `notebook/{YYYY-MM-DD}-{short-topic}.md`
+- Creates or updates `tests/TEST_PLAN.md`
+- Includes skeleton/framework tasks when work is substantial
+- Runs bounded critic review automatically for non-trivial plans
+- Calls out dependencies between steps
 - Notes any open questions that block execution
 
 ## Hard rule — plan as contract
@@ -34,12 +38,14 @@ Once approved, the plan is a contract. `execute-plan` does not improvise. If the
 
 Plan files are committed to git as a decision log. Never delete an old plan — mark it superseded if the approach changes.
 
+Critic review is part of planning. The user should not have to manually request it.
+
 ## Full instructions
 
 Complete behavior contract — plan template, completion criteria style, how dependencies are tracked — in [`../../commands/write-plan.md`](../../commands/write-plan.md).
 
 ## Related skills
 
-- Usually invoked after `brainstorm` (design approved) and `write-spec` (contract defined)
-- Often runs before `critic-review` (audit the plan before code)
-- Hands off to: `execute-plan` (build phase)
+- Usually invoked after `brainstorm` and `write-spec`.
+- Includes critic review internally.
+- Hands off to `execute-plan`.

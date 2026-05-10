@@ -43,7 +43,7 @@ Critically, characterization tests capture **reality, not intent.** If the code 
 ### Phase C — Verify
 
 8. **Run the full test suite**, not just the characterization tests. Refactors often touch things called by other tests.
-9. **Invoke `/review-work`** to compare before/after and confirm nothing user-visible changed.
+9. **Run separate-agent review** to compare before/after and confirm nothing user-visible changed.
 10. **Commit the refactor.** Commit message should describe the structural change — "Extract calculate_discount into a shared util" — and explicitly state "No behavior change" in the body.
 
 ## Handling quirks and bugs found during characterization
@@ -99,7 +99,7 @@ Write a plan file at `plans/{YYYY-MM-DD}-refactor-{name}.md`.
 
 - [ ] Characterization tests still pass
 - [ ] Full test suite passes
-- [ ] `/review-work` returns pass
+- [ ] Separate-agent review returns pass
 - [ ] Diff reviewed for accidental behavior changes
 
 ---
@@ -123,7 +123,7 @@ Write a plan file at `plans/{YYYY-MM-DD}-refactor-{name}.md`.
 
 - All characterization tests pass after refactor
 - Full test suite still passes
-- No user-visible change (verify with `/review-work`)
+- No user-visible change, verified by separate-agent review
 - Code is measurably cleaner (specific metric: fewer lines / less duplication / better names / whatever applies)
 ```
 

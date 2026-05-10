@@ -18,6 +18,16 @@ Most-recent entries at the top. Older entries below.
 
 ---
 
+## 2026-05-10 — Refactor main workflow around spec canvases
+
+**Files touched:** `.claude/commands/brainstorm.md`, `.claude/commands/write-spec.md`, `.claude/commands/write-plan.md`, `.claude/commands/execute-plan.md`, `.claude/commands/README.md`, `.claude/skills/brainstorm/SKILL.md`, `.claude/skills/write-spec/SKILL.md`, `.claude/skills/write-plan/SKILL.md`, `.claude/skills/execute-plan/SKILL.md`, plus support docs `hodos.md`, `CLAUDE-add-to-project.md`, `README.md`, `specs/README.md`, `notebook/README.md`, and `tests/TEST_PLAN.md`.
+**What changed:** Main Hodos workflow is now `brainstorm → write-spec → write-plan → execute-plan`. Decomposition is folded into `brainstorm`; spec work is centered on CSV canvases, page mock-ups, interaction matrices, and state tables; critic review and skeleton/framework phases are folded into `write-plan`; final separate-agent verification is folded into `execute-plan`. Planning now engages notebook and cumulative test-plan updates.
+**Why:** The prior workflow had too many user-called steps and relied too heavily on prose/JSON specs. The new workflow keeps the user review surface structured and compact, supports AI-first reverse engineering, and reduces manual orchestration by making critic/skeleton/reviewer gates automatic.
+**Test:** In a real session, trigger each main workflow skill by natural language and verify routing, artifact locations, notebook/test-plan updates, and bounded critic/reviewer loops. Search docs for stale references that still present `decompose`, `flowchart`, `critic-review`, `skeleton-first`, `verify`, or `review-work` as normal user-called main workflow steps.
+**Backport status:** Originated here.
+
+---
+
 ## 2026-04-27 — Move plans/ out of .claude/
 
 **Files touched:** moved `.claude/plans/` → `plans/`; updated path references in all 6 SKILL.md files (`audit-subsystem`, `brainstorm`, `decompose`, `execute-plan`, `spec-drift-check`, `write-plan`), 13 command files (`README.md`, `backfill-tests.md`, `brainstorm.md`, `critic-review.md`, `debug.md`, `decompose.md`, `execute-plan.md`, `refactor.md`, `review-work.md`, `skeleton-first.md`, `spec-drift-check.md`, `update-spec.md`, `write-plan.md`), `CLAUDE-add-to-project.md`, and `hodos.md`.

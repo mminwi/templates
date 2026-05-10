@@ -1,5 +1,5 @@
 ---
-description: Execute an approved plan task by task, checking off items as they complete, stopping for deviations rather than improvising
+description: Execute an approved plan task by task, including skeleton phases, tests, notebook closeout, and mandatory separate-agent verification before completion
 ---
 
 # /execute-plan
@@ -8,10 +8,10 @@ description: Execute an approved plan task by task, checking off items as they c
 
 Invoke after:
 1. The plan has been written (`/write-plan`) and approved.
-2. The critic has reviewed (`/critic-review`) and findings are resolved.
-3. The skeleton has been written (`/skeleton-first`) and approved.
+2. The plan's critic loop has resolved or been user-approved.
+3. The plan names the specs/canvases, notebook, test plan, files touched, and execution model.
 
-This skill fills in the skeleton, task by task, against the plan. It is the last step before `/review-work`.
+This skill executes the approved plan. Skeleton/framework work, implementation, tests, notebook updates, and final verification are plan phases, not separate user-called workflows.
 
 ## The contract
 
@@ -24,9 +24,11 @@ This is the discipline that prevents AI drift on long tasks. The checkbox plan i
 ### Starting
 
 1. Read the plan file from `plans/{plan-name}.md`.
-2. Confirm status is `Approved`. If it's `Draft`, stop and ask the user to approve or run `/critic-review`.
+2. Confirm status is `Approved`. If it's `Draft`, stop and ask for approval or plan revision.
 3. Change status to `In progress`. Record the start time.
-4. Review the task list. Identify the next unchecked task.
+4. Read linked spec canvases, notebook entry, and `tests/TEST_PLAN.md`.
+5. Review the execution model: owners, writable files, interfaces, parallel/series decisions.
+6. Identify the next unchecked task.
 
 ### Per task
 
@@ -49,6 +51,8 @@ Stop immediately if:
 - A task that looked simple reveals an issue the plan did not anticipate
 - An existing test fails due to your changes
 - The user interrupts
+- A parallel/series ownership rule would be violated
+- The implementation no longer matches the spec canvases
 
 **Do not improvise past these stops.** Report to the user. Propose a plan revision if needed. Wait for approval.
 
@@ -72,18 +76,22 @@ This is why plan files matter. They are not documentation — they are execution
 
 4. **Log, don't hide.** If a task took longer than expected, note it. If a task surprised you, note it. If the approach changed, update the plan AND note the change. The plan is a decision log — preserve the decisions.
 
-5. **Tests get written when the plan says.** If Phase C of the plan says "run tests," you run tests. You don't skip. You don't hope.
+5. **Tests get written when the plan says.** If the plan says update tests or `tests/TEST_PLAN.md`, do it. Don't skip. Don't hope.
 
-6. **Gherkin scenarios are the acceptance criteria.** When you think you're done, the scenarios must pass. If they don't, you're not done — even if all checkboxes are ticked.
+6. **Spec canvases and test plan are acceptance criteria.** CSVs, mock-ups, interaction matrices, state tables, and test plan entries must be satisfied. If they aren't, you're not done — even if all checkboxes are ticked.
+
+7. **Notebook closes the loop.** Update the notebook with results, surprises, unresolved gaps, and follow-up before marking the plan complete.
 
 ## Plan status transitions during execution
 
 - `Approved` → `In progress` at start
 - `In progress` → `Complete` only after:
   - All checkboxes ticked
-  - All Gherkin scenarios pass
-  - `/review-work` has returned pass or pass-with-notes
-  - User has accepted
+  - Required tests/manual checks run or documented
+  - `tests/TEST_PLAN.md` updated
+  - Notebook updated
+  - Separate-agent reviewer verifies the work against plan/spec/test plan
+  - User-approved exception for any unresolved gap
 - `In progress` → `Superseded` if the plan is abandoned or rewritten
 
 ## What to output during execution
@@ -93,22 +101,63 @@ Brief updates at key moments:
 - When starting: "Executing plan `{name}`. {N} tasks. Starting task 1."
 - When completing a task: (just check the box silently unless the task was notable)
 - When blocked: "Stopped at task {N}: {reason}. Recommending: {plan revision / user input needed}."
-- When finishing: "All tasks complete. Plan status: ready for `/review-work`."
+- When finishing implementation: "All tasks complete. Starting separate-agent verification."
+- When verification passes: "Plan complete. Reviewer verified plan/spec/test alignment."
 
 Do not narrate every single task verbally. The checkbox changes are the narration.
 
 ## Output handoff
 
-After the last task is checked:
+After the last implementation task is checked:
 
 1. Run the final verification tasks (usually last phase of the plan)
-2. Change plan status to a candidate state pending review
-3. Invoke `/review-work` automatically, or prompt the user to invoke it
+2. Confirm notebook and test plan are updated
+3. Invoke a separate reviewer/fresh context to verify plan completion
+4. If reviewer finds gaps, fix and re-check at most two times
+5. Escalate to orchestrator/composer if still unresolved
+6. Mark plan `Complete` only after pass or user-approved exception
+
+## Separate-agent verification
+
+The reviewer asks:
+
+```text
+This is what the agent was told to do. Did it actually do it?
+```
+
+Reviewer input should be short and focused:
+
+- Plan file
+- Relevant spec canvases
+- Files changed
+- Test plan entries
+- Notebook result section
+
+Reviewer checks:
+
+- Every plan checkbox is complete and backed by actual file changes.
+- Implementation matches CSVs/mock-ups/interaction matrices/state tables.
+- Skeleton/framework structure was respected if required.
+- Required tests were added or updated.
+- Test plan was run or remaining manual checks are explicit.
+- No planned work was silently skipped.
+- No unplanned behavior/files were introduced without explanation.
+- Notebook was updated.
+
+Failure loop:
+
+```text
+reviewer identifies gaps
+  → builder fixes gaps
+  → reviewer re-checks
+  → repeat at most two fix/review attempts
+  → escalate to orchestrator/composer if still unresolved
+```
 
 ## What you do NOT do in this skill
 
 - Do not write a new plan — that's `/write-plan`
-- Do not skip `/review-work` — Phase 4 is required
+- Do not skip separate-agent verification
 - Do not modify files not listed in the plan
 - Do not "clean up" code you happen to see that's outside scope
 - Do not batch check boxes at the end — real-time updates only

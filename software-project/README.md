@@ -1,6 +1,6 @@
 # Hodos — Software Project Template
 
-A starter template for AI-assisted software projects. Loads a working discipline, a skill set (~16 skills), and a two-path documentation structure (`specs/` + `vision/`) into a fresh project so you don't rebuild the rails every time.
+A starter template for AI-assisted software projects. Loads a working discipline, a Claude skill set, and a documentation structure (`specs/` + `vision/` + `plans/` + `notebook/` + `tests/`) into a fresh project so you don't rebuild the rails every time.
 
 *Hodos* (Greek: ὁδός — "way," "path"; the root of *method*, *exodus*, *synod*) names the process so it can be referenced quickly: *"Mike's running Hodos on this," "did the critic review pass?"*
 
@@ -19,6 +19,10 @@ hodos_template/
     README.md                   ← what goes in specs/, what doesn't
   vision/                       ← seed for project's vision/ — READMEs only
     README.md                   ← what goes in vision/, what doesn't
+  notebook/                     ← engineering notebook entries
+    README.md                   ← trace log convention
+  tests/
+    TEST_PLAN.md                ← cumulative test plan
   .claude/
     commands/                   ← slash-command overrides for the skill set
     skills/                     ← (next pass) auto-trigger SKILL.md files
@@ -39,13 +43,14 @@ The most common contamination: vision content leaks into specs because the user 
 
 ### Working Discipline (operates on the AI, not the user)
 
-Five rules in `CLAUDE.md` shape how the AI works during a session:
+Core rules in `CLAUDE.md` shape how the AI works during a session:
 
-1. **Tier the work to the change size** — Small/Medium/Big. Small skips spec-first; Big requires design conversation first.
+1. **Tier the work to the change size** — tiny work stays light; medium/big work uses specs, plans, notebook, tests, and review.
 2. **Announce phases when running long** — "Inventorying," "Editing," "Verifying." No 40-minute silent stretches.
 3. **End every modifying turn with a change manifest** — `path — what changed`. The user shouldn't have to `git diff` to see the result.
-4. **Spec-edit budget rule** — if updating the spec is taking longer than the code change, the spec is too prescriptive.
-5. **Skeleton-first for new subsystems** — file paths + signatures + empty bodies before logic.
+4. **Structured specs first for meaningful behavior changes** — CSV canvases, mock-ups, interaction matrices, and state tables before implementation planning.
+5. **Planning engages notebook and tests** — any plan also links a notebook entry and updates `tests/TEST_PLAN.md`.
+6. **Separate-agent verification before done** — non-trivial work is not done until a fresh reviewer verifies plan/spec/test alignment.
 
 ### Don't promote reasoning to rules
 
@@ -109,12 +114,10 @@ If a project already has a `CLAUDE.md`:
 
 Full list with trigger phrases is in [`hodos.md`](hodos.md). Quick reference:
 
-| Phase | Skills |
+| Area | Skills |
 |---|---|
-| 1 — Design | `brainstorm` `decompose` `write-spec` `flowchart` `write-plan` |
-| 2 — Audit | `critic-review` |
-| 3 — Build | `skeleton-first` `execute-plan` |
-| 4 — Verify | `verification-before-completion` `review-work` |
+| Main workflow | `brainstorm` `write-spec` `write-plan` `execute-plan` |
+| Folded into main workflow | `decompose` in `brainstorm`; `critic-review` and `skeleton-first` in `write-plan`; `verify` and `review-work` in `execute-plan` |
 | Maintenance | `systematic-debug` `update-spec` `spec-drift-check` `audit-subsystem` `refactor` `backfill-tests` |
 
 ---

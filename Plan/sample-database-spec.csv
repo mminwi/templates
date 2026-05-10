@@ -1,0 +1,18 @@
+table_name,column_name,data_type,nullable,default_value,primary_key,unique,foreign_key,validation,notes,new thing
+projects,id,uuid,no,generated,yes,yes,,,Stable project identity,lock
+projects,owner_id,uuid,no,,no,no,users.id,required,Project belongs to one user,lock
+projects,name,text,no,,no,no,,non-empty,User-visible project name,lock
+projects,status,text,no,draft,no,no,,draft|active|archived,Project lifecycle state,lock
+projects,created_at,timestamp,no,current_timestamp,no,no,,required,Creation timestamp,lock
+projects,updated_at,timestamp,no,current_timestamp,no,no,,required,Last update timestamp,lock
+users,id,uuid,no,generated,no,yes,,,Stable user identity,lock
+users,email,text,no,,no,yes,,valid email,User login email,lock
+users.display_name,text,yes,,no,no,,,Optional display name,,lock
+users.created_at,timestamp,no,current_timestamp,no,no,,required,Account creation timestamp,,lock
+project_members,id,uuid,no,generated,yes,yes,,,Stable membership identity,lock
+project_members,project_id,uuid,no,,no,no,projects.id,required,Linked project,
+project_members,user_id,uuid,no,,no,no,users.id,required,Linked user,
+project_members,role,text,no,viewer,no,no,,owner|editor|viewer,Permission role,
+project_members,created_at,timestamp,no,current_timestamp,no,no,,required,Membership creation timestamp,
+,,,,,,,,,,
+,,,,,,,,1,2,=I18+J18

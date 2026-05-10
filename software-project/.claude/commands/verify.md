@@ -4,6 +4,8 @@ description: Verify behavior with concrete checks before claiming work is comple
 
 # /verify
 
+Compatibility note: verification is now normally a final gate inside `/execute-plan`. Use this command directly only when the user explicitly asks for a standalone verification pass.
+
 ## When to use
 
 Invoke (and the AI should auto-fire this) **before** any "done" / "fixed" / "implemented" / "complete" claim. The auto-trigger is the existence of any of those words about to be said by the AI.

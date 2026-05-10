@@ -1,44 +1,50 @@
 ---
 name: write-spec
-description: "Use this when a feature, route, event handler, or subsystem needs a spec and none exists yet, OR when an existing spec is so stale (>30%) that update-spec recommended a full rewrite. Produces a JSON spec by default, Markdown on request. Software-defining content only — vision/marketing/audience content goes elsewhere."
+description: "Use this to create or revise structured product specification artifacts: database CSVs, page interaction matrices, low-fidelity page mock-ups, state/transition CSVs, generated JSON views, and concise review summaries. This is the main 'update the spec' skill."
 ---
 
 # write-spec
 
-Create a new spec file describing **how the software is built**: schema, routes, runtime behavior, data shapes, API contracts. Software-defining content only.
+Create or revise the structured spec canvases that define product behavior. Keep CSVs/mock-ups/tables primary; use JSON/Markdown as generated or review views.
 
 ## When this skill fires
 
 Auto-fires on:
 
+- *"Update the spec"*
 - *"Spec out X"*
-- *"Document how X works"*
-- *"Write the spec for Y"*
-- *"We need a spec for this"*
+- *"Document the page"*
+- *"Make the CSVs"*
+- *"Make the mock-up"*
+- *"Reverse engineer this into specs"*
 
-Or when a feature/event/route/subsystem needs documentation and no existing spec covers it.
+Or when a product/page/data/behavior change needs spec canvases before implementation.
 
 ## What this skill does
 
-- Confirms the scope in 1-2 sentences before writing anything
-- Reads existing specs to understand cross-references
-- Drafts the new spec section by section, with user approval after each section for Big specs
-- Saves to `specs/<feature-or-subsystem>.json` (or `.md` on request)
-- Validates JSON parsing after writing
-- Cross-references other specs by file path; never duplicates content that lives elsewhere
+- Reads current specs, relevant vision, and code when needed.
+- Creates or updates database CSVs, page mock-ups, interaction matrices, and state tables.
+- Generates JSON/Markdown views only when useful.
+- Reverse-engineers existing code into canvases when requested.
+- Updates local spec changelogs for meaningful conceptual changes.
+- Updates the notebook for Tier 2/3 work.
+- Hands off to `write-plan` when specs are aligned.
 
-## Hard rule — software-defining content only
+## Hard rules
 
-The test from `specs/README.md`: *"If this content disappeared, would the code break?"* Yes → spec. No → vision (do not include here).
-
-Common contamination to avoid: the user explains *why* a feature exists or *who* it's for while specifying *how* it should work. Capture the *how* here. The *why* and *who* go in `vision/` (or don't get written down at all if they're just reasoning).
+- CSVs/mock-ups/tables are primary.
+- Do not turn specs into large prose documents.
+- Use one CSV per database table by default.
+- Page interaction matrices reference database CSVs instead of duplicating them.
+- Keep mock-ups low fidelity.
+- Keep vision separate unless purpose/direction changes.
 
 ## Full instructions
 
-Complete behavior contract — JSON template, MD template, process, rules, sibling-skill differences — in [`../../commands/write-spec.md`](../../commands/write-spec.md).
+Complete behavior contract in [`../../commands/write-spec.md`](../../commands/write-spec.md).
 
 ## Related skills
 
-- `update-spec` — for editing an existing spec (NOT for creation)
+- `brainstorm` — often comes first to choose direction and slices.
+- `write-plan` — comes after spec canvases are aligned.
 - `spec-drift-check` — for finding where specs are stale (NOT for editing)
-- `decompose` — run first if the spec covers too much to write as one unit

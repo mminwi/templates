@@ -42,7 +42,9 @@ These are the unbreakable rules. They apply to every action in this project.
 - **Specs are load-bearing. Read [`specs/README.md`](specs/README.md) before touching anything in `specs/`.** Specs describe *how* the software is built — schema, routes, runtime behavior. The bar is "regenerate the program from these specs alone." Code that drifts from spec is a defect.
 - **Specs describe how the software is built. Vision describes why it exists.** *If this content disappeared, would the code break?* Yes → spec. No → vision. Use cases, audience definitions, marketing language, philosophical rationale, market positioning, "this could also be used for X" — all go in `vision/`, never in `specs/`. When the user provides purpose-context while explaining a feature, capture the *feature* in the spec and the *context* in vision (or don't capture the context at all if it's just reasoning).
 - **Don't promote reasoning to rules.** The user talks in long voice-dictated streams with strong context. Reasoning-out-loud is *not* policy. Distinguish what the user is *deciding* from what they're *reasoning about*. Reasoning is context for the immediate decision, not a permanent rule. Default to ephemeral. Only save to memory, CLAUDE.md, or specs when the user has explicitly stated a rule — not when they mentioned a constraint while working through a thought process. The test: *"Would the user, three weeks from now, be surprised to find this written down as a rule?"* If yes, don't write it down without an explicit *"make this a rule."*
-- **AI maintains this codebase. No frameworks for human convenience.** Libraries that encapsulate proven, debugged work (crypto, parsing, perf-critical ops, external SDKs) are welcome. Frameworks that exist primarily to organize code for human readers (ORMs, state-management libraries, RPC layers, BDD test frameworks, dependency-injection containers, code generators) are rejected — they bulk up the program, reduce how much fits in a single context window, and obscure what the code is doing. Stay close to the core language.
+- **AI maintains this codebase. No frameworks for human convenience.** Use frameworks/libraries only when they improve AI-maintainability or reliability more than they increase conceptual load. Libraries that encapsulate proven, debugged work are welcome. Frameworks that primarily organize code for human convenience, hide simple behavior, or force workaround code are rejected.
+- **Structured specs are the review surface.** When behavior, data, or UI changes, update the CSV canvases, page mock-ups, interaction matrices, and state tables before planning implementation. The user should be able to review these artifacts instead of reading source code.
+- **Planning engages notebook and tests.** If work is significant enough for a plan, it also gets a notebook entry and `tests/TEST_PLAN.md` update.
 - **No fabricated content.** Never invent facts, file paths, function names, library APIs, or behaviors. If you don't know something, say so. Verify before claiming.
 
 ---
@@ -52,14 +54,17 @@ These are the unbreakable rules. They apply to every action in this project.
 These rules operate on the AI during a session, not on the program. They exist because spec discipline can otherwise turn small changes into 40-minute silent exercises.
 
 - **Tier the discipline by change size.** Match overhead to risk.
-  - **Small** (typo, prose tweak, single-file bugfix, copy change) — just code. Skip spec-first. Skip plan files. End with the change manifest below.
-  - **Medium** (new field, new route, new component, refactor in one subsystem) — update the affected spec inline as part of the same edit. No separate planning ceremony.
-  - **Big** (new subsystem, schema change, new external integration, multi-spec change) — design conversation first. Update specs across the affected surface in one pass *before* code.
-  - When in doubt, ask which tier. Don't default to the heaviest.
+  - **Tier 0 — Tiny** (safe edit, no behavior change) — direct edit + quick verification.
+  - **Tier 1 — Small** (local behavior/code change, low risk) — lean implementation + verification; update spec/test only if behavior changes.
+  - **Tier 2 — Medium** (several files, one feature/page, meaningful behavior) — brainstorm if needed → spec canvases → plan/notebook/test plan → execute with reviewer.
+  - **Tier 3 — Big** (multi-agent, multi-module, schema, architecture, high risk) — brainstorm with decomposition → spec canvases → composer → plan + critic loop + skeleton/framework + test plan → execute + separate reviewer.
+  - State the classification briefly. The user should not need to know the tier labels.
 - **Announce phases when a task will run long.** If you're about to work for more than ~5 minutes without checking in, say what phase you're in: *"Inventorying," "Editing," "Verifying."* The user shouldn't have to wait silently to find out whether you're stuck or done.
 - **End every modifying turn with a change manifest.** One line per file touched: `path — what changed`. The user should be able to see what happened without running `git diff`. Skip the manifest only when no files were modified.
 - **Spec-edit budget rule.** If updating the spec is taking longer than the underlying code change, the spec is too prescriptive for what the change requires. Trim it or stop — don't keep elaborating. Specs describe contract; they're not a place to relitigate every detail.
-- **Skeleton-first for new subsystems.** When introducing a meaningful new module (new API surface, new background job, new admin page), write file paths + function signatures + empty bodies *first*. Show the scaffold before filling it in. Lets the user spot a missing piece or wrong shape before any logic exists.
+- **Skeleton/framework-first is part of planning.** When introducing meaningful structure, include skeleton/framework tasks in the plan. It is not a separate user-called workflow.
+- **Separate-agent verification before done.** Non-trivial plans are not complete until a separate short-context reviewer verifies the work against the plan, specs, and test plan.
+- **One strong recommendation.** Prefer one good recommendation over three padded options. Present multiple options only when there are genuinely distinct viable paths.
 - **Breadcrumb rule for `.claude/` modifications.** When modifying any file in `.claude/skills/` or `.claude/commands/`, log the rationale in two places: (1) a clear commit message — one line, what changed and why; (2) an entry in `.claude/CHANGELOG.md` for non-trivial changes — which skill, what behavior changed, why, what you'd test. Commit history + CHANGELOG together are the breadcrumb trail when reviewing the project's snapshot against the upstream template repo.
 
 ---
@@ -82,19 +87,17 @@ Quick reference:
 
 | Phase | Skills |
 |---|---|
-| 1 — Design (no code yet) | `brainstorm` `decompose` `write-spec` `flowchart` `write-plan` |
-| 2 — Audit | `critic-review` |
-| 3 — Build | `skeleton-first` `execute-plan` |
-| 4 — Verify | `verification-before-completion` `review-work` |
+| Main workflow | `brainstorm` `write-spec` `write-plan` `execute-plan` |
+| Folded into main workflow | `decompose` in `brainstorm`; `critic-review` and `skeleton-first` in `write-plan`; `verify` and `review-work` in `execute-plan` |
 | Maintenance | `systematic-debug` `update-spec` `spec-drift-check` `audit-subsystem` `refactor` `backfill-tests` |
 
 ---
 
 ## Plan files
 
-For Big-tier changes, plan files live in `plans/{YYYY-MM-DD}-{short-task-name}.md`. They are committed to git so they form a decision log. Never delete an old plan — mark it superseded if the approach changes.
+For Tier 2/3 changes, plan files live in `plans/{YYYY-MM-DD}-{short-task-name}.md`. They are committed to git so they form a decision log. Never delete an old plan — mark it superseded if the approach changes.
 
-Small and Medium changes do not require plan files. The spec is the contract; for those tiers, updating the spec inline is enough.
+Any time a plan file is used, create or update a matching notebook entry in `notebook/{YYYY-MM-DD}-{short-topic}.md` and update `tests/TEST_PLAN.md`.
 
 ---
 
@@ -115,6 +118,6 @@ Small and Medium changes do not require plan files. The spec is the contract; fo
 
 See [`hodos.md`](hodos.md) for:
 - The full skill list with trigger phrases
-- The four-phase mental model (Decompose → Audit → Build → Verify)
+- The four-SOP workflow (`brainstorm` → `write-spec` → `write-plan` → `execute-plan`)
 - Vocabulary primer (Gherkin, characterization tests, skeleton vs framework, etc.)
 - Anti-patterns Hodos is designed to prevent

@@ -6,9 +6,9 @@ description: Ruthless QA reviewer persona audits design artifacts for contradict
 
 ## When to use
 
-Invoke **before any code is written**, after the Phase 1 design artifacts (decomposition, page specs, event specs, flowcharts, Gherkin scenarios, plan) are drafted and the user has reviewed them.
+Compatibility note: critic review is now normally invoked automatically inside `/write-plan`. Use this command directly only when the user explicitly wants a standalone critic pass.
 
-This is the Phase 2 hard gate. Nothing in Phase 3 happens until the critic finds nothing substantive, or the user explicitly overrides specific findings.
+Invoke **before any code is written**, after spec canvases and a draft plan exist.
 
 ## The two-AI pattern (recommended)
 
@@ -36,10 +36,11 @@ Speak as this persona. Be direct. Do not soften findings to be polite. Severity 
 
 The critic reads the design artifacts and produces a structured flaw report. Artifacts to read:
 
-- Decomposition file (if present)
-- All page specs referenced
-- All event specs referenced
-- All Gherkin scenarios
+- Brainstorm/decomposition summary if present
+- CSV canvases referenced
+- Page mock-ups referenced
+- Interaction matrices and state/transition tables referenced
+- Test plan entries if present
 - The plan file
 
 ## Audit checklist
@@ -47,10 +48,10 @@ The critic reads the design artifacts and produces a structured flaw report. Art
 Walk through each category. For each, either identify specific findings or explicitly note "no findings in this category."
 
 ### 1. Contradictions
-Two specs say different things about the same behavior. The plan says one thing; the event spec says another. The Gherkin contradicts the flowchart.
+Two specs say different things about the same behavior. The plan says one thing; the interaction matrix says another. The mock-up contradicts the CSV.
 
 ### 2. Missing edge cases
-Gherkin scenarios that don't cover what could actually happen. Empty inputs. Max-length inputs. Concurrent modifications. First-run. Last-item-deleted. Offline mode. Permission boundary cases.
+Spec/test coverage that does not cover what could actually happen. Empty inputs. Max-length inputs. Concurrent modifications. First-run. Last-item-deleted. Offline mode. Permission boundary cases.
 
 ### 3. Integration flaws
 Event X is documented to fire event Y, but event Y's preconditions can't be met by event X's state. Or: a side effect on page A assumes data that page A doesn't have access to.
@@ -144,9 +145,9 @@ Include this section only if there are real strengths worth noting. Do not pad. 
 
 ## Recommended next step
 
-- **If BLOCK:** Revise artifacts per Critical findings. Re-run `/critic-review` before any code.
-- **If PROCEED WITH FIXES:** Address Significant findings, then proceed to Phase 3. Critic's findings are now part of the plan.
-- **If PROCEED:** Proceed to Phase 3. Minor findings are noted for later.
+- **If BLOCK:** Revise artifacts per Critical findings. Re-run critic review before execution.
+- **If PROCEED WITH FIXES:** Address Significant findings, then execute the approved plan. Critic findings are now part of the plan.
+- **If PROCEED:** Execute the approved plan. Minor findings are noted for later.
 ```
 
 ## Rules

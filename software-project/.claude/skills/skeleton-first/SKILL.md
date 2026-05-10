@@ -1,11 +1,11 @@
 ---
 name: skeleton-first
-description: "Use this when introducing a meaningful new module — new API surface, new background job, new admin page. Write file paths + function signatures + empty bodies (or pass/TODO) FIRST. Wait for user approval before any logic is written. Lets the user spot a missing piece or wrong shape before code exists."
+description: "Compatibility/standalone skeleton/framework pass. Normally folded into write-plan as a skeleton/framework phase for substantial work."
 ---
 
 # skeleton-first
 
-Write the **shape** of new code before any logic — file paths, function/class signatures, docstrings, empty bodies (`pass` / `TODO`). User reviews the shape; once approved, logic gets filled in.
+Write the **shape** of new code before any logic — file paths, function/class signatures, docstrings, empty bodies (`pass` / `TODO`). Normally this is a planned phase inside `write-plan`.
 
 The user prefers the word **framework** verbally — same thing as skeleton.
 
@@ -19,7 +19,7 @@ Auto-fires on:
 - *"Skeleton first"*
 - *"Show me the structure first"*
 
-Or whenever introducing a meaningful new module (Medium or Big tier) — auto-applies even without explicit phrasing.
+Normally included by `write-plan` when work is substantial enough.
 
 ## What this skill does
 
@@ -40,6 +40,5 @@ Complete behavior contract — skeleton format per language, what counts as "sha
 
 ## Related skills
 
-- Usually invoked after `write-plan` (Big-tier) or directly after `write-spec` (Medium-tier)
-- Hands off to: `execute-plan` (fill in bodies)
-- Pairs with `critic-review` — critic can audit a skeleton before logic is written
+- Normally included as a phase in `write-plan`
+- Executed by `execute-plan`

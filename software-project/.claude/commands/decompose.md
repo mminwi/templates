@@ -4,6 +4,8 @@ description: Break a large task into a tree of epic → feature → component so
 
 # /decompose
 
+Compatibility note: decomposition is now normally part of `/brainstorm`. Use this command directly only when the user explicitly asks for a standalone decomposition artifact.
+
 ## When to use
 
 Invoke when the user describes a task that is:
@@ -78,7 +80,7 @@ After the decomposition is approved, the user picks one component. Then invoke `
 
 ## What you do NOT do in this skill
 
-- Do not write flowcharts (that's `/flowchart`)
+- Do not write flowcharts; state behavior now usually belongs in state/transition CSVs during `/write-spec`
 - Do not write tests (that's `/backfill-tests` if capturing current behavior, or part of `/execute-plan` if implementing new code)
 - Do not write code
 - Do not produce more than the decomposition file

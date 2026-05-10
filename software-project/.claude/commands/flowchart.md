@@ -4,6 +4,8 @@ description: Produce a Mermaid diagram for a process flow, state change, or syst
 
 # /flowchart
 
+Compatibility note: flowcharts are no longer a normal main workflow artifact. Use state/transition CSVs in `/write-spec` when behavior must be implemented. Use this command only as an optional diagram helper.
+
 ## When to use
 
 Invoke when the user wants a visual representation of:

@@ -1,11 +1,11 @@
 ---
 name: review-work
-description: "Use this AFTER execute-plan completes and verification-before-completion has passed. A reviewer persona audits the diff against the plan and the spec, looking for silent deviations and missed side effects. Output is pass / pass-with-notes / needs-fix. Best run in a separate AI instance for max value."
+description: "Compatibility/standalone final review. Normally folded into execute-plan as separate-agent verification. Audits finished work against the approved plan, spec canvases, and test plan."
 ---
 
 # review-work
 
-Phase 4 audit: catch drift between plan and implementation before declaring done. The reviewer persona reads the diff cold (ideally in a separate AI instance) and reports whether the work matches the plan.
+Final verification audit: catch drift between plan and implementation before declaring done. Normally this is a mandatory final gate inside `execute-plan`.
 
 ## When this skill fires
 
@@ -16,7 +16,7 @@ Auto-fires on:
 - *"Audit the diff"*
 - *"Check the implementation"*
 
-Or after `verification-before-completion` passes — review-work is the second gate before declaring complete.
+Normally invoked by `execute-plan` before declaring complete.
 
 ## What this skill does
 
@@ -44,6 +44,6 @@ Complete behavior contract — review report template, persona priming, deviatio
 
 ## Related skills
 
-- Runs after `verification-before-completion` (verify behavior, then audit the diff)
+- Runs inside `execute-plan` after implementation and tests
 - Different from `critic-review` (which audits the *design* before code; this audits the *finished code*)
 - If review surfaces issues, routes back to `execute-plan` (or back further if the plan was wrong)

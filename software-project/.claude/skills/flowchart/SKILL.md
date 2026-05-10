@@ -1,11 +1,11 @@
 ---
 name: flowchart
-description: "Use this when a process, state machine, data flow, or sequence of events needs a visual diagram. Produces a Mermaid diagram (graph / state / sequence / ER, chosen to fit the content). Embedded in the relevant spec file or saved standalone."
+description: "Compatibility/optional diagram helper. Main workflow uses state/transition CSVs in write-spec for implementable behavior. Use this only when the user explicitly wants a Mermaid diagram."
 ---
 
 # flowchart
 
-Produce a Mermaid diagram for a process flow, state change, data flow, or sequence of events. Pick the right diagram type for the content.
+Produce a Mermaid diagram for a process flow, state change, data flow, or sequence of events when a diagram is useful. This is not a normal main workflow artifact.
 
 ## When this skill fires
 
@@ -34,5 +34,5 @@ Complete behavior contract — Mermaid syntax conventions, diagram-type selectio
 
 ## Related skills
 
-- Usually invoked during `write-spec` or as part of `update-spec` to add a visual to an existing spec
-- The flowchart is an artifact of Phase 1 (Design); does not generate code
+- Optional helper when the user explicitly wants a diagram
+- Implementable state behavior usually belongs in a state/transition CSV created by `write-spec`

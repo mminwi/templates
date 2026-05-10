@@ -1,5 +1,5 @@
 ---
-description: Write a new spec for a feature, event, route, or subsystem. JSON by default, Markdown on request. Replaces /spec-page and /spec-event from earlier Hodos versions.
+description: Create or revise structured product specification artifacts — CSV canvases, page mock-ups, interaction matrices, state tables, generated JSON, and concise review summaries
 ---
 
 # /write-spec
@@ -8,144 +8,126 @@ description: Write a new spec for a feature, event, route, or subsystem. JSON by
 
 Invoke when:
 
-- A feature, route, event handler, or subsystem needs a spec and none exists yet
-- An existing spec is so stale (>30%) that `/update-spec` recommended a full rewrite
-- The user says *"spec out X," "document how X works," "write the spec for Y," "we need a spec for this"*
+- A brainstormed direction needs to become product/spec artifacts
+- A page, database, workflow, behavior, or state model is changing
+- Existing code needs to be reverse-engineered into spec canvases
+- The user says *"update the spec," "spec this out," "document the page," "make the mock-up," "make the CSVs"*
 
 Do **not** use when:
 
-- The spec already exists and only needs a targeted edit — that's `/update-spec`
-- You just want to find where specs are stale — that's `/spec-drift-check`
-- The work is too big to spec as one unit — run `/decompose` first
+- The work is a tiny code edit with no behavior/product impact
+- The user only wants drift assessment with no edits — use `/spec-drift-check`
+- The request is pure troubleshooting — use `/debug`
 
-## Core discipline — software-defining content only
+## Core discipline — structured artifacts first
 
-The spec describes **how the software is built**: schema, routes, runtime behavior, data shapes, API contracts, configuration the runtime depends on. Apply the test from `specs/README.md`:
+In Hodos, "the spec" means the structured product specification artifacts, not a large prose document.
 
-> *If this content disappeared, would the code break?*
-> Yes → goes in this spec.
-> No → goes in `vision/` instead, or doesn't get written down at all.
+Primary artifacts:
 
-Common contamination to avoid: the user explained *why* a feature exists or *who* it's for while specifying *how* it should work. Capture the *how* here. The *why* and *who* go in `vision/`. See CLAUDE.md `Specs describe how the software is built. Vision describes why it exists.`
+- `specs/database/{table}.csv`
+- `specs/pages/{page}/interaction-matrix.csv`
+- `specs/pages/{page}/mock-up.html`
+- `specs/pages/{page}/state-transitions.csv` when state behavior matters
+- Generated JSON views when useful for AI/code processing
+- Concise Markdown summaries only when useful for review
 
-## Format
+Vision remains separate. Use `vision/` only when purpose, audience, rejected ideas, potential directions, or business direction changes.
 
-- **JSON is the default** — schema-heavy specs, route maps, plan matrices, anything where structure matters and contradictions across files need to be catchable.
-- **Markdown on request** — when the user wants to read and comment, render the spec as MD. Edits or comments come back; sync to JSON.
+## Spec canvas rules
 
-Validate JSON specs after writing:
+- Use one CSV per database table by default.
+- Group related tables as a logical data structure in surrounding notes or indexes, not one giant CSV.
+- Page interaction matrices reference table CSVs instead of duplicating the whole database.
+- Keep CSV rows/columns filled enough to remain structurally readable.
+- Do not over-specify rigid CSV schemas up front; generate useful tables, let the user edit them, then interpret the edited tables.
+- Keep mock-ups low fidelity. They are visual spec canvases, not production UI.
+- Prefer state/transition CSVs over Mermaid flowcharts for behavior that must be implemented.
 
-```bash
-node -e "JSON.parse(require('fs').readFileSync('specs/<file>.json','utf8')); console.log('ok')"
-```
+## Spec revision convention
 
-## What you must produce
+Use stable current paths plus Git history and local changelogs.
 
-A new spec file at `specs/<feature-or-subsystem>.json` (or `.md` if the user asked for Markdown). Structure:
+- Keep the current artifact at its stable path.
+- Use Git for exact file history.
+- Record meaningful conceptual changes in a nearby `CHANGELOG.md`.
+- Only create full versioned alternatives when comparing major options or preserving a major baseline.
 
-### JSON template
+Examples:
 
-```json
-{
-  "meta": {
-    "name": "<spec name>",
-    "version": "1.0",
-    "generated": "YYYY-MM-DD",
-    "description": "One paragraph describing what this spec covers and what part of the program it defines."
-  },
-  "<top-level-section>": {
-    "description": "What this section defines.",
-    "<subkey>": "..."
-  },
-  "<another-section>": {
-    "..."
-  }
-}
-```
-
-Top-level sections depend on what's being specced. Common patterns:
-
-- **Feature spec:** `meta`, `dataModel`, `behavior`, `apiSurface`, `constraints`, `errorHandling`
-- **Event handler spec:** `meta`, `trigger`, `flow`, `sideEffects`, `constraints`, `errorHandling`
-- **Route spec:** `meta`, `routes` (with method, path, request, response per route), `auth`, `errors`
-- **Subsystem spec:** `meta`, `responsibilities`, `interfaces`, `dependencies`, `data`, `runtime`
-
-Use the structure that fits the thing being specced. Don't force a feature spec into an event-handler shape.
-
-### Markdown template
-
-```markdown
-# <Spec Name>
-
-**Version:** 1.0
-**Generated:** YYYY-MM-DD
-
-## What this covers
-
-One paragraph.
-
-## <Section>
-
-Body.
-
-## <Section>
-
-Body.
+```text
+specs/pages/contacts/mock-up.html
+specs/pages/contacts/interaction-matrix.csv
+specs/pages/contacts/CHANGELOG.md
+specs/database/contacts.csv
+specs/database/CHANGELOG.md
 ```
 
 ## Process
 
-### Step 1 — Confirm the scope
+### Step 1 — Read context
 
-Restate what you understood the spec needs to cover, in one or two sentences. Get user confirmation before writing.
+Read:
 
-### Step 2 — Identify the spec's place in the project
+- `CLAUDE.md`
+- `hodos.md`
+- Relevant `specs/`
+- Relevant `vision/` if product direction is involved
+- Existing code when reverse-engineering or validating current behavior
+- Relevant notebook entry if one exists
 
-- Where does this file go in `specs/`?
-- Are there existing specs it cross-references? (Read them.)
-- Is anything in scope that already lives in another spec? (Don't duplicate; cross-reference.)
+### Step 2 — Decide artifact set
 
-### Step 3 — Draft the spec in sections
+Identify which artifacts must be created or updated:
 
-Write top-level section by section, presenting each for user approval before moving on. Long specs are easier to validate this way.
+- Database table CSVs
+- Page mock-ups
+- Interaction matrices
+- State/transition tables
+- Generated JSON views
+- Markdown review summaries
+- Vision files
 
-For each section:
+Do not produce artifacts that are not useful for the change.
 
-- Describe the structure and behavior in concrete terms
-- Use code-shaped examples when the spec describes data shapes (table columns, JSON payloads, function signatures)
-- Cross-reference other specs by file path (`See PNT Web Application Architecture.json apiDesign for…`)
+### Step 3 — Generate or update canvases
 
-### Step 4 — Validate and finalize
+For new work, generate the simplest useful canvas from the brainstorm direction.
 
-- For JSON specs: validate parsing.
-- For MD specs: skim once for internal consistency.
-- Check the cross-spec consistency — does this spec contradict anything in another spec? If yes, surface it before saving.
+For existing projects, inspect the code and reverse-engineer current behavior into canvases so the user can review without reading source.
 
-### Step 5 — Commit and hand off
+### Step 4 — Semantic review
 
-Save the spec file. Note in the commit message what's new. Hand off to `/write-plan` (for implementation work) or `/critic-review` (if the design wants a separate-context audit before implementation).
+Check that the canvases preserve meaning:
 
-## Rules
+- CSVs and mock-ups agree
+- Interaction matrices reference the right data
+- State transitions cover the behavior
+- Generated JSON/Markdown views do not add meaning not present in the canvases
+- Vision content has not leaked into specs
 
-1. **Software-defining content only.** No marketing, no audience definitions, no purpose explanations. Those go in `vision/`.
-2. **Concrete over abstract.** A spec that says "the system handles authentication" is useless. The spec must describe *which routes*, *what tokens*, *what flows*, *what storage*.
-3. **Cross-reference, don't duplicate.** If another spec already defines something, point to it.
-4. **Section-by-section approval for Big specs.** Don't dump 1,000 lines for the user to review at once.
-5. **Don't promote reasoning to rules.** When the user explains *why* during the spec conversation, the reasoning is context, not text for the spec. See CLAUDE.md.
-6. **JSON unless asked otherwise.** The default is the validatable format.
+If user edits a CSV/mock-up, treat the edited artifact as the human intent source and resync generated views.
 
-## Difference from sibling skills
+### Step 5 — Update notebook
 
-| Skill | Purpose | Output |
-|---|---|---|
-| `/write-spec` | **Create** a new spec (or full rewrite after massive drift) | New spec file in `specs/` |
-| `/update-spec` | **Targeted edit** of an existing spec | Diff proposals, structure preserved |
-| `/spec-drift-check` | **Scan** for spec/code divergence | Report only, no edits |
+For Tier 2/3 work, update the notebook with:
 
-## What you do NOT do in this skill
+- What spec artifacts changed
+- Notable decisions
+- Non-obvious context
+- Links to artifacts
 
-- Do not write code (that's `/execute-plan` / build-phase skills)
-- Do not write tests (that's `/backfill-tests` for current behavior, or part of build for new code)
-- Do not write a plan (that's `/write-plan`)
-- Do not include vision content (purpose, audience, market positioning) — those go in `vision/`
-- Do not enumerate things that live in code as the source of truth — point at the source instead
+Do not paste the full spec into the notebook.
+
+### Step 6 — Handoff
+
+When the spec canvases are aligned enough to implement, hand off to `/write-plan`.
+
+## What you do NOT do
+
+- Do not write implementation code.
+- Do not write the implementation plan.
+- Do not turn specs into large prose documents.
+- Do not duplicate database detail into page matrices.
+- Do not use flowcharts as the main behavioral artifact.
+- Do not bury vision in specs.

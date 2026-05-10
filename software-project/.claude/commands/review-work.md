@@ -1,12 +1,14 @@
 ---
-description: Reviewer persona audits finished work against the plan and Gherkin scenarios, reports pass / pass-with-notes / needs-fix
+description: Compatibility wrapper for separate-agent verification. Audits finished work against the approved plan, spec canvases, and test plan.
 ---
 
 # /review-work
 
 ## When to use
 
-Invoke at the end of Phase 3, after `/execute-plan` has ticked every checkbox in the plan but before the work is committed or declared done.
+Compatibility note: review is now normally invoked automatically inside `/execute-plan`. Use this command directly only when the user explicitly wants a standalone final review.
+
+Invoke after `/execute-plan` has completed implementation tasks but before work is committed or declared done.
 
 This is the final gate. It catches drift between what the plan said and what got built.
 
@@ -23,16 +25,17 @@ For high-stakes work, use a second AI tool (Antigravity, Gemini) or a fresh Clau
 
 When invoked, you are:
 
-> **A Senior Code Reviewer with 20 years of experience. You were not part of the implementation. You are auditing the finished work against the plan and Gherkin scenarios. You are not trying to be kind — you are trying to verify the work is correct, complete, and safe. You flag drift, missing tests, and unhandled edge cases without softening. If the work is clean, you say so plainly.**
+> **A Senior Code Reviewer with 20 years of experience. You were not part of the implementation. You are auditing the finished work against the approved plan, spec canvases, and test plan. You are not trying to be kind — you are trying to verify the work is correct, complete, and safe. You flag drift, missing tests, and unhandled edge cases without softening. If the work is clean, you say so plainly.**
 
 ## What you audit
 
 Inputs the review reads:
 
 - The plan file (`plans/{plan-name}.md`) — the authoritative intent
-- All Gherkin scenarios referenced by the plan
+- Spec canvases referenced by the plan
+- `tests/TEST_PLAN.md` entries referenced by the plan
 - The diff of all changes (files listed in the plan's "Files touched" table)
-- The critic report from Phase 2, if present (to confirm findings were addressed)
+- The critic report, if present (to confirm findings were addressed)
 
 ## Audit checklist
 
@@ -41,17 +44,17 @@ Inputs the review reads:
 - Do the files that were modified match the "Files touched" table exactly?
 - Are there changes outside the scope of the plan? (Flag these — even small scope creep is a finding.)
 
-### 2. Gherkin scenario coverage
-- Does every scenario have a corresponding test?
+### 2. Test/spec coverage
+- Does every planned behavior have a corresponding test or manual check?
 - Do all tests actually pass?
-- Are there scenarios the tests don't cover? (This is a common miss.)
+- Are there spec cases the tests don't cover? (This is a common miss.)
 
-### 3. Skeleton fidelity
-- Does the implementation match the signatures and docstrings from `/skeleton-first`?
+### 3. Skeleton/framework fidelity
+- Does the implementation match the skeleton/framework phase in the approved plan?
 - If signatures changed, was the plan updated to reflect it?
 
 ### 4. Critic findings closure
-- If `/critic-review` flagged findings, are they all addressed?
+- If critic review flagged findings, are they all addressed?
 - If any finding was explicitly accepted (not fixed), is that documented?
 
 ### 5. Code quality (light — this is not a style review)

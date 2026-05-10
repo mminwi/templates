@@ -1,11 +1,11 @@
 ---
 name: verification-before-completion
-description: "Use this BEFORE claiming any work is done, fixed, implemented, or complete. Auto-fires whenever the AI is about to say 'done' / 'fixed' / 'all set' / 'should work now'. Enumerates verification claims, runs concrete checks (curl, DB query, test, manual UI), produces a pass/fail report. 'Compiles' is not 'verified.'"
+description: "Compatibility/standalone verification pass. Normally folded into execute-plan. Use before any done/fixed/complete claim, especially for small work without a plan."
 ---
 
 # verification-before-completion
 
-The gate before any "done" claim. Enumerate the specific behaviors the change is supposed to produce, verify each one with a concrete method, report pass/fail. **"Compiles" is not "verified."**
+The gate before any "done" claim. For planned work, this is inside `execute-plan`; for small unplanned work, use this standalone.
 
 ## When this skill fires
 
@@ -57,6 +57,6 @@ Complete behavior contract — verification report template, anti-patterns, when
 
 ## Related skills
 
-- Auto-fires after `execute-plan` (Phase 3 → Phase 4 transition)
-- Often invoked before `review-work` — verify behavior first, then audit the diff
+- Included inside `execute-plan` for planned work
+- Can be used standalone for Tier 0/1 work
 - For new tests, hands off to `backfill-tests` if a nontrivial test is needed

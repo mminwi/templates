@@ -30,9 +30,38 @@ The most common contamination: the user explains *why* a feature exists while sp
 
 ---
 
-## Two kinds of spec documents
+## Primary spec canvases
 
-`specs/` holds two complementary categories of document. Both are part of the spec.
+For Hodos workflow, the primary human-reviewable spec surface is structured canvases:
+
+```text
+specs/database/{table}.csv
+specs/pages/{page}/mock-up.html
+specs/pages/{page}/interaction-matrix.csv
+specs/pages/{page}/state-transitions.csv
+```
+
+Use one CSV per database table by default. Related tables can be treated as a domain/data structure, but avoid one giant database CSV.
+
+Page interaction matrices should reference relevant table CSVs instead of duplicating the whole database.
+
+Mock-ups are low-fidelity HTML visual canvases. They are part of the spec, not disposable sketches.
+
+State/transition CSVs replace flowcharts as the usual behavior artifact when state behavior matters.
+
+Generated JSON and Markdown views may be useful, but they are secondary:
+
+```text
+CSV/mock-up/table canvases = human intent
+JSON = normalized AI/code view
+Markdown = review/report view
+```
+
+If a user edits a CSV or mock-up, treat that edit as the current human intent and resync generated views.
+
+## Supporting spec documents
+
+`specs/` may also hold complementary JSON contracts and Markdown inventories.
 
 1. **JSON specs (`*.json`) — contracts.** What the platform *must* do. Behavioral rules, architectural invariants, runtime contracts (e.g., "the audit log is append-only," "no dialogue retention," "instruction layers are additive"). These change when intent changes, not when implementation drifts. They are the stable, opinionated documents.
 
@@ -52,20 +81,23 @@ The most common contamination: the user explains *why* a feature exists while sp
 
    Inventories are denormalizable from the codebase. They exist so future-you and future-Claude don't have to re-grep the project to answer "what does this app actually contain?" Maintain them as you change code; treat them as part of the same edit.
 
-**Together, the JSON contracts + the markdown inventories are the regeneration source.** Either alone is incomplete. JSON specs say what the platform must do; markdown inventories say what shape the current implementation takes.
+**Together, the canvases + generated views + inventories are the regeneration source.** CSV/mock-up/table canvases are the primary review surface; JSON contracts and Markdown inventories support implementation and auditing.
 
 ### Precedence on conflict
 
-If a JSON spec and a markdown inventory disagree, **the JSON spec wins** for behavioral facts; update the inventory to match.
+If a CSV/mock-up/table canvas and a generated JSON/Markdown view disagree, **the canvas wins**; regenerate or update the generated view.
+If a JSON spec and a markdown inventory disagree, **the JSON spec wins** for behavioral facts unless a canvas says otherwise; update the stale artifact to match.
 If the codebase and a markdown inventory disagree, **the codebase wins** (the inventory is a snapshot — regenerate it).
-If the codebase and a JSON spec disagree, **the JSON spec wins** unless intent has changed — in which case update the spec first as part of the same change.
+If the codebase and a spec canvas/JSON contract disagree, **the spec wins** unless intent has changed — in which case update the spec first as part of the same change.
 
 ---
 
 ## File format
 
-- **JSON** is the default for the contract specs (database invariants, route conventions, runtime rules, plan matrices). Structure is enforced; contradictions across files are easier to spot.
-- **Markdown** is the format for the eight bundled inventories listed above and for any prose-heavy spec (runtime behavior described in narrative form, complex flows that benefit from narrative context).
+- **CSV** is the default human-editable format for database tables, interaction matrices, and state/transition tables.
+- **HTML** is the default low-fidelity page mock-up format.
+- **JSON** is the normalized AI/code view when structure matters and contradictions across files need to be catchable.
+- **Markdown** is the format for inventories, summaries, and review reports.
 - **When you want to review and comment**, ask the AI to render a JSON spec as Markdown. Edit or comment on the MD; the AI re-syncs to JSON.
 
 Validate JSON specs after every edit:
@@ -80,11 +112,12 @@ node -e "JSON.parse(require('fs').readFileSync('specs/<file>.json','utf8')); con
 
 When a design conversation produces a new direction:
 
-1. **Decide the tier** (Small / Medium / Big — see CLAUDE.md Working Discipline).
-2. **For Medium and Big changes:** update the relevant spec *first*. Code follows. The spec is the contract; if the spec is wrong, the code that follows it is wrong.
-3. **For Small changes** (typos, prose tweaks, single-file bugfixes): skip spec-first. Just code.
-4. **Validate JSON if you touched a JSON spec.**
-5. **Then implement.**
+1. **Classify the tier** — see CLAUDE.md Working Discipline.
+2. **For Tier 2/3 changes:** update the relevant CSVs/mock-ups/interaction matrices/state tables first.
+3. **For Tier 1 changes:** update spec/test only if behavior changes.
+4. **For Tier 0 changes:** skip spec-first.
+5. **Validate JSON if you touched generated or contract JSON.**
+6. **Then plan and implement.**
 
 Spec edits are not paperwork after the fact. They are the work for any change that's bigger than a typo.
 

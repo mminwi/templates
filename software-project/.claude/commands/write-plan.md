@@ -1,18 +1,32 @@
 ---
-description: Produce a numbered checkbox plan file for non-trivial work — 2-5 minute tasks, file paths, done criteria, resumable across sessions
+description: Produce a checkbox implementation plan from aligned spec canvases; includes notebook link, test plan updates, skeleton phase when substantial, and automatic critic loop
 ---
 
 # /write-plan
 
 ## When to use
 
-Invoke after the design artifacts exist (decomposition, page specs, event specs, flowcharts, Gherkin) and before any code is written. The plan is the final Phase 1 artifact — it's what gets handed to `/critic-review` in Phase 2, and what `/execute-plan` follows in Phase 3.
+Invoke after the relevant spec canvases are aligned and before implementation begins.
 
-Also invoke for smaller tasks where the design artifacts are unnecessary but a plan is still warranted (bug fixes that touch multiple files, refactors, spec updates).
+Use for:
+
+- Tier 2 and Tier 3 implementation work
+- Any change touching several files
+- Any multi-agent or sequenced-agent work
+- Refactors/debug fixes substantial enough to need execution state
+- Any work where the user asks for a plan
+
+Do not use for tiny edits or small single-file fixes unless the user explicitly wants a plan.
 
 ## What you must produce
 
-A plan file at `plans/{YYYY-MM-DD}-{short-task-name}.md`. Use today's date and a short hyphenated name derived from the task (e.g., `2026-04-24-verified-customer-tag.md`).
+Produce or update all three:
+
+- Plan file: `plans/{YYYY-MM-DD}-{short-task-name}.md`
+- Notebook entry: `notebook/{YYYY-MM-DD}-{short-topic}.md`
+- Test plan: `tests/TEST_PLAN.md`
+
+The notebook gets an overview, not the full plan text.
 
 ## File template
 
@@ -23,10 +37,10 @@ A plan file at `plans/{YYYY-MM-DD}-{short-task-name}.md`. Use today's date and a
 **Author:** Claude + {user name}
 **Status:** Draft / Approved / In progress / Complete / Superseded
 **Related artifacts:**
-- Decomposition: {link, if exists}
-- Page specs: {links}
-- Event specs: {links}
-- Gherkin: {links}
+- Specs/canvases: {links}
+- Notebook: {link}
+- Test plan: `tests/TEST_PLAN.md`
+- Critic report: {link if produced}
 
 ---
 
@@ -57,6 +71,20 @@ Every file this plan reads, creates, modifies, or deletes. No surprises later.
 
 ---
 
+## Execution model
+
+| Slice/Phase | Owner | Execution Mode | Writable Files | Interfaces |
+|---|---|---|---|---|
+| Phase A | Composer / agent name | parallel / series | `path` | `interface` |
+
+Rules:
+
+- No two agents modify the same file in parallel.
+- Shared-file slices may be decomposed but must run in series.
+- Composer owns integration and small glue changes.
+
+---
+
 ## Tasks
 
 Numbered checkboxes. Each task is 2-5 minutes of focused work. No task should be so vague that "did I do it?" is unclear. No task should be so big it needs sub-tasks — split it.
@@ -73,29 +101,42 @@ Numbered checkboxes. Each task is 2-5 minutes of focused work. No task should be
 
 - [ ] **3. ...**
 
-Group tasks by logical phase if the plan is long:
+Group tasks by logical phase. For substantial work, include skeleton/framework and skeleton review phases:
 
 ### Phase A — Preparation
 - [ ] 1. ...
 - [ ] 2. ...
 
-### Phase B — Implementation
+### Phase B — Skeleton / Framework
+- [ ] 3. Create file/module/page structure
+  - File: ...
+  - Done when: structure, signatures, contracts, and placeholders exist without full logic
+- [ ] 4. Review skeleton shape against specs
+  - Done when: separate reviewer/composer confirms the structure matches the spec canvases
+
+### Phase C — Implementation
 - [ ] 3. ...
 - [ ] 4. ...
 
-### Phase C — Verification
-- [ ] 5. Run tests: `{command}`
-  - Done when: all tests pass including the new Gherkin scenarios
-- [ ] 6. Invoke `/review-work` on the diff
-  - Done when: reviewer returns pass or pass-with-notes
+### Phase D — Tests / Verification
+- [ ] 5. Update `tests/TEST_PLAN.md`
+  - Done when: new checks, regression checks, manual checks, and known gaps are recorded
+- [ ] 6. Add or update tests
+  - Done when: tests exist at the named paths
+- [ ] 7. Run tests/manual checks
+  - Done when: results are recorded
+- [ ] 8. Separate-agent reviewer checks completion
+  - Done when: reviewer verifies the plan was executed or gaps are fixed/escalated
+- [ ] 9. Update notebook result/conclusion
+  - Done when: result, surprises, and follow-up are recorded
 
 ---
 
 ## Acceptance criteria
 
-How the user confirms the plan is complete. Usually the Gherkin scenarios from Phase 1, plus any manual checks.
+How completion is verified against specs/canvases and tests.
 
-- All Gherkin scenarios in [spec/events/{event}.md](...) pass
+- Relevant CSVs/mock-ups/interaction matrices are implemented
 - Manual check: {specific user-observable behavior}
 - No regressions in {related tests}
 
@@ -115,6 +156,45 @@ Things that could cause this plan to change mid-execution. Flag them up front so
 Any context that will help future-you or the next AI session understand this plan. Commit hashes, related issues, decisions made during design, etc.
 ```
 
+## Automatic critic loop
+
+Critic review belongs inside `write-plan`. The user should not need to request it separately.
+
+Run critic review automatically for most non-trivial work:
+
+```text
+write-plan
+  → critic-review
+  → revise plan/specs if needed
+  → critic-review again if substantive changes were made
+  → repeat at most two critic/revision attempts
+  → ask user only if still blocked, conflicted, or after two unresolved iterations
+```
+
+If escalating to the user, provide:
+
+```text
+Issue:
+What we tried:
+Why it is still unresolved:
+Options:
+Recommendation:
+Consequence of recommendation:
+```
+
+## Test plan format
+
+Maintain `tests/TEST_PLAN.md` with:
+
+- Purpose
+- How to run the test suite
+- Current regression suite
+- Current change additions
+- Manual verification checks
+- Known gaps
+
+Tests are cumulative. Do not remove regression checks just because the current plan is complete.
+
 ## Rules
 
 1. **Tasks must be 2-5 minutes.** If a task reads as "implement X feature" and you'd struggle to say what "done" means after 5 minutes, it's too big. Split it. A plan with 30 small tasks is better than a plan with 5 big ones — the small plan is resumable, the big one is not.
@@ -132,17 +212,22 @@ Any context that will help future-you or the next AI session understand this pla
 
 5. **Never delete an old plan.** Even abandoned plans are decision history. Mark them `Superseded` and explain why.
 
-6. **Commit the plan.** The plan file goes into git with the work it describes. Plans are documentation.
+6. **Planning engages notebook and test plan.** If work needs a plan, it also needs notebook context and test-plan coverage.
+
+7. **Skeleton is part of the plan.** Do not make skeleton/framework-first a separate user-called workflow. Include it as a phase when work is substantial.
+
+8. **One strong recommendation.** If there is one best path, recommend it. Do not pad with weak options.
 
 ## Output handoff
 
 After the plan is written:
 
 1. Set status to `Draft`
-2. Present to user for review
-3. On user approval, change status to `Approved`
-4. User invokes `/critic-review` (Phase 2) before execution begins
-5. Only after critic review passes do you proceed to `/skeleton-first` / `/execute-plan` (Phase 3)
+2. Ensure notebook and test plan were created/updated
+3. Run automatic critic loop if required
+4. Present the approved/revised plan summary and recommendation
+5. On user approval, change status to `Approved`
+6. Hand off to `/execute-plan`
 
 ## What you do NOT do in this skill
 

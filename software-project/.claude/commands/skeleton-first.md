@@ -6,6 +6,8 @@ description: Write the structure of the code first — module shape, class/funct
 
 > **Terminology note:** In mechanical-engineering parlance, the user calls this the **framework** — the structural backbone before detail features are added. "Skeleton" and "framework" are interchangeable here. When the user says "do the framework first," "write the framework," or "frame it up," invoke this skill. When speaking back to the user, prefer "framework" over "skeleton" in explanations.
 
+Compatibility note: skeleton/framework-first is now normally a phase inside `/write-plan`. Use this command directly only when the user explicitly asks for a standalone skeleton pass.
+
 ## When to use
 
 Invoke at the start of Phase 3, after the design artifacts are approved, the critic has passed the plan, and it's time to write code — but before any implementation exists.

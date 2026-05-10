@@ -12,7 +12,7 @@ Invoke when:
 - You're about to refactor (`/refactor`) code that lacks characterization tests
 - A bug revealed a gap — the scenario that broke had no test
 
-Do **not** use to add tests to code you're actively changing in a Hodos run — that pipeline produces its own tests as part of Phase 1 (Gherkin) and Phase 3 (execute-plan).
+Do **not** use to add tests to code you're actively changing in a planned Hodos run — `write-plan` updates `tests/TEST_PLAN.md`, and `execute-plan` adds/runs the planned tests.
 
 ## The backfill discipline
 
@@ -42,9 +42,9 @@ Before writing any tests, read the code thoroughly. Understand:
 
 If the code is too tangled to understand in one read, that's a signal: backfill-tests may need to be preceded by a refactor. Report this to the user and stop.
 
-### Step 3 — Write Gherkin scenarios first
+### Step 3 — Write behavior scenarios first
 
-For each observable behavior, write a Gherkin scenario capturing what the code currently does.
+For each observable behavior, write a clear scenario capturing what the code currently does. Gherkin wording is allowed when useful, but no BDD framework is required.
 
 ```gherkin
 Feature: {function or class name}
