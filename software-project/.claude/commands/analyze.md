@@ -190,6 +190,16 @@ If the user only has 30 minutes, do this one thing: {specific item from above, w
 
 ---
 
+## Notebook entry
+
+Link: `notebook/{YYYY-MM-DD}-analyze-{subsystem}.md`
+
+Record findings that aren't documented elsewhere — patterns noticed, architectural concerns,
+context that would be lost if not written down. This is the persistent record of what was
+found during the analysis.
+
+---
+
 ## Recommended next actions
 
 1. {Most important — usually fix spec drift first, it's cheap}
@@ -227,7 +237,11 @@ Include these in the report under a **Test Plan Recommendations** section. Do no
 
 If the user approves, chain into updating `tests/TEST_PLAN.md` with the recommended additions.
 
-## Step 5 — Offer next actions
+## Step 5 — Update notebook
+
+Create or update a notebook entry at `notebook/{YYYY-MM-DD}-analyze-{subsystem}.md`. Record findings that aren't captured elsewhere — patterns noticed, architectural concerns, surprising discoveries, context that would be lost if not written down. Link to the audit report in `plans/`.
+
+## Step 6 — Offer next actions
 
 After presenting the report:
 

@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: "Use this when code works but needs restructuring (duplication, complexity, hard-to-read) WITHOUT changing behavior. Writes characterization tests FIRST to capture current behavior, then restructures, then proves the same tests still pass. NOT for adding behavior (that's a feature change). NOT for fixing bugs (that's systematic-debug)."
+description: "Use this when code works but needs restructuring (duplication, complexity, hard-to-read) WITHOUT changing behavior. Writes characterization tests FIRST to capture current behavior, then restructures, then proves the same tests still pass. NOT for adding behavior (that's a feature change). NOT for fixing bugs (that's troubleshoot)."
 ---
 
 # refactor
@@ -19,7 +19,7 @@ Auto-fires on:
 Do NOT use for:
 
 - Adding new behavior (that's feature work — go through brainstorm/spec/plan)
-- Fixing bugs (that's `systematic-debug`)
+- Fixing bugs (that's `troubleshoot`)
 - Adding tests to code that has none (run `analyze` first to assess coverage gaps)
 
 ## What this skill does

@@ -29,7 +29,7 @@ Do not use for:
 
 - Tiny safe edits
 - Fully specified single-file fixes
-- Troubleshooting/debugging where the problem is already "something is broken" — use `/debug`
+- Troubleshooting where the problem is already "something is broken" — use `/troubleshoot`
 - Refactors where behavior must stay the same — use `/refactor`
 
 ## Core discipline
@@ -50,7 +50,7 @@ Before asking detailed questions, classify the request:
 | Medium build | One coherent feature/page touching several files | `/write-spec` → `/write-plan` |
 | Big build | Multi-page, multi-module, schema, architecture, or multi-agent work | Full workflow with decomposition, composer guidance, critic, skeleton phase |
 | Existing project reverse engineering | User wants AI to understand current code | Inspect code → generate canvases/mock-ups → user reviews gaps |
-| Troubleshooting/debugging | Something is broken or unknown | `/debug` |
+| Troubleshooting | Something is broken or unknown | `/troubleshoot` |
 | Refactor/cleanup | Behavior should stay the same | `/refactor` |
 
 The user should not need to know the tier labels. State your classification briefly and proceed.

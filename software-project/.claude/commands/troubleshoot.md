@@ -1,18 +1,20 @@
 ---
-description: Systematic debugging — reproduce, pattern, hypothesize, fix. Forces a rethink after 3 failed attempts instead of letting the AI try random fixes
+description: Systematic troubleshooting — reproduce, pattern, hypothesize, fix. Forces a rethink after 3 failed attempts instead of letting the AI try random fixes. Documents everything in the notebook.
 ---
 
-# /debug
+# /troubleshoot
+
+> Formerly `/debug`. Same discipline, better name.
 
 ## When to use
 
 Invoke when something is broken and you need to fix it — a failing test, a user-reported bug, a wrong output, a crash.
 
-Do **not** use for feature work (that's full Hodos) or for performance issues that aren't bugs (that's `/profile`).
+Do **not** use for feature work (that's full Hodos) or for performance issues that aren't bugs.
 
-## The four-phase debug discipline
+## The four-phase troubleshooting discipline
 
-Debugging has a specific failure mode: AI (or a tired human) tries random fixes until something seems to work, then declares victory. The fix "works" because it masks the symptom, but the root cause is still there. Next week, the bug returns in a different form.
+Troubleshooting has a specific failure mode: AI (or a tired human) tries random fixes until something seems to work, then declares victory. The fix "works" because it masks the symptom, but the root cause is still there. Next week, the bug returns in a different form.
 
 This skill prevents that. Four phases, in order. You cannot skip phases. **You stop after 3 failed fix attempts and escalate to architectural review.**
 
@@ -61,6 +63,26 @@ Only after a hypothesis is supported by clear evidence.
 - **Write a regression test FIRST.** Commit the failing test. Then commit the fix. The failing-test commit proves you actually understand the bug; the passing-test commit proves you fixed it.
 - **Check for the bug's siblings.** If the pattern analysis found related code, fix those too (or document why they're safe).
 - **Update the relevant spec.** If the bug was caused by spec drift, fix the spec alongside the code.
+
+## Notebook — document everything
+
+Create or update a notebook entry at `notebook/{YYYY-MM-DD}-troubleshoot-{short-name}.md` for every non-trivial troubleshooting session. This is the engineering log.
+
+Record:
+
+- **What was observed** — the symptom, reproduction steps, environment
+- **What was tried** — each hypothesis, each fix attempt, what worked, what didn't
+- **What was learned** — root cause, pattern analysis findings, related code locations
+- **What was fixed** — the actual change, regression test added, specs updated
+- **What's still uncertain** — if the fix is a patch rather than a root cause fix, say so
+
+This matters because:
+
+- If the problem recurs in a week, the notebook shows exactly what was tried before
+- A future session doesn't have to re-investigate from scratch
+- Patterns across multiple troubleshooting entries reveal systemic issues
+
+Update the notebook at each phase — don't wait until the end. If the session gets interrupted or the 3-attempt rule fires, the notebook should already contain everything learned so far.
 
 ## The 3-attempt rule
 
@@ -161,6 +183,15 @@ Write to `plans/{YYYY-MM-DD}-bug-{short-name}.md`.
 - [ ] Attempt 3: {pending}
 
 **If 3 attempts all fail: STOP. Escalate.**
+
+---
+
+## Notebook entry
+
+Link: `notebook/{YYYY-MM-DD}-troubleshoot-{short-name}.md`
+
+Summary of what was observed, tried, learned, fixed, and what's still uncertain.
+This is the persistent record — if this bug comes back, start here.
 ```
 
 ## Rules

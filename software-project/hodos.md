@@ -39,7 +39,7 @@ Folded steps:
 
 | Say this                                                                  | Skill              | Slash               | Produces                                                                                           |
 | ------------------------------------------------------------------------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
-| *"Let's debug this," "why is X failing," "find the bug"*                  | `systematic-debug` | `/debug`            | Four-phase investigation (reproduce → pattern → hypothesize → fix). Stops after 3 failed attempts. |
+| *"Troubleshoot X," "why is X failing," "find the bug," "what's broken," "debug X"* | `troubleshoot` | `/troubleshoot` | Four-phase investigation (reproduce → pattern → hypothesize → fix). Documents in notebook. Stops after 3 failed attempts. |
 | *"Analyze X," "audit X," "how healthy is X," "check for spec drift," "is the spec accurate," "does X have enough tests"* | `analyze` | `/analyze` | Full health check: code hygiene, spec drift, test coverage + test plan recommendations, ops/security. Green/Yellow/Red grade. |
 | *"Refactor X," "clean up X without changing behavior," "restructure X"*   | `refactor`         | `/refactor`         | Characterization tests → refactor → same tests still pass                                          |
 
@@ -61,7 +61,7 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 
 | If the problem is...                               | Skill                                |
 | -------------------------------------------------- | ------------------------------------ |
-| Something is broken / wrong output / crash         | `systematic-debug`                   |
+| Something is broken / wrong output / crash         | `troubleshoot`                       |
 | Code works but is ugly / duplicated / hard to read | `refactor`                           |
 | Code works but has no tests                        | `analyze` (assesses coverage + recommends test plan updates) |
 | Code works but has significant debt                | `analyze` first, then triage |

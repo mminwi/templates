@@ -13,7 +13,7 @@ Use for:
 - Tier 2 and Tier 3 implementation work
 - Any change touching several files
 - Any multi-agent or sequenced-agent work
-- Refactors/debug fixes substantial enough to need execution state
+- Refactors/troubleshooting fixes substantial enough to need execution state
 - Any work where the user asks for a plan
 
 Do not use for tiny edits or small single-file fixes unless the user explicitly wants a plan.

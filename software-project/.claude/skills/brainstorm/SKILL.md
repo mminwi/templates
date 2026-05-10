@@ -48,4 +48,4 @@ Complete behavior contract in [`../../commands/brainstorm.md`](../../commands/br
 
 - Usually hands off to `write-spec`.
 - May hand off directly to `write-plan` if spec canvases are already current.
-- Maintenance work may route to `systematic-debug` or `refactor` instead.
+- Maintenance work may route to `troubleshoot` or `refactor` instead.

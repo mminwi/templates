@@ -23,11 +23,9 @@ brainstorm → write-spec → write-plan → execute-plan
 
 ## Maintenance skills
 
-- `debug.md`
-- `analyze.md` (includes spec drift and test coverage assessment)
+- `troubleshoot.md` (four-phase investigation with notebook documentation)
+- `analyze.md` (full health check with spec drift, test coverage, and notebook)
 - `refactor.md`
-
-Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet — the slash command name is `/debug` (kept short for typing/voicing).
 
 ## Removed from earlier Hodos versions
 
@@ -50,9 +48,8 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 | Plan files (Hodos) | `plans/{YYYY-MM-DD}-{task}.md` |
 | Notebook entries | `notebook/{YYYY-MM-DD}-{topic}.md` |
 | Test plan | `tests/TEST_PLAN.md` |
-| Bug investigations | `plans/{YYYY-MM-DD}-bug-{name}.md` |
-| Spec update proposals | `plans/{YYYY-MM-DD}-update-{spec-name}.md` |
-| Audit reports (includes spec drift + test coverage) | `plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
+| Troubleshooting investigations | `plans/{YYYY-MM-DD}-bug-{name}.md` + `notebook/{YYYY-MM-DD}-troubleshoot-{name}.md` |
+| Analysis reports (code + spec drift + test coverage) | `plans/{YYYY-MM-DD}-analyze-{subsystem}.md` + `notebook/{YYYY-MM-DD}-analyze-{subsystem}.md` |
 | Refactor plans | `plans/{YYYY-MM-DD}-refactor-{name}.md` |
 | Spec canvases | `specs/database/*.csv`, `specs/pages/{page}/interaction-matrix.csv`, `specs/pages/{page}/mock-up.html` |
 | Critic reports | `plans/{plan-name}-critic.md` when produced by the automatic plan loop |

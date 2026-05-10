@@ -17,7 +17,7 @@ Do **not** use when:
 
 - The work is a tiny code edit with no behavior/product impact
 - The user only wants drift assessment with no edits — use `/analyze` (includes spec drift)
-- The request is pure troubleshooting — use `/debug`
+- The request is pure troubleshooting — use `/troubleshoot`
 
 ## Core discipline — structured artifacts first
 
