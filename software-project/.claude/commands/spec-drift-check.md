@@ -8,12 +8,12 @@ description: Scan where code and spec have diverged. Report findings — do not 
 
 Invoke when:
 - A spec file has not been updated in a while and you suspect code has drifted
-- Before running `/update-spec` — to know what's actually out of sync
+- Before running `/write-spec` — to know what's actually out of sync
 - As part of a periodic health check (monthly, quarterly)
 - Before a significant change to a subsystem — confirm you're working from accurate assumptions
 - After a long vibe-coding session — verify the spec still describes reality
 
-Do **not** use to auto-fix drift. That's `/update-spec` (if the spec is wrong) or a Hodos run (if the code is wrong). `/spec-drift-check` reports only.
+Do **not** use to auto-fix drift. That's `/write-spec` (if the spec is wrong) or a Hodos run (if the code is wrong). `/spec-drift-check` reports only.
 
 ## What you must produce
 
@@ -96,7 +96,7 @@ One paragraph. Is the spec fundamentally accurate, partially drifted, or badly o
 #### D-1: {short name}
 - **Claim in spec:** "{exact quote or paraphrase, with section reference}"
 - **Reality in code:** {what the code actually says, with file:line}
-- **Suggested action:** Update spec via `/update-spec` — the code is the current truth.
+- **Suggested action:** Update spec via `/write-spec` — the code is the current truth.
 
 #### D-2: ...
 
@@ -163,19 +163,19 @@ List of spec claims explicitly verified and current. This matters — it tells t
 
 ---
 
-## Offer: apply spec-wrong fixes via `/update-spec`
+## Offer: apply spec-wrong fixes via `/write-spec`
 
-For the findings where the **spec is wrong and the code is the current truth** (the "Spec is wrong" section above), `/update-spec` can turn these findings into concrete edit proposals. Would you like to chain into `/update-spec` now to fix them?
+For the findings where the **spec is wrong and the code is the current truth** (the "Spec is wrong" section above), `/write-spec` can turn these findings into concrete edit proposals. Would you like to chain into `/write-spec` now to fix them?
 
-- Yes → invoke `/update-spec {spec-name}.md` with this drift report as input. It will produce diff proposals for each spec-wrong finding for your approval.
+- Yes → invoke `/write-spec {spec-name}.md` with this drift report as input. It will produce diff proposals for each spec-wrong finding for your approval.
 - No → the drift report stays as a standalone document for later reference.
 
-(Code-wrong and both-wrong findings are NOT candidates for `/update-spec` — those need a Hodos run or a user decision, respectively.)
+(Code-wrong and both-wrong findings are NOT candidates for `/write-spec` — those need a Hodos run or a user decision, respectively.)
 ```
 
 ## Rules
 
-1. **Report, don't repair.** This skill does not edit code or spec files. That's `/update-spec` or Hodos.
+1. **Report, don't repair.** This skill does not edit code or spec files. That's `/write-spec` or Hodos.
 2. **Be specific.** "The spec is out of date" is not a finding. "Spec section 3.2 says the BD schema lives at `BD/schema.sql`; actual location is `aims/web/bd/schema/migrations/`" is a finding.
 3. **Sort by severity.** Code-wrong findings are bugs. Spec-wrong findings are documentation work. Both wrong = user judgment required.
 4. **Note what's accurate.** An all-findings-and-no-confirmations report reads like the spec is 100% broken. Report the ✅ items too.
@@ -187,15 +187,15 @@ For the findings where the **spec is wrong and the code is the current truth** (
 After the drift report is produced:
 
 1. Present the report to the user.
-2. **Offer to chain to `/update-spec`** for the "Spec is wrong" findings — these are the cheap wins. If the user approves, invoke `/update-spec` with the drift report as input; it will produce diff proposals for each.
+2. **Offer to chain to `/write-spec`** for the "Spec is wrong" findings — these are the cheap wins. If the user approves, invoke `/write-spec` with the drift report as input; it will produce diff proposals for each.
 3. "Code is wrong" findings are flagged for a separate Hodos run (they require actual code changes).
 4. "Both wrong or ambiguous" findings stay open until the user makes a decision.
 5. The drift report is saved at `plans/` regardless of whether the user chooses to act on it — it's a decision log.
 
 ## What you do NOT do in this skill
 
-- Do not edit the spec (but you can offer to chain into `/update-spec` which does)
+- Do not edit the spec (but you can offer to chain into `/write-spec` which does)
 - Do not edit the code
 - Do not invent findings to look thorough — confirmed-accurate is a valid outcome
 - Do not skip the silent-omissions scan (it's where the real drift hides)
-- Do not auto-run `/update-spec` — always offer and wait for user approval before chaining
+- Do not auto-run `/write-spec` — always offer and wait for user approval before chaining

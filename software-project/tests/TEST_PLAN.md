@@ -2,7 +2,7 @@
 
 This is the cumulative test plan for the project.
 
-It is maintained by `write-plan` and executed/updated by `execute-plan`. Tests should accumulate as regression coverage. Do not remove checks just because a specific implementation plan is complete.
+It is maintained by `write-plan` and executed/updated by `execute-plan`. The test suite is cumulative — it evolves with each plan. Review prior tests when adding new ones: update, consolidate, or replace tests that no longer make sense. Do not blindly pile on more tests, but do not remove regression coverage either. The test suite should verify the overall program purpose, not just individual plan tasks.
 
 ## Purpose
 

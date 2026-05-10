@@ -27,7 +27,7 @@ Auto-fires on:
   - **accurate** — spec and code agree (still worth listing — tells the user what they can trust)
   - **undocumented** — code does something the spec doesn't cover at all
 - Writes the report to `plans/{YYYY-MM-DD}-drift-{spec-name}.md`
-- Suggests next-step skills per finding (e.g., undocumented → `write-spec`; spec-wrong → `update-spec`)
+- Suggests next-step skills per finding (e.g., undocumented → `write-spec`; spec-wrong → `write-spec` targeted edit mode)
 
 ## Hard rule — no edits
 
@@ -39,5 +39,5 @@ Complete behavior contract — report template, finding categories, suggested ne
 
 ## Related skills
 
-- Usually invoked before `update-spec` (or `write-spec` for full rewrites) — assess first, edit second
+- Usually invoked before `write-spec` — assess first, edit second
 - Pairs with `audit-subsystem` (spec-drift-check is spec-focused; audit-subsystem is broader subsystem health)

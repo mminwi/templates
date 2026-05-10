@@ -24,7 +24,6 @@ brainstorm → write-spec → write-plan → execute-plan
 ## Maintenance skills
 
 - `debug.md`
-- `update-spec.md`
 - `spec-drift-check.md`
 - `audit-subsystem.md`
 - `refactor.md`

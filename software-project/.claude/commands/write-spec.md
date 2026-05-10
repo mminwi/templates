@@ -63,6 +63,86 @@ specs/database/contacts.csv
 specs/database/CHANGELOG.md
 ```
 
+## Bootstrap mode — new page, feature, or module
+
+When the work is **new** (not updating existing specs), bootstrap the full initial canvas set before doing anything else. This gives you and the user something concrete to review and edit immediately.
+
+### When bootstrap fires
+
+- *"New page,"* *"add a contacts page,"* *"spec out a new feature,"* *"scaffold specs for invoicing"*
+- Brainstorm output identifies a new page, entity, or module that has no spec canvases yet
+- The relevant `specs/` subdirectory does not exist or is empty
+
+### What bootstrap creates by type
+
+**New page:**
+
+```text
+specs/pages/{page}/mock-up.html          ← low-fidelity HTML layout
+specs/pages/{page}/interaction-matrix.csv ← columns: Element, Action, Result, Data Source, Notes
+specs/pages/{page}/state-transitions.csv  ← only if the page has modal/state behavior
+specs/pages/{page}/CHANGELOG.md          ← empty, ready for revision notes
+```
+
+**New database entity:**
+
+```text
+specs/database/{table}.csv               ← columns: Column, Type, Constraints, Default, Notes
+specs/database/CHANGELOG.md              ← update existing or create
+```
+
+**New workflow / service / background process:**
+
+```text
+specs/{feature}/state-transitions.csv    ← columns: Current State, Event, Next State, Side Effects, Notes
+specs/{feature}/CHANGELOG.md
+```
+
+If the new thing spans multiple types (e.g., a new page that also introduces a new table), create all relevant canvases.
+
+### Bootstrap rules
+
+- Generate the **simplest useful version** from the brainstorm direction or user description. Do not over-specify.
+- Mock-ups are low fidelity — plain HTML, no styling framework, no pixel polish.
+- CSV canvases should have real column headers and 3–5 representative rows so the user can see the shape and edit.
+- Interaction matrices should reference database CSVs by table name, not duplicate column definitions.
+- Do not create canvases that are not useful for the thing being specced (e.g., no state-transitions.csv for a static display page).
+- After creating the canvases, tell the user what was created and invite them to edit before proceeding.
+
+### After bootstrap
+
+The canvases are now the working surface. Continue with the normal write-spec process (review, semantic check, handoff to write-plan) or pause for user edits.
+
+---
+
+## Targeted edit mode — updating existing specs
+
+When the work is a **small, focused change** to an existing spec (a field changed, a route was renamed, a behavior was updated), use targeted edit mode instead of a full rewrite.
+
+### When targeted edit fires
+
+- *"Update the spec," "fix the spec for X," "the spec is wrong about Y," "I changed X, update the spec"*
+- A known small change needs to be reflected in existing canvases
+- Investigation reveals a spec is partially stale but mostly accurate
+
+### Targeted edit rules
+
+1. **Preserve structure and voice.** Keep the existing section order, heading style, formatting, and tone. If the spec uses tables, edits stay in tables.
+2. **Change only what's stale.** Accurate sections stay untouched.
+3. **Propose before applying.** Show the user the diff — before/after for each section needing a change. Let them approve, reject, or redirect.
+4. **Flag disagreements.** If the spec and code genuinely disagree and neither is obviously right, report the disagreement and let the user decide. Do not resolve it unilaterally.
+5. **Trim rot.** Replace hardcoded values that will naturally drift with pointers to the source of truth:
+   - Row counts, data volumes ("3,906 companies") — remove or convert to "approximate as of {date}"
+   - Exhaustive lists that live in code (all routes, all columns, all flags) — replace with a pointer to the source file. Example: "Routes: see `src/routes/` for the current list."
+   - A spec that enumerates things will always drift. A spec that points to the source of truth cannot.
+6. **Verify architectural claims.** Any edit that makes or modifies a sweeping claim ("single database," "three services," "monolithic app") must be verified by reading at least one file in the relevant code path. If you can't verify, say so: "Based on existing spec text (unverified)."
+
+### Scope threshold
+
+If more than ~30% of a spec needs changing, stop. That's a rewrite, not a patch. Tell the user and proceed with full write-spec mode instead.
+
+---
+
 ## Process
 
 ### Step 1 — Read context

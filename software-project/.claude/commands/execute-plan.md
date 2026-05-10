@@ -76,11 +76,13 @@ This is why plan files matter. They are not documentation — they are execution
 
 4. **Log, don't hide.** If a task took longer than expected, note it. If a task surprised you, note it. If the approach changed, update the plan AND note the change. The plan is a decision log — preserve the decisions.
 
-5. **Tests get written when the plan says.** If the plan says update tests or `tests/TEST_PLAN.md`, do it. Don't skip. Don't hope.
+5. **Tests are cumulative.** When the plan says to add or update tests, review the existing test suite first. Update, consolidate, or replace tests that no longer make sense — don't just pile on more. The test suite should evolve to comprehensively cover prior behavior and new behavior. It verifies the overall program purpose, not just the current plan's tasks.
 
-6. **Spec canvases and test plan are acceptance criteria.** CSVs, mock-ups, interaction matrices, state tables, and test plan entries must be satisfied. If they aren't, you're not done — even if all checkboxes are ticked.
+6. **Review happens at agent/composer boundaries.** When a composer closes (parallel agents finish), that group is reviewed together against the CSVs and mock-ups. When a series agent closes, its work is reviewed. The review question is: does this match what the spec canvases describe?
 
-7. **Notebook closes the loop.** Update the notebook with results, surprises, unresolved gaps, and follow-up before marking the plan complete.
+7. **Spec canvases and test plan are acceptance criteria.** CSVs, mock-ups, interaction matrices, state tables, and test plan entries must be satisfied. If they aren't, you're not done — even if all checkboxes are ticked.
+
+8. **Notebook closes the loop.** Update the notebook with results, surprises, unresolved gaps, and follow-up before marking the plan complete.
 
 ## Plan status transitions during execution
 

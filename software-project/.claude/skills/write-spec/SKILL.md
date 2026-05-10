@@ -12,17 +12,27 @@ Create or revise the structured spec canvases that define product behavior. Keep
 Auto-fires on:
 
 - *"Update the spec"*
+- *"Fix the spec for X"* / *"The spec is wrong about Y"*
 - *"Spec out X"*
 - *"Document the page"*
 - *"Make the CSVs"*
 - *"Make the mock-up"*
 - *"Reverse engineer this into specs"*
+- *"New page"* / *"Add a [page name] page"*
+- *"Scaffold specs for X"*
+- *"Bootstrap the spec canvases"*
 
 Or when a product/page/data/behavior change needs spec canvases before implementation.
 
+**Three modes:**
+- **Bootstrap** — target has no spec canvases yet. Creates the full initial artifact set.
+- **Targeted edit** — existing spec needs a small, focused update. Preserves structure/voice, proposes diffs before applying, trims rot, flags disagreements.
+- **Full create/rewrite** — new spec canvases or existing spec has drifted too far for surgical fixes.
+
 ## What this skill does
 
-- Reads current specs, relevant vision, and code when needed.
+- **Bootstraps** initial canvas sets for new pages, database entities, or workflows when none exist yet.
+- **Targeted edits** to existing specs — proposes diffs, preserves structure, trims hardcoded values that rot, flags spec-vs-code disagreements for user decision.
 - Creates or updates database CSVs, page mock-ups, interaction matrices, and state tables.
 - Generates JSON/Markdown views only when useful.
 - Reverse-engineers existing code into canvases when requested.

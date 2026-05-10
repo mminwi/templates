@@ -101,7 +101,11 @@ Numbered checkboxes. Each task is 2-5 minutes of focused work. No task should be
 
 - [ ] **3. ...**
 
-Group tasks by logical phase. For substantial work, include skeleton/framework and skeleton review phases:
+Group tasks by logical phase. For substantial work, include skeleton/framework and skeleton review phases.
+
+**Review happens at agent/composer boundaries, not at every task.** When a composer closes (parallel agents finish), that group is reviewed together against the CSVs and mock-ups. When a series agent closes, its work is reviewed. The review question is: does this match what the spec canvases describe?
+
+**Testing is cumulative.** The test suite evolves to comprehensively cover prior behavior AND new code. Review prior tests when adding new ones — update, consolidate, or replace tests that no longer make sense rather than just piling on more. The test suite should verify the overall program purpose, not just individual tasks.
 
 ### Phase A — Preparation
 - [ ] 1. ...
@@ -115,19 +119,21 @@ Group tasks by logical phase. For substantial work, include skeleton/framework a
   - Done when: separate reviewer/composer confirms the structure matches the spec canvases
 
 ### Phase C — Implementation
-- [ ] 3. ...
-- [ ] 4. ...
+- [ ] 5. ...
+- [ ] 6. ...
+- [ ] C-review. **Review at agent/composer boundary**
+  - Done when: reviewer confirms implementation matches CSVs/mock-ups/interaction matrices
 
 ### Phase D — Tests / Verification
-- [ ] 5. Update `tests/TEST_PLAN.md`
-  - Done when: new checks, regression checks, manual checks, and known gaps are recorded
-- [ ] 6. Add or update tests
-  - Done when: tests exist at the named paths
-- [ ] 7. Run tests/manual checks
-  - Done when: results are recorded
-- [ ] 8. Separate-agent reviewer checks completion
-  - Done when: reviewer verifies the plan was executed or gaps are fixed/escalated
-- [ ] 9. Update notebook result/conclusion
+- [ ] 7. Update `tests/TEST_PLAN.md`
+  - Done when: cumulative test coverage is reviewed and updated — new checks added, prior checks updated or consolidated, known gaps documented
+- [ ] 8. Add or update tests
+  - Done when: test suite comprehensively covers prior behavior and new behavior
+- [ ] 9. Run full test suite
+  - Done when: all tests pass; results are recorded
+- [ ] 10. Separate-agent reviewer checks full plan completion
+  - Done when: reviewer verifies the plan was executed, implementation matches spec canvases, and test suite is green
+- [ ] 11. Update notebook result/conclusion
   - Done when: result, surprises, and follow-up are recorded
 
 ---
@@ -193,7 +199,7 @@ Maintain `tests/TEST_PLAN.md` with:
 - Manual verification checks
 - Known gaps
 
-Tests are cumulative. Do not remove regression checks just because the current plan is complete.
+Tests are cumulative. Review and evolve the test suite with each plan — update, consolidate, or replace tests that no longer make sense. Do not remove regression coverage, but do not blindly pile on either. The test suite should verify the overall program purpose, not just individual plan tasks.
 
 ## Rules
 

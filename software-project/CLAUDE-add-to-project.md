@@ -89,7 +89,8 @@ Quick reference:
 |---|---|
 | Main workflow | `brainstorm` `write-spec` `write-plan` `execute-plan` |
 | Folded into main workflow | `decompose` in `brainstorm`; `critic-review` and `skeleton-first` in `write-plan`; `verify` and `review-work` in `execute-plan` |
-| Maintenance | `systematic-debug` `update-spec` `spec-drift-check` `audit-subsystem` `refactor` `backfill-tests` |
+| Folded into main workflow | `update-spec` in `write-spec` (targeted edit mode) |
+| Maintenance | `systematic-debug` `spec-drift-check` `audit-subsystem` `refactor` `backfill-tests` |
 
 ---
 

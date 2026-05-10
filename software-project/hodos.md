@@ -17,7 +17,7 @@ Speak naturally. You don't type slash commands — you describe intent and Claud
 | Say this | Skill | Slash | Produces |
 |---|---|---|---|
 | *"Let's brainstorm," "what could we do about X," "how should we handle Y," "break this up"* | `brainstorm` | `/brainstorm` | Intake classification, one strong recommendation, small-slice decomposition, composer guidance, notebook summary |
-| *"Update the spec," "spec out X," "make the CSVs," "make the mock-up," "reverse engineer this into specs"* | `write-spec` | `/write-spec` | CSV canvases, page mock-ups, interaction matrices, state/transition tables, generated views |
+| *"Update the spec," "spec out X," "make the CSVs," "make the mock-up," "new page," "scaffold specs for X," "reverse engineer this into specs"* | `write-spec` | `/write-spec` | CSV canvases, page mock-ups, interaction matrices, state/transition tables, generated views. **Bootstrap mode** creates the full initial canvas set for new pages/entities/modules. |
 | *"Write the plan," "let's plan this," "plan the implementation"* | `write-plan` | `/write-plan` | Checkbox plan, notebook link, `tests/TEST_PLAN.md` updates, skeleton phase if needed, automatic critic loop |
 | *"Execute the plan," "build it," "run the plan," "implement this"* | `execute-plan` | `/execute-plan` | Implementation, tests, notebook closeout, separate-agent verification before completion |
 
@@ -40,7 +40,6 @@ Folded steps:
 | Say this                                                                  | Skill              | Slash               | Produces                                                                                           |
 | ------------------------------------------------------------------------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
 | *"Let's debug this," "why is X failing," "find the bug"*                  | `systematic-debug` | `/debug`            | Four-phase investigation (reproduce → pattern → hypothesize → fix). Stops after 3 failed attempts. |
-| *"Targeted edit to old prose spec," "surgically patch this spec file"*    | `update-spec`      | `/update-spec`      | Legacy targeted spec-file edit proposals. Main spec canvas updates use `write-spec`.                 |
 | *"Check for spec drift," "is the spec still accurate," "scan the specs"*  | `spec-drift-check` | `/spec-drift-check` | Drift report — spec-wrong / code-wrong / both-wrong / accurate                                     |
 | *"Audit the X module," "how healthy is X," "check the health of X"*       | `audit-subsystem`  | `/audit-subsystem`  | Green/Yellow/Red report across categories                                                          |
 | *"Refactor X," "clean up X without changing behavior," "restructure X"*   | `refactor`         | `/refactor`         | Characterization tests → refactor → same tests still pass                                          |
@@ -57,7 +56,7 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 | If the intent is...                     | Skill                       |
 | --------------------------------------- | --------------------------- |
 | Create or revise CSVs/mock-ups/spec canvases | `write-spec`          |
-| Targeted edit of an older prose/JSON spec file | `update-spec`       |
+| Small targeted edit to an existing spec | `write-spec` (targeted edit mode) |
 | Report where specs are stale (no edits) | `spec-drift-check` (assess) |
 
 ### "Fix this" / bug vs refactor
@@ -166,6 +165,8 @@ The main Hodos workflow is those hard gates expressed as four SOPs: brainstorm, 
 **Goal:** capture intended product behavior in structured spec canvases before planning implementation.
 
 **Why it matters:** prose drifts. CSVs, mock-ups, interaction matrices, and state tables give the user a reviewable surface and give the AI a tighter contract.
+
+**Bootstrap mode:** when a new page, database entity, or module has no spec canvases yet, write-spec creates the full initial artifact set first — mock-up, interaction matrix, database CSV, state transitions if applicable — so there is something concrete to review and edit before proceeding.
 
 **Key artifacts:**
 
