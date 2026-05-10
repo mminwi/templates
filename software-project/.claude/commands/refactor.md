@@ -119,12 +119,23 @@ Write a plan file at `plans/{YYYY-MM-DD}-refactor-{name}.md`.
 
 ---
 
+## Notebook entry
+
+Link: `notebook/{YYYY-MM-DD}-refactor-{scope}.md`
+
+Record what was refactored, why, what characterization tests were added,
+any quirks or bugs found during characterization, and the before/after
+state. If quirks were filed as follow-up Hodos tasks, link them.
+
+---
+
 ## Acceptance criteria
 
 - All characterization tests pass after refactor
 - Full test suite still passes
 - No user-visible change, verified by separate-agent review
 - Code is measurably cleaner (specific metric: fewer lines / less duplication / better names / whatever applies)
+- Notebook updated
 ```
 
 ## Rules
