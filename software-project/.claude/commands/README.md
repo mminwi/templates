@@ -30,23 +30,17 @@ brainstorm → write-spec → write-plan → execute-plan
 - `refactor.md`
 - `backfill-tests.md`
 
-## Legacy / folded main-flow commands
-
-These remain as compatibility references but are no longer normal user-called steps in the main workflow:
-
-- `decompose.md` — folded into `brainstorm.md`
-- `flowchart.md` — replaced by state/transition CSVs except as optional diagram helper
-- `critic-review.md` — folded into `write-plan.md`
-- `skeleton-first.md` — folded into `write-plan.md` as a skeleton/framework phase
-- `verify.md` — folded into `execute-plan.md`
-- `review-work.md` — folded into `execute-plan.md` as separate-agent verification
-
 Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet — the slash command name is `/debug` (kept short for typing/voicing).
 
 ## Removed from earlier Hodos versions
 
 - `gherkin.md` — Gherkin vocabulary (Feature/Scenario/Given/When/Then/And/But) is preserved as a primer in [`hodos.md`](../../hodos.md), but is not enforced as a workflow skill. The CLAUDE.md fragment rejects BDD frameworks as runtime dependencies.
 - `spec-page.md`, `spec-event.md` — folded into the unified `write-spec.md` (the spec format adapts to the thing being specced).
+- `decompose.md` — folded into `brainstorm.md`.
+- `flowchart.md` — replaced by state/transition CSVs except when a one-off diagram is useful.
+- `critic-review.md` — folded into the automatic critic loop in `write-plan.md`.
+- `skeleton-first.md` — folded into `write-plan.md` as a skeleton/framework phase.
+- `verify.md`, `review-work.md` — folded into `execute-plan.md` as final verification and separate-agent review.
 - `upgrade-dependency.md` — one-off task that didn't earn a slot in the lean skill set; treat dependency upgrades as Medium-tier work that follows the normal Working Discipline.
 
 ## Where the artifacts these skills produce end up

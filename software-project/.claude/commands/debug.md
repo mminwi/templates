@@ -71,7 +71,7 @@ At this point:
 2. Consider that the bug might be architectural, not local. A 4th local attempt will not find an architectural cause.
 3. Propose one of:
    - A call with the user to walk through the code together
-   - A `/critic-review` of your debug file, in a fresh AI instance, to find what you've missed
+   - A fresh-context review of your debug file to find what you've missed
    - A wider investigation — is the assumption about how a whole subsystem works actually correct?
 
 This rule exists because "try random fixes until one works" is how bugs get papered over instead of fixed. Respect the rule.
