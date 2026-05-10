@@ -202,9 +202,11 @@ found during the analysis.
 
 ## Recommended next actions
 
-1. {Most important — usually fix spec drift first, it's cheap}
-2. {Update test plan with recommended additions}
-3. {Defer or flag for Hodos run}
+For each recommendation, name the skill and what to hand off:
+
+1. {Action} — via `/write-spec` (targeted edit) with findings {D-1, D-2}
+2. {Action} — update `tests/TEST_PLAN.md` with scenarios {list}
+3. {Action} — route through main workflow (brainstorm → plan → execute) for code-wrong findings
 
 ---
 
@@ -241,16 +243,33 @@ If the user approves, chain into updating `tests/TEST_PLAN.md` with the recommen
 
 Create or update a notebook entry at `notebook/{YYYY-MM-DD}-analyze-{subsystem}.md`. Record findings that aren't captured elsewhere — patterns noticed, architectural concerns, surprising discoveries, context that would be lost if not written down. Link to the audit report in `plans/`.
 
-## Step 6 — Offer next actions
+## Step 6 — Recommend next actions with concrete handoffs
 
-After presenting the report:
+After presenting the report, recommend specific next actions. Each recommendation must name the skill and what to pass to it — not just "fix the spec."
 
-- **Spec drift findings (spec is wrong):** offer to chain into `/write-spec` to fix the spec canvases.
-- **Test gaps:** offer to update `tests/TEST_PLAN.md` with recommended additions.
-- **Code-wrong findings:** flag for a separate Hodos run (these require actual code changes, not maintenance).
-- **Both-wrong / ambiguous:** leave open for user decision.
+**Spec drift (spec is wrong):**
+- Recommend: `/write-spec` in targeted edit mode
+- Hand off: the specific drift findings (which claims are wrong, what the code actually does, `spec-file:line` and `code-file:line`)
+- Write-spec uses that to propose diffs the user can approve
 
-The audit report is saved at `plans/` regardless of next actions — it's a decision log.
+**Spec drift (undocumented / silent omissions):**
+- Recommend: `/write-spec` in bootstrap or full create mode
+- Hand off: what the code does that has no spec coverage, which canvas type is needed (database CSV, interaction matrix, etc.)
+
+**Test gaps:**
+- Recommend: update `tests/TEST_PLAN.md` with the specific scenarios identified by Agent B
+- Hand off: the scenarios to add, which are highest priority, what existing entries need updating
+
+**Code-wrong findings (spec was intent, code drifted):**
+- Recommend: route through the main workflow — brainstorm → write-plan → execute-plan
+- Hand off: the specific findings showing what the spec says vs what the code does
+- These are bugs, not maintenance — they need the full discipline
+
+**Both-wrong / ambiguous:**
+- Recommend: escalate to user for a decision before any action
+- Present the disagreement clearly: what spec says, what code does, why neither is obviously right
+
+The analysis report is saved at `plans/` regardless of whether the user acts — it's a decision log.
 
 ## Rules
 
