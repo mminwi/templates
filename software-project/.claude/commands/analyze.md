@@ -205,7 +205,7 @@ found during the analysis.
 For each recommendation, name the skill and what to hand off:
 
 1. {Action} — via `/write-spec` (targeted edit) with findings {D-1, D-2}
-2. {Action} — update `tests/TEST_PLAN.md` with scenarios {list}
+2. {Action} — via `/write-plan` to create a test-addition plan with scenarios {list}, then `/execute-plan` to run it
 3. {Action} — route through main workflow (brainstorm → plan → execute) for code-wrong findings
 
 ---
@@ -257,8 +257,10 @@ After presenting the report, recommend specific next actions. Each recommendatio
 - Hand off: what the code does that has no spec coverage, which canvas type is needed (database CSV, interaction matrix, etc.)
 
 **Test gaps:**
-- Recommend: update `tests/TEST_PLAN.md` with the specific scenarios identified by Agent B
-- Hand off: the scenarios to add, which are highest priority, what existing entries need updating
+- Recommend: `/write-plan` to create a plan whose deliverable is updating `tests/TEST_PLAN.md` and adding the tests
+- Hand off: the specific test gap findings from Agent B — which scenarios are missing, which are highest priority, what existing test plan entries need updating
+- The plan may have no code changes — it may only add tests and update the test plan. That's fine. The plan is still the right vehicle because it gets a critic review, has checkboxes, and gets verified.
+- If the user also wants the tests executed, they can approve the plan and run `/execute-plan` — but analyze does not execute tests itself
 
 **Code-wrong findings (spec was intent, code drifted):**
 - Recommend: route through the main workflow — brainstorm → write-plan → execute-plan
