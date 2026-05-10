@@ -11,14 +11,19 @@ Full health check on one subsystem at a time. Produces a Green/Yellow/Red punch 
 
 Auto-fires on:
 
-- *"Analyze X"*
-- *"Audit X"*
-- *"How healthy is X"*
-- *"Check the health of X"*
-- *"Check for spec drift"*
-- *"Is the spec still accurate"*
-- *"Does X have enough test coverage"*
-- *"What tests exist for X"*
+- *"Analyze X"* / *"Audit X"*
+- *"How healthy is X"* / *"Check the health of X"*
+- *"What shape is X in?"* / *"How's the code in X?"*
+- *"Check for spec drift"* / *"Is the spec still accurate?"*
+- *"Does X have enough test coverage?"* / *"What tests exist for X?"*
+- *"Look at X before we change it"*
+- *"What are we working with in X?"*
+- *"Assess X"* / *"Review X"*
+- *"Give me the state of X"*
+- *"What's the quality of X?"*
+- *"Before we touch X, what's there?"*
+- *"Is X in good shape?"*
+- *"Check X"*
 
 ## What this skill does
 

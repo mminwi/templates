@@ -11,10 +11,14 @@ Restructure code without changing observable behavior. The discipline: character
 
 Auto-fires on:
 
-- *"Refactor X"*
-- *"Clean up X without changing behavior"*
-- *"Restructure X"*
-- *"This code is ugly, let's clean it up"*
+- *"Refactor X"* / *"Restructure X"*
+- *"Clean up X"* / *"Clean this up"*
+- *"This code is ugly"* / *"This is a mess"*
+- *"Simplify X"* / *"Make X more readable"*
+- *"There's too much duplication in X"*
+- *"Extract this into a function"* / *"Pull this out"*
+- *"Reorganize X"* / *"Tidy up X"*
+- *"This needs to be cleaned up before we touch it"*
 
 Do NOT use for:
 

@@ -11,12 +11,19 @@ Find the root cause of a bug through a structured four-phase investigation, not 
 
 Auto-fires on:
 
-- *"Troubleshoot X"*
-- *"Why is X failing"*
-- *"What's broken"*
-- *"X isn't working"*
-- *"Debug X"*
-- *"Find the bug"*
+- *"Troubleshoot X"* / *"Debug X"*
+- *"Why is X failing"* / *"Why isn't X working"*
+- *"What's broken"* / *"Something's broken"*
+- *"X isn't working"* / *"X is broken"*
+- *"Find the bug"* / *"There's a bug in X"*
+- *"This doesn't work"* / *"This is wrong"*
+- *"Why is this value wrong?"*
+- *"It's giving the wrong result"*
+- *"It's crashing"* / *"It keeps failing"*
+- *"This used to work and now it doesn't"*
+- *"What happened to X?"*
+- *"Figure out why X"*
+- *"The test is failing"* / *"Tests are broken"*
 
 Slash override: `/troubleshoot` (file: `commands/troubleshoot.md`).
 

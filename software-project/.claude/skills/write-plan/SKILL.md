@@ -11,10 +11,16 @@ Produce a checkbox-driven implementation plan from aligned spec canvases. The pl
 
 Auto-fires on:
 
-- *"Write the plan"*
-- *"Let's plan this"*
-- *"Plan this out"*
+- *"Write the plan"* / *"Make a plan"* / *"Create the plan"*
+- *"Let's plan this"* / *"Plan this out"*
 - *"Plan the implementation"*
+- *"How are we going to do this?"* (after spec is aligned)
+- *"What's the order of operations?"*
+- *"Break this into steps"*
+- *"Write the test plan"* / *"What tests do we need?"*
+- *"What needs to happen first?"*
+- *"Lay out the work"*
+- *"Set up the tasks"*
 
 Use for Tier 2/3 work, multi-file changes, multi-agent work, sequenced slices, or whenever the user asks for a plan. Skip only for genuinely tiny or obvious changes.
 

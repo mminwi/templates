@@ -16,10 +16,10 @@ Speak naturally. You don't type slash commands — you describe intent and Claud
 
 | Say this | Skill | Slash | Produces |
 |---|---|---|---|
-| *"Let's brainstorm," "what could we do about X," "how should we handle Y," "break this up"* | `brainstorm` | `/brainstorm` | Intake classification, one strong recommendation, small-slice decomposition, composer guidance, notebook summary |
-| *"Update the spec," "spec out X," "make the CSVs," "make the mock-up," "new page," "scaffold specs for X," "reverse engineer this into specs"* | `write-spec` | `/write-spec` | CSV canvases, page mock-ups, interaction matrices, state/transition tables, generated views. **Bootstrap mode** creates the full initial canvas set for new pages/entities/modules. |
-| *"Write the plan," "let's plan this," "plan the implementation"* | `write-plan` | `/write-plan` | Checkbox plan, notebook link, `tests/TEST_PLAN.md` updates, skeleton phase if needed, automatic critic loop |
-| *"Execute the plan," "build it," "run the plan," "implement this"* | `execute-plan` | `/execute-plan` | Implementation, tests, notebook closeout, separate-agent verification before completion |
+| *"Let's brainstorm," "what could we do about X," "how should we handle Y," "break this up," "research how to do X," "what's the best way," "I want to add X," "where do we start," "what would it take"* | `brainstorm` | `/brainstorm` | Intake classification, research if needed, one strong recommendation, small-slice decomposition, composer guidance, notebook summary |
+| *"Update the spec," "spec out X," "make the CSVs," "make the mock-up," "new page," "scaffold specs for X," "design the page," "what fields do we need," "map out the data model," "define the behavior," "the spec is wrong"* | `write-spec` | `/write-spec` | CSV canvases, page mock-ups, interaction matrices, state/transition tables, generated views. **Bootstrap mode** creates the full initial canvas set. **Targeted edit mode** for small spec fixes. |
+| *"Write the plan," "let's plan this," "plan the implementation," "write the test plan," "what's the order of operations," "break this into steps," "lay out the work"* | `write-plan` | `/write-plan` | Checkbox plan, notebook link, `tests/TEST_PLAN.md` updates, skeleton phase if needed, automatic critic loop |
+| *"Execute the plan," "build it," "implement this," "start building," "go ahead and do it," "let's go," "approved, go ahead," "make it happen"* | `execute-plan` | `/execute-plan` | Implementation, tests, notebook closeout, separate-agent verification before completion |
 
 Normal sequence:
 
@@ -39,9 +39,9 @@ Folded steps:
 
 | Say this                                                                  | Skill              | Slash               | Produces                                                                                           |
 | ------------------------------------------------------------------------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
-| *"Troubleshoot X," "why is X failing," "find the bug," "what's broken," "debug X"* | `troubleshoot` | `/troubleshoot` | Four-phase investigation (reproduce → pattern → hypothesize → fix). Documents in notebook. Stops after 3 failed attempts. |
-| *"Analyze X," "audit X," "how healthy is X," "check for spec drift," "is the spec accurate," "does X have enough tests"* | `analyze` | `/analyze` | Full health check: code hygiene, spec drift, test coverage + test plan recommendations, ops/security. Green/Yellow/Red grade. |
-| *"Refactor X," "clean up X without changing behavior," "restructure X"*   | `refactor`         | `/refactor`         | Characterization tests → refactor → same tests still pass                                          |
+| *"Troubleshoot X," "debug X," "why is X failing," "what's broken," "X isn't working," "find the bug," "this doesn't work," "it's giving the wrong result," "the test is failing," "this used to work"* | `troubleshoot` | `/troubleshoot` | Four-phase investigation (reproduce → pattern → hypothesize → fix). Documents in notebook. Stops after 3 failed attempts. |
+| *"Analyze X," "audit X," "how healthy is X," "check for spec drift," "is the spec accurate," "does X have enough tests," "what shape is X in," "check X before we change it," "assess X"* | `analyze` | `/analyze` | Full health check: code hygiene, spec drift, test coverage + test plan recommendations, ops/security. Green/Yellow/Red grade. |
+| *"Refactor X," "clean up X," "restructure X," "simplify X," "this code is ugly," "too much duplication," "tidy up X," "reorganize X"* | `refactor` | `/refactor` | Characterization tests → refactor → same tests still pass |
 
 ---
 
@@ -73,6 +73,23 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 | Too big to plan as one unit          | `brainstorm` decomposes it first                |
 | Bounded, scope is clear              | `write-plan` directly                           |
 | Not sure what we're trying to do yet | `brainstorm` first                              |
+
+### "Look at X" / investigate vs build
+
+| If the intent is...                    | Skill                                           |
+| -------------------------------------- | ----------------------------------------------- |
+| Something is broken                    | `troubleshoot`                                  |
+| Want to know the health before changing it | `analyze`                                    |
+| Want to understand it before building on it | `brainstorm` (reverse engineering intake)    |
+| Want to clean it up without changing behavior | `refactor`                                 |
+
+### "Write tests" / which kind
+
+| If the intent is...                    | Skill                                           |
+| -------------------------------------- | ----------------------------------------------- |
+| Tests for new code being built         | `write-plan` + `execute-plan` (cumulative test plan) |
+| Tests for existing code that has none  | `analyze` (assesses gaps, flows into write-plan) |
+| Tests to capture behavior before refactoring | `refactor` (characterization tests)        |
 
 ---
 

@@ -12,15 +12,21 @@ Create or revise the structured spec canvases that define product behavior. Keep
 Auto-fires on:
 
 - *"Update the spec"*
-- *"Fix the spec for X"* / *"The spec is wrong about Y"*
-- *"Spec out X"*
-- *"Document the page"*
-- *"Make the CSVs"*
-- *"Make the mock-up"*
+- *"Fix the spec"* / *"The spec is wrong about Y"*
+- *"Spec out X"* / *"Spec this out"*
+- *"Document the page"* / *"Document this feature"*
+- *"Make the CSVs"* / *"Create the CSVs"*
+- *"Make the mock-up"* / *"Create a mock-up"*
 - *"Reverse engineer this into specs"*
 - *"New page"* / *"Add a [page name] page"*
-- *"Scaffold specs for X"*
-- *"Bootstrap the spec canvases"*
+- *"Scaffold specs for X"* / *"Bootstrap the spec canvases"*
+- *"What should the database look like for X?"*
+- *"Design the page for X"*
+- *"What fields do we need for X?"*
+- *"Map out the data model"*
+- *"What does the interaction look like?"*
+- *"Define the behavior for X"*
+- *"What states does X go through?"*
 
 Or when a product/page/data/behavior change needs spec canvases before implementation.
 

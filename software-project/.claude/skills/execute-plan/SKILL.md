@@ -11,10 +11,16 @@ Implement an approved plan, step by step, without deviation. Skeleton, testing, 
 
 Auto-fires on:
 
-- *"Execute the plan"*
-- *"Build it"*
-- *"Run the plan"*
-- *"Implement this"*
+- *"Execute the plan"* / *"Run the plan"*
+- *"Build it"* / *"Build this"*
+- *"Implement this"* / *"Implement the plan"*
+- *"Start building"* / *"Start coding"*
+- *"Go ahead and do it"*
+- *"Make it happen"*
+- *"Let's go"* / *"Ship it"*
+- *"Do the work"*
+- *"Execute"*
+- *"Approved, go ahead"*
 
 Or after `write-plan` is approved.
 

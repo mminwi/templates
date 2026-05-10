@@ -21,6 +21,17 @@ Auto-fires on:
 - *"What's the best way to handle X?"*
 - *"Research how to do X"*
 - *"What options do we have for X?"*
+- *"I want to add X"*
+- *"We need a new feature for X"*
+- *"How would we build X?"*
+- *"What framework should we use for X?"*
+- *"What library handles X?"*
+- *"Take a look at this and tell me what you think"*
+- *"I have an idea…"*
+- *"Where do we start with X?"*
+- *"Can we do X?"*
+- *"Is it possible to X?"*
+- *"What would it take to X?"*
 
 Plus: any wide opening of feature/product work where multiple implementations could be reasonable, or where research is needed before a direction can be chosen.
 
