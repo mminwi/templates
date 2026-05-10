@@ -138,6 +138,21 @@ The main Hodos workflow is those hard gates expressed as four SOPs: brainstorm, 
 
 ---
 
+## Flow-through rule — no dead ends
+
+Once work enters a workflow (main or maintenance), it flows all the way through to execute-plan completing. Each skill hands off to the next automatically. The AI does not stop to "offer" or "recommend" the next step and wait — it proceeds.
+
+The only legitimate pause points are:
+
+1. **Ambiguous findings** that need a user decision (both-wrong, scope unclear)
+2. **Critic loop exhausted** (2 iterations) with no resolution
+3. **Reviewer loop exhausted** (2 iterations) with no resolution
+4. **The user explicitly says stop**
+
+Everything else flows forward. If you start a brainstorm, you end at a completed execute-plan. If you start an analysis, you end at a completed execute-plan (after flowing through write-spec or write-plan as needed). The user can interrupt or redirect at any point, but the default is forward motion.
+
+---
+
 ## The four main SOPs of Hodos
 
 ### 1 — Brainstorm

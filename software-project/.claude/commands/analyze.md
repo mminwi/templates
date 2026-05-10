@@ -200,13 +200,12 @@ found during the analysis.
 
 ---
 
-## Recommended next actions
+## Next actions (proceeding unless stopped)
 
-For each recommendation, name the skill and what to hand off:
-
-1. {Action} — via `/write-spec` (targeted edit) with findings {D-1, D-2}
-2. {Action} — via `/write-plan` to create a test-addition plan with scenarios {list}, then `/execute-plan` to run it
-3. {Action} — route through main workflow (brainstorm → plan → execute) for code-wrong findings
+1. {Action} — flowing into `/write-spec` (targeted edit) with findings {D-1, D-2}
+2. {Action} — flowing into `/write-plan` for test-addition plan with scenarios {list}, then `/execute-plan`
+3. {Action} — flowing into main workflow (brainstorm → spec → plan → execute) for code-wrong findings
+4. {Decision needed from user} — ambiguous findings requiring direction before proceeding
 
 ---
 
@@ -243,35 +242,55 @@ If the user approves, chain into updating `tests/TEST_PLAN.md` with the recommen
 
 Create or update a notebook entry at `notebook/{YYYY-MM-DD}-analyze-{subsystem}.md`. Record findings that aren't captured elsewhere — patterns noticed, architectural concerns, surprising discoveries, context that would be lost if not written down. Link to the audit report in `plans/`.
 
-## Step 6 — Recommend next actions with concrete handoffs
+## Step 6 — Flow into next actions
 
-After presenting the report, recommend specific next actions. Each recommendation must name the skill and what to pass to it — not just "fix the spec."
+Analyze does not stop at recommendations. After presenting the report, **proceed into the next skill automatically** unless the user stops you. The only time you pause and ask is when there's an ambiguity that requires a user decision, or when iteration loops are exhausted.
+
+Present a brief summary of findings and the recommended path, then start executing it. The user can interrupt or redirect at any point, but the default is forward motion through to completion.
+
+### Flow paths by finding type
 
 **Spec drift (spec is wrong):**
-- Recommend: `/write-spec` in targeted edit mode
-- Hand off: the specific drift findings (which claims are wrong, what the code actually does, `spec-file:line` and `code-file:line`)
-- Write-spec uses that to propose diffs the user can approve
+- Flow into: `/write-spec` in targeted edit mode
+- Pass: the specific drift findings (which claims are wrong, what the code actually does, `spec-file:line` and `code-file:line`)
+- Write-spec proposes diffs → user approves → if behavior changes are needed, continue into `/write-plan` → `/execute-plan`
 
 **Spec drift (undocumented / silent omissions):**
-- Recommend: `/write-spec` in bootstrap or full create mode
-- Hand off: what the code does that has no spec coverage, which canvas type is needed (database CSV, interaction matrix, etc.)
+- Flow into: `/write-spec` in bootstrap or full create mode
+- Pass: what the code does that has no spec coverage, which canvas type is needed
+- Write-spec creates canvases → continue into `/write-plan` → `/execute-plan` if implementation follows
 
 **Test gaps:**
-- Recommend: `/write-plan` to create a plan whose deliverable is updating `tests/TEST_PLAN.md` and adding the tests
-- Hand off: the specific test gap findings from Agent B — which scenarios are missing, which are highest priority, what existing test plan entries need updating
-- The plan may have no code changes — it may only add tests and update the test plan. That's fine. The plan is still the right vehicle because it gets a critic review, has checkboxes, and gets verified.
-- If the user also wants the tests executed, they can approve the plan and run `/execute-plan` — but analyze does not execute tests itself
+- Flow into: `/write-plan` to create a plan whose deliverable is updating `tests/TEST_PLAN.md` and adding the tests
+- Pass: the specific test gap findings — which scenarios are missing, which are highest priority, what existing test plan entries need updating
+- The plan may have no code changes — it may only add tests. That's fine. The plan gets critic review, checkboxes, and verification like any other plan.
+- After plan approval, flow into `/execute-plan` to add the tests and run them
 
 **Code-wrong findings (spec was intent, code drifted):**
-- Recommend: route through the main workflow — brainstorm → write-plan → execute-plan
-- Hand off: the specific findings showing what the spec says vs what the code does
-- These are bugs, not maintenance — they need the full discipline
+- Flow into: the main workflow — `/brainstorm` → `/write-spec` → `/write-plan` → `/execute-plan`
+- Pass: the specific findings showing what the spec says vs what the code does
+- These are bugs — they need the full discipline
 
-**Both-wrong / ambiguous:**
-- Recommend: escalate to user for a decision before any action
+**Both-wrong / ambiguous — PAUSE HERE:**
+- This is the one case where you stop and ask the user for a decision
 - Present the disagreement clearly: what spec says, what code does, why neither is obviously right
+- Do not proceed until the user decides which side wins
 
-The analysis report is saved at `plans/` regardless of whether the user acts — it's a decision log.
+**Multiple finding types in one report:**
+- Present the full report first, then recommend one strong path that addresses the highest-priority findings
+- If findings span multiple types, recommend the order: ambiguous decisions first (need user input), then spec fixes, then test gaps, then code fixes
+- Flow into the first action after presenting the summary
+
+### When to pause and ask the user
+
+The only legitimate pause points are:
+
+1. Both-wrong / ambiguous findings that need a user decision
+2. Critic loop exhausted (2 iterations) with no resolution
+3. Reviewer loop exhausted (2 iterations) with no resolution
+4. The user explicitly says stop
+
+Everything else flows forward. The analysis report is saved at `plans/` as a decision log regardless.
 
 ## Rules
 
