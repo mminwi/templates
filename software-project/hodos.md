@@ -40,10 +40,8 @@ Folded steps:
 | Say this                                                                  | Skill              | Slash               | Produces                                                                                           |
 | ------------------------------------------------------------------------- | ------------------ | ------------------- | -------------------------------------------------------------------------------------------------- |
 | *"Let's debug this," "why is X failing," "find the bug"*                  | `systematic-debug` | `/debug`            | Four-phase investigation (reproduce → pattern → hypothesize → fix). Stops after 3 failed attempts. |
-| *"Check for spec drift," "is the spec still accurate," "scan the specs"*  | `spec-drift-check` | `/spec-drift-check` | Drift report — spec-wrong / code-wrong / both-wrong / accurate                                     |
-| *"Audit the X module," "how healthy is X," "check the health of X"*       | `audit-subsystem`  | `/audit-subsystem`  | Green/Yellow/Red report across categories                                                          |
+| *"Audit X," "how healthy is X," "check for spec drift," "is the spec accurate," "does X have enough tests"* | `audit-subsystem` | `/audit-subsystem` | Full health check: code hygiene, spec drift, test coverage + test plan recommendations, ops/security. Green/Yellow/Red grade. |
 | *"Refactor X," "clean up X without changing behavior," "restructure X"*   | `refactor`         | `/refactor`         | Characterization tests → refactor → same tests still pass                                          |
-| *"Backfill tests for X," "add tests to X," "cover X with tests"*          | `backfill-tests`   | `/backfill-tests`   | Tests capturing actual current behavior                                                            |
 
 ---
 
@@ -57,7 +55,7 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 | --------------------------------------- | --------------------------- |
 | Create or revise CSVs/mock-ups/spec canvases | `write-spec`          |
 | Small targeted edit to an existing spec | `write-spec` (targeted edit mode) |
-| Report where specs are stale (no edits) | `spec-drift-check` (assess) |
+| Report where specs are stale (no edits) | `audit-subsystem` (includes spec drift) |
 
 ### "Fix this" / bug vs refactor
 
@@ -65,7 +63,7 @@ Some phrases are ambiguous. The AI will ask to clarify in these cases; here's th
 | -------------------------------------------------- | ------------------------------------ |
 | Something is broken / wrong output / crash         | `systematic-debug`                   |
 | Code works but is ugly / duplicated / hard to read | `refactor`                           |
-| Code works but has no tests                        | `backfill-tests`                     |
+| Code works but has no tests                        | `audit-subsystem` (assesses coverage + recommends test plan updates) |
 | Code works but has significant debt                | `audit-subsystem` first, then triage |
 
 ### "Let's plan this" / planning granularity
@@ -254,5 +252,5 @@ Speaking in this shape makes specs much easier for the AI to translate into stru
 - **Idempotent** — an operation that can be run multiple times without side effects beyond the first run. Webhook handlers, migration scripts, etc., should be idempotent.
 - **Audit gate** — a separate-context review step before declaring something done. The reviewer doesn't have the builder's context and can spot what was missed.
 - **Hard gate vs soft text** — a *hard gate* requires producing a specific artifact before the next step is allowed. *Soft text* is a recommendation in prose that the AI may or may not follow.
-- **Drift** — gradual divergence between the spec (what we said the system does) and the code (what it actually does). `spec-drift-check` finds it.
+- **Drift** — gradual divergence between the spec (what we said the system does) and the code (what it actually does). `audit-subsystem` finds it as part of the full health check.
 - **Spec-first** — design and document the change in the spec *before* writing code. Required for Medium and Big tier changes.

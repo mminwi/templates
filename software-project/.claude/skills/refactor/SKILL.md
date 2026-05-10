@@ -20,7 +20,7 @@ Do NOT use for:
 
 - Adding new behavior (that's feature work — go through brainstorm/spec/plan)
 - Fixing bugs (that's `systematic-debug`)
-- Adding tests to code that has none (that's `backfill-tests`)
+- Adding tests to code that has none (run `audit-subsystem` first to assess coverage gaps)
 
 ## What this skill does
 
@@ -44,5 +44,4 @@ Complete behavior contract — characterization test patterns, refactor moves, w
 ## Related skills
 
 - Often follows `audit-subsystem` (which reveals what's worth refactoring)
-- Uses `backfill-tests` patterns for the characterization step (if no tests exist)
-- After refactor: `verification-before-completion` to confirm nothing broke beyond the tests
+- After refactor: separate-agent verification to confirm nothing broke beyond the tests

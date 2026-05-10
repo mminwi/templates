@@ -24,10 +24,8 @@ brainstorm → write-spec → write-plan → execute-plan
 ## Maintenance skills
 
 - `debug.md`
-- `spec-drift-check.md`
-- `audit-subsystem.md`
+- `audit-subsystem.md` (includes spec drift and test coverage assessment)
 - `refactor.md`
-- `backfill-tests.md`
 
 Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet — the slash command name is `/debug` (kept short for typing/voicing).
 
@@ -40,6 +38,9 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 - `critic-review.md` — folded into the automatic critic loop in `write-plan.md`.
 - `skeleton-first.md` — folded into `write-plan.md` as a skeleton/framework phase.
 - `verify.md`, `review-work.md` — folded into `execute-plan.md` as final verification and separate-agent review.
+- `update-spec.md` — folded into `write-spec.md` as targeted edit mode.
+- `spec-drift-check.md` — folded into `audit-subsystem.md` as the spec drift agent.
+- `backfill-tests.md` — folded into `audit-subsystem.md` as test coverage assessment and test plan recommendations.
 - `upgrade-dependency.md` — one-off task that didn't earn a slot in the lean skill set; treat dependency upgrades as Medium-tier work that follows the normal Working Discipline.
 
 ## Where the artifacts these skills produce end up
@@ -51,10 +52,8 @@ Note: `debug.md` corresponds to the `systematic-debug` skill in the cheat sheet 
 | Test plan | `tests/TEST_PLAN.md` |
 | Bug investigations | `plans/{YYYY-MM-DD}-bug-{name}.md` |
 | Spec update proposals | `plans/{YYYY-MM-DD}-update-{spec-name}.md` |
-| Drift reports | `plans/{YYYY-MM-DD}-drift-{spec-name}.md` |
-| Audit reports | `plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
+| Audit reports (includes spec drift + test coverage) | `plans/{YYYY-MM-DD}-audit-{subsystem}.md` |
 | Refactor plans | `plans/{YYYY-MM-DD}-refactor-{name}.md` |
-| Backfill plans | `plans/{YYYY-MM-DD}-backfill-tests-{target}.md` |
 | Spec canvases | `specs/database/*.csv`, `specs/pages/{page}/interaction-matrix.csv`, `specs/pages/{page}/mock-up.html` |
 | Critic reports | `plans/{plan-name}-critic.md` when produced by the automatic plan loop |
 | Review reports | `plans/{plan-name}-review.md` when separate-agent verification is written to disk |

@@ -16,7 +16,7 @@ Invoke when:
 Do **not** use when:
 
 - The work is a tiny code edit with no behavior/product impact
-- The user only wants drift assessment with no edits — use `/spec-drift-check`
+- The user only wants drift assessment with no edits — use `/audit-subsystem` (includes spec drift)
 - The request is pure troubleshooting — use `/debug`
 
 ## Core discipline — structured artifacts first

@@ -1,5 +1,5 @@
 ---
-description: Health check on one module or subsystem using 4 parallel Explore subagents — code hygiene, tests, spec drift, ops/security. Produces a concise punch list, not a wall of text
+description: Full health check on one subsystem — code hygiene, spec drift, test coverage, ops/security — using 4 parallel agents. Produces a punch list and test plan recommendations.
 ---
 
 # /audit-subsystem
@@ -12,6 +12,13 @@ Invoke when:
 - Periodically (monthly or quarterly) as a maintenance practice
 - Before adding new features to an older subsystem
 - After a project takeover or onboarding
+- You want to check if specs match reality
+- You want to know if test coverage is adequate and whether tests should be added
+
+Trigger phrases:
+- *"Audit X," "how healthy is X," "check the health of X"*
+- *"Check for spec drift," "is the spec still accurate," "scan the specs"*
+- *"Does X have enough test coverage," "what tests exist for X"*
 
 Scope this to **one subsystem at a time** — a folder, a module, or a feature area. Do not try to audit the whole project in one run.
 
@@ -66,26 +73,34 @@ Launch all four in a **single message with multiple tool calls.** Each agent is 
 >
 > Report a punch list with severity (CRITICAL / MODERATE / MINOR) and `file:line` references. Under 250 words. Do not fix anything.
 
-### Agent B — Test coverage
+### Agent B — Test coverage and test plan assessment
 
-> Check test coverage for the `{subsystem-name}` subsystem at paths: `{paths}`. Look in `{test directories, from step 1}`. Answer:
+> Check test coverage for the `{subsystem-name}` subsystem at paths: `{paths}`. Look in `{test directories, from step 1}` and read `tests/TEST_PLAN.md`. Answer:
 > - Which routes / functions have direct test coverage?
 > - Which have NO test coverage but are user-facing or load-bearing?
 > - Are there obvious happy-path flows untested?
 > - Are there skipped (`@skip`) or flaky tests?
+> - What does `tests/TEST_PLAN.md` say about this subsystem? Is it listed? Are the listed checks still accurate?
+> - Are there tests that capture **current actual behavior** (characterization tests), or do tests only cover intended behavior?
+> - Recommend: should tests be added? If so, which scenarios are highest value — prioritize code that handles money, security, data integrity, or is about to be changed.
 >
-> Report a punch list: what's tested, what's not, with severity. Under 250 words. Do not write tests.
+> Report a punch list: what's tested, what's not, what the test plan says vs reality, with severity. Under 300 words. Do not write tests.
 
-### Agent C — Spec / procedure drift
+### Agent C — Spec drift
 
-> Compare the actual code at paths `{paths}` against the spec or procedure at `{spec/procedure files, if any}`. Find:
-> - Claims in the spec that no longer match the code (renamed routes, removed features, changed data models).
-> - Behavior in the code that the spec does not describe (new features added without spec update).
-> - Hardcoded counts, exhaustive enumerations, or "currently N..." claims that will naturally drift.
+> Compare the actual code at paths `{paths}` against the spec canvases and spec files at `{spec/procedure files, if any}`. For each concrete claim the spec makes (paths, table/field names, endpoint signatures, behavioral claims, counts, configuration), verify it against the code.
 >
-> Report a punch list with `file:line` on both sides. Under 250 words. Do not fix anything.
+> Categorize each finding:
+> - **Spec is wrong (code moved)** — code evolved, spec wasn't updated
+> - **Spec is wrong (renamed/relocated)** — feature exists but at a different path/name. Before concluding "deleted," search for similar patterns — prefix drops, namespace reorgs, promotions to root paths
+> - **Code is wrong (spec was intent)** — code drifted from intended behavior (a bug)
+> - **Both wrong / ambiguous** — neither matches stated intent
+> - **Stale metric** — hardcoded counts that drift naturally
+> - **Undocumented** — behavior in code with no spec coverage (silent omissions — the most dangerous kind of drift)
 >
-> _If no spec exists for this subsystem, skip this agent and note in the final report: "No spec exists for this subsystem — flag as CRITICAL gap."_
+> Report a punch list with `file:line` on both sides (spec and code). Under 300 words. Do not fix anything.
+>
+> _If no spec exists for this subsystem, note: "No spec exists — flag as CRITICAL gap."_
 
 ### Agent D — Operations & security (external calls, cron, permissions, observability)
 
@@ -144,6 +159,43 @@ If the user only has 30 minutes, do this one thing: {specific item from above, w
 
 ---
 
+## Spec drift findings
+
+### Spec is wrong (code moved)
+- [drift] {claim in spec} → {reality in code} — `spec-file:line` vs `code-file:line`
+
+### Code is wrong (spec was intent)
+- [drift] {claim} → {reality} — needs Hodos run to fix code
+
+### Undocumented (silent omissions)
+- [drift] {feature/behavior in code with no spec coverage}
+
+### Confirmed accurate
+- {spec claim verified} — ✅
+
+---
+
+## Test plan recommendations
+
+### Tests that should be added
+- {scenario description — what the code currently does, not desired behavior} — `file:line`
+
+### Existing tests that are stale
+- {test that passes but tests changed behavior} — `test-file:line`
+
+### Test plan entries to update
+- {entry in TEST_PLAN.md that needs correction}
+
+---
+
+## Recommended next actions
+
+1. {Most important — usually fix spec drift first, it's cheap}
+2. {Update test plan with recommended additions}
+3. {Defer or flag for Hodos run}
+
+---
+
 ## Gaps flagged (meta-findings about the audit itself)
 
 - No spec exists for this subsystem
@@ -161,11 +213,34 @@ If the user only has 30 minutes, do this one thing: {specific item from above, w
 - (Whatever wasn't checked — be explicit so the reader knows what still needs doing)
 ```
 
+## Step 4 — Test plan recommendations
+
+After merging the audit report, review Agent B's test coverage findings against `tests/TEST_PLAN.md` and produce concrete recommendations:
+
+1. **Tests that should be added** — highest-value gaps: user-facing paths with no coverage, code handling money/security/data, code about to be changed. For each, describe the scenario to test (what it does now, not what it should do).
+2. **Existing tests that are stale or wrong** — tests that pass but test behavior that has changed, or tests that are skipped/flaky.
+3. **Test plan entries that need updating** — entries in `tests/TEST_PLAN.md` that reference this subsystem but are inaccurate.
+
+Include these in the report under a **Test Plan Recommendations** section. Do not write the actual tests — recommend what should be tested and let the user decide whether to proceed.
+
+If the user approves, chain into updating `tests/TEST_PLAN.md` with the recommended additions.
+
+## Step 5 — Offer next actions
+
+After presenting the report:
+
+- **Spec drift findings (spec is wrong):** offer to chain into `/write-spec` to fix the spec canvases.
+- **Test gaps:** offer to update `tests/TEST_PLAN.md` with recommended additions.
+- **Code-wrong findings:** flag for a separate Hodos run (these require actual code changes, not maintenance).
+- **Both-wrong / ambiguous:** leave open for user decision.
+
+The audit report is saved at `plans/` regardless of next actions — it's a decision log.
+
 ## Rules
 
 1. **Always four parallel agents, in a single message.** Sequential auditing drops quality. Parallel is not optional.
 2. **Agents must be briefed concretely.** Pass the actual paths — not a placeholder. Each agent's prompt must be self-contained because they don't share context.
-3. **Final report under 500 words.** If findings exceed that, tighten. Drop the weakest MINOR items.
+3. **Final report should be concise.** Tighten findings. Drop the weakest MINOR items. The report covers more ground now (code, specs, tests, ops) — keep each section punchy.
 4. **Dedupe overlapping findings.** The same issue surfaced by multiple agents is *stronger signal*, not cause for three line items. Mention it once, note that multiple angles found it.
 5. **Tag each finding with its category** (`[hygiene]`, `[coverage]`, `[drift]`, `[ops]`). So the reader can see the distribution at a glance.
 6. **Green / Yellow / Red grade is required.** Top of the report. No "Inconclusive" cop-out.

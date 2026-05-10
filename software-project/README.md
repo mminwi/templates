@@ -117,9 +117,9 @@ Full list with trigger phrases is in [`hodos.md`](hodos.md). Quick reference:
 | Area | Skills |
 |---|---|
 | Main workflow | `brainstorm` `write-spec` `write-plan` `execute-plan` |
-| Folded into main workflow | `decompose` in `brainstorm`; `critic-review` and `skeleton-first` in `write-plan`; `verify` and `review-work` in `execute-plan` |
-| Folded into main workflow | `update-spec` in `write-spec` (targeted edit mode) |
-| Maintenance | `systematic-debug` `spec-drift-check` `audit-subsystem` `refactor` `backfill-tests` |
+| Folded into main workflow | `decompose` in `brainstorm`; `critic-review` and `skeleton-first` in `write-plan`; `verify` and `review-work` in `execute-plan`; `update-spec` in `write-spec` |
+| Folded into audit | `spec-drift-check` and `backfill-tests` in `audit-subsystem` |
+| Maintenance | `systematic-debug` `audit-subsystem` `refactor` |
 
 ---
 

@@ -57,4 +57,4 @@ Complete behavior contract in [`../../commands/write-spec.md`](../../commands/wr
 
 - `brainstorm` — often comes first to choose direction and slices.
 - `write-plan` — comes after spec canvases are aligned.
-- `spec-drift-check` — for finding where specs are stale (NOT for editing)
+- `audit-subsystem` — includes spec drift checking as part of the full health check
