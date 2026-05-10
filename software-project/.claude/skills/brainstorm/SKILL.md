@@ -1,11 +1,11 @@
 ---
 name: brainstorm
-description: "Use this as the front door for non-trivial product/software work. Classifies the request, recommends one strong path, decomposes into small slices when needed, defines composer/parallelism guidance, updates the notebook for Tier 2/3 work, and hands off to write-spec or write-plan. No code."
+description: "Use this as the front door for non-trivial product/software work. Classifies the request, researches when needed (frameworks, libraries, architectural patterns), recommends one strong path, decomposes into small slices when needed, defines composer/parallelism guidance, updates the notebook for Tier 2/3 work, and hands off to write-spec or write-plan. No code."
 ---
 
 # brainstorm
 
-Open non-trivial work, decide the workflow tier, converge on direction, and decompose small enough that later agents can work with focused context.
+Open non-trivial work, decide the workflow tier, research when needed, converge on direction, and decompose small enough that later agents can work with focused context.
 
 ## When this skill fires
 
@@ -18,8 +18,11 @@ Auto-fires on:
 - *"How should we handle X?"*
 - *"Break this up"*
 - *"How should we divide this work?"*
+- *"What's the best way to handle X?"*
+- *"Research how to do X"*
+- *"What options do we have for X?"*
 
-Plus: any wide opening of feature/product work where multiple implementations could be reasonable.
+Plus: any wide opening of feature/product work where multiple implementations could be reasonable, or where research is needed before a direction can be chosen.
 
 ## What this skill does
 

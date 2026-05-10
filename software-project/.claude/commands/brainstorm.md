@@ -95,13 +95,53 @@ Focus on:
 
 Do not ask implementation-detail questions the AI can decide later.
 
-### Step 3 — Recommend one path unless there are true alternatives
+### Step 3 — Research if needed
+
+Before recommending a path, assess whether you know enough to make a strong recommendation. If not, research first.
+
+**When research is needed:**
+
+- Evaluating frameworks, libraries, or tools you haven't worked with in this project
+- Comparing architectural patterns for a problem you haven't solved in this context
+- The user asks "what's the best way to..." and you don't have a confident answer
+- External APIs, services, or integrations you need to understand before recommending
+- The problem domain has tradeoffs you can't evaluate without looking at real-world approaches
+
+**How to research:**
+
+- Search the web for current best practices, comparisons, and real-world usage
+- Read documentation for candidate libraries/frameworks/APIs
+- Check the project's existing dependencies and patterns — the answer may already be in the codebase
+- Look at how similar problems are solved in the same stack
+- Check `specs/tooling-philosophy.md` if evaluating a new dependency — it has evaluation criteria
+
+**Research output:**
+
+Summarize findings briefly in the notebook (for Tier 2/3) or inline (for smaller work):
+
+- What was researched and why
+- What options exist
+- Which option you recommend and why
+- What tradeoffs you considered
+- What you ruled out and why
+
+Do not dump raw research. Synthesize it into a recommendation. The research supports the recommendation — it is not the deliverable.
+
+**When research is NOT needed:**
+
+- You already know the stack and the right approach
+- The user has already decided and just needs execution
+- The problem is well-understood and the codebase already has patterns for it
+
+Skip research and go straight to recommending.
+
+### Step 4 — Recommend one path unless there are true alternatives
 
 Prefer one strong recommendation over padded choices.
 
 If there is one best path, recommend it and explain why. Present multiple options only when there are genuinely distinct viable paths with meaningful tradeoffs.
 
-### Step 4 — Decompose small by default
+### Step 5 — Decompose small by default
 
 If the work is bigger than one small coherent slice, decompose it inside brainstorming.
 
@@ -124,7 +164,7 @@ Produce:
 - Whether skeleton/framework-first is required inside the plan
 - Whether critic review should run automatically
 
-### Step 5 — Composer guidance
+### Step 6 — Composer guidance
 
 For decomposed work, identify composer guidance:
 
@@ -140,7 +180,7 @@ Composer notes:
 
 No two agents should modify the same file, page mock-up, CSV canvas, or implementation module in parallel. Shared-file work can still be decomposed, but those slices must run in series.
 
-### Step 6 — Notebook update
+### Step 7 — Notebook update
 
 If the work is Tier 2 or Tier 3, create or update a notebook entry:
 
@@ -159,7 +199,7 @@ Record:
 
 The notebook summarizes and links. Do not paste full plans/specs.
 
-### Step 7 — Handoff
+### Step 8 — Handoff
 
 After the user accepts the direction:
 
